@@ -9,7 +9,7 @@
     "build": "./scripts/build.sh",
     "prepublish": "npm run build"
   },
-  "main": "dist/ledger.js",
+  "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
   "files": [
