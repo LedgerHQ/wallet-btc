@@ -1,0 +1,53 @@
+{
+  "name": "xpub.js",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "yarn jest --detectOpenHandles",
+    "typecheck": "yarn tsc --project ./tsconfig-typecheck.json",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "build": "./scripts/build.sh",
+    "prepublish": "npm run build"
+  },
+  "main": "dist/xpub.js",
+  "typings": "dist/index.d.ts",
+  "license": "MIT",
+  "files": [
+    "dist/"
+  ],
+  "devDependencies": {
+    "@types/bs58": "^4.0.1",
+    "@types/jest": "^25.2.3",
+    "@types/lodash": "^4.14.170",
+    "@types/node": "^15.12.4",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-formatter-pretty": "^3.0.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-typescript": "^0.14.0",
+    "fs": "^0.0.1-security",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.0.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3",
+    "typescript-eslint-parser": "^22.0.0"
+  },
+  "dependencies": {
+    "@ledgerhq/hw-app-btc": "^6.0.2",
+    "@types/bchaddrjs": "^0.4.0",
+    "@types/bitcore-lib-cash": "^8.23.3",
+    "bitcoinjs-lib": "^5.2.0",
+    "bs58": "^4.0.1",
+    "coininfo": "^5.1.0",
+    "lodash": "^4.17.21",
+    "xpub.js": "ledgerhq/xpub.js#ec6d329"
+  }
+}
