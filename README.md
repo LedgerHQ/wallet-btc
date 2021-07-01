@@ -1,6 +1,6 @@
-# wallets.js
+# wallet-btc
 
-a lib of js wallets for various crypto
+a ledger btc wallet in js
 
 ## Todo
 
