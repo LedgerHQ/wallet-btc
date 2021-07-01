@@ -1,6 +1,10 @@
 {
   "name": "wallet-btc",
   "version": "1.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LedgerHQ/wallet-btc.git"
+  },
   "scripts": {
     "test": "yarn jest --detectOpenHandles",
     "typecheck": "yarn tsc --project ./tsconfig-typecheck.json",
