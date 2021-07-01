@@ -5262,19 +5262,6 @@ xmlchars@^2.2.0:
   resolved "https://registry.yarnpkg.com/xmlchars/-/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
   integrity sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
 
-xpub.js@ledgerhq/xpub.js#ec6d329:
-  version "1.0.0"
-  resolved "https://codeload.github.com/ledgerhq/xpub.js/tar.gz/ec6d329397806f84d9838cd432607c0429c422f1"
-  dependencies:
-    axios "^0.21.1"
-    axios-retry "^3.1.9"
-    bip32 "^2.0.6"
-    bip39 "^3.0.4"
-    bitcoinjs-lib "^5.2.0"
-    coininfo "^5.1.0"
-    jest-file-snapshot "^0.5.0"
-    lodash "^4.17.21"
-
 y18n@^4.0.0:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.3.tgz#b5f259c82cd6e336921efd7bfd8bf560de9eeedf"

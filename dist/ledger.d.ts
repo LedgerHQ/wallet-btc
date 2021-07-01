@@ -1,8 +1,8 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import Btc from '@ledgerhq/hw-app-btc';
-import Xpub from 'xpub.js/dist/xpub';
-import { IExplorer } from 'xpub.js/dist/explorer/types';
-import { IStorage, Output, TX } from 'xpub.js/dist/storage/types';
+import Xpub from './xpub';
+import { IExplorer } from './explorer/types';
+import { IStorage, Output, TX } from './storage/types';
 export interface Account {
     params: {
         path: string;
@@ -57,8 +57,8 @@ declare class WalletLedger {
     exportToSerializedAccount(account: Account): Promise<SerializedAccount>;
     importFromSerializedAccount(account: SerializedAccount): Promise<Account>;
     syncAccount(account: Account): Promise<number>;
-    getAccountNewReceiveAddress(account: Account): Promise<import("xpub.js/dist/storage/types").Address>;
-    getAccountNewChangeAddress(account: Account): Promise<import("xpub.js/dist/storage/types").Address>;
+    getAccountNewReceiveAddress(account: Account): Promise<import("./storage/types").Address>;
+    getAccountNewChangeAddress(account: Account): Promise<import("./storage/types").Address>;
     getAccountOperations(account: Account): Promise<TX[]>;
     getAccountUnspentUtxos(account: Account): Promise<Output[]>;
     getAccountBalance(account: Account): Promise<number>;

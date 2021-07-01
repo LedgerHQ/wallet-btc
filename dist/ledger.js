@@ -73,14 +73,14 @@ var bitcoin = __importStar(require("bitcoinjs-lib"));
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 var bufferutils_1 = require("bitcoinjs-lib/src/bufferutils");
-var xpub_1 = __importDefault(require("xpub.js/dist/xpub"));
-var ledger_v3_2_4_1 = __importDefault(require("xpub.js/dist/explorer/ledger.v3.2.4"));
-var bitcoin_1 = __importDefault(require("xpub.js/dist/crypto/bitcoin"));
-var mock_1 = __importDefault(require("xpub.js/dist/storage/mock"));
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 var coininfo_1 = __importDefault(require("coininfo"));
 var lodash_1 = require("lodash");
+var xpub_1 = __importDefault(require("./xpub"));
+var ledger_v3_2_4_1 = __importDefault(require("./explorer/ledger.v3.2.4"));
+var bitcoin_1 = __importDefault(require("./crypto/bitcoin"));
+var mock_1 = __importDefault(require("./storage/mock"));
 var utils = __importStar(require("./utils"));
 var WalletLedger = /** @class */ (function () {
     function WalletLedger(btc) {
