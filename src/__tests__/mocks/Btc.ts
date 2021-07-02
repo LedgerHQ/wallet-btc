@@ -1,6 +1,5 @@
 import Btc, { AddressFormat } from '@ledgerhq/hw-app-btc';
 import { CreateTransactionArg } from '@ledgerhq/hw-app-btc/lib/createTransaction';
-import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
 import Transport from '@ledgerhq/hw-transport';
 import hash from 'object-hash';
 
