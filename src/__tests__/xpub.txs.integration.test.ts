@@ -14,7 +14,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const describeToUse = process.env.CI ? describe.skip : describe;
 
-describeToUse('testing legacy transactions', () => {
+describeToUse('testing xpub legacy transactions', () => {
   const network = coininfo.bitcoin.test.toBitcoinJS();
 
   const explorer = new Explorer({

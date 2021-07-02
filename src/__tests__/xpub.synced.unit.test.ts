@@ -9,7 +9,7 @@ import Explorer from '../explorer/ledger.v3.2.4';
 import Crypto from '../crypto/bitcoin';
 import Xpub from '../xpub';
 
-describe('synced wallet utilites functions', () => {
+describe('synced xpub utilites functions', () => {
   const explorer = new Explorer({
     explorerURI: 'whatever',
   });
