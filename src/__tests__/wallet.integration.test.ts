@@ -40,6 +40,6 @@ describeToUse('testing wallet', () => {
   it('should allow to build a transaction', async () => {
     const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
     const tx = await wallet.buildAccountTx(account, receiveAddress.address, 100000, 1000);
-    expect(tx).toEqual('8d216d0da40e8aece0dd14a65eacfabeb4b3432f');
+    expect(tx).toEqual('004ab82add183c2dad9d38f492f977e71c83056c');
   });
 });

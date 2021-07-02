@@ -33,26 +33,6 @@ class MockBtc extends Btc {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  splitTransaction(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    transactionHex: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    isSegwitSupported?: boolean,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    hasTimestamp?: boolean,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    hasExtraData?: boolean,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    additionals?: string[]
-  ) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    const tx: Transaction;
-
-    return tx;
-  }
-
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-unused-vars
   async createPaymentTransactionNew(arg: CreateTransactionArg) {
     return hash(arg);
