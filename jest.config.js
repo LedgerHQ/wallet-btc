@@ -23,6 +23,7 @@ console.log('Type checking is disabled during Jest for performance reasons, use 
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  testPathIgnorePatterns: ['/node_modules/', '/mocks'],
   globals: {
     'ts-jest': {
       isolatedModules: true,

@@ -1,9 +1,7 @@
 import WalletLedger, { Account } from '..';
 import MockBtc from './mocks/Btc';
 
-const describeToUse = process.env.CI ? describe.skip : describe;
-
-describeToUse('testing wallet', () => {
+describe('testing wallet', () => {
   const wallet = new WalletLedger(new MockBtc());
   let account: Account;
   it('should generate an account', async () => {
