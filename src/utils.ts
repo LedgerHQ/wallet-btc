@@ -16,7 +16,7 @@ export function parseHexString(str: any) {
 export function encodeBase58Check(vchIn: any) {
   // eslint-disable-next-line no-param-reassign
   vchIn = parseHexString(vchIn);
-  let chksum = bitcoin.crypto.sha256(vchIn);
+  let chksum = bitcoin.crypto.sha256(Buffer.from(vchIn));
   chksum = bitcoin.crypto.sha256(chksum);
   chksum = chksum.slice(0, 4);
   const hash = vchIn.concat(Array.from(chksum));

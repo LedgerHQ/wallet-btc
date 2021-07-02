@@ -20,10 +20,12 @@
     "dist/"
   ],
   "devDependencies": {
+    "@ledgerhq/hw-transport": "^6.0.2",
     "@types/bs58": "^4.0.1",
     "@types/jest": "^25.2.3",
     "@types/lodash": "^4.14.170",
     "@types/node": "^15.12.4",
+    "@types/object-hash": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "eslint": "^7.0.0",
@@ -39,6 +41,7 @@
     "fs": "^0.0.1-security",
     "jest": "^26.0.1",
     "jest-file-snapshot": "^0.5.0",
+    "object-hash": "^2.2.0",
     "prettier": "^2.0.5",
     "ts-jest": "^26.0.0",
     "ts-node": "^8.10.1",

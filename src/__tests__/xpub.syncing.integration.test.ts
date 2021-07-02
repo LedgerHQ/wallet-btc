@@ -29,7 +29,7 @@ const stopLogging = (emitters: any) => {
 
 expect.extend({ toMatchFile });
 
-describe('integration sync', () => {
+describe('xpub integration sync', () => {
   const walletDatasets = [
     {
       xpub: 'xpub6CMtoA66sLkbsZo8RNq7PoKz19WdThkSxNzwz8MgyjhsPjVwjFqXqb69xyRVGs2iSd98yDrVL4A6tC2vsTsgQDPXFa46AvPoh5PWhppNdoV',
