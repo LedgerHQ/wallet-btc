@@ -7,6 +7,8 @@ import bchaddr from 'bchaddrjs';
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
 import { ICrypto, DerivationMode } from './types';
 
+require('bitcore-lib');
+
 // a mock explorer class that just use js objects
 class BitcoinCash implements ICrypto {
   network: any;

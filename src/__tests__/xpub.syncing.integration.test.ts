@@ -12,6 +12,7 @@ import Bitcoin from '../crypto/bitcoin';
 import BitcoinCash from '../crypto/bitcoincash';
 import Litecoin from '../crypto/litecoin';
 import Digibyte from '../crypto/digibyte';
+import Zec from '../crypto/zec';
 
 const startLogging = (emitters: any) => {
   emitters.forEach((emitter: any) =>
@@ -111,15 +112,15 @@ describe('xpub integration sync', () => {
       balance: 0,
       network: coininfo.bitcoin.main.toBitcoinJS(),
       coin: 'xsn',
-    },
+    }, */
     {
       xpub: 'xpub6DWu8baXZKRb3FbLebkpXq2qm1hH4N9F8hzTBoZAWrPNBAXgCSK8qqfsc38gaCEFZWUS9rJHMgE3DS4rh7Qqn47PHKHYkMzWXfo39cYdwVJ',
       derivationMode: 'Legacy',
-      addresses: 0,
-      balance: 0,
+      addresses: 25,
+      balance: 591574,
       network: coininfo.zcash.main.toBitcoinJS(),
       coin: 'zec',
-    }, */
+    },
   ];
 
   walletDatasets.forEach((dataset) =>
@@ -179,13 +180,13 @@ describe('xpub integration sync', () => {
           break;
         case 'via': // viacoin
           crypto = new Bitcoin({ network: dataset.network });
-          break;
+          break; */
         case 'zec': // zcash
-          crypto = new Bitcoin({ network: dataset.network });
+          crypto = new Zec({ network: dataset.network });
           break;
         case 'zen': // zencash
           crypto = new Bitcoin({ network: dataset.network });
-          break; */
+          break;
         default:
           throw new Error('Should not be reachable');
       }
