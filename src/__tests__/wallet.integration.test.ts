@@ -25,19 +25,19 @@ describe('testing wallet', () => {
     await wallet.syncAccount(account);
     const balance = await wallet.getAccountBalance(account);
 
-    expect(balance).toEqual(111299);
+    expect(balance).toEqual(109088);
   });
 
   it('should allow to store and load an account', async () => {
     const serializedAccount = await wallet.exportToSerializedAccount(account);
     const unserializedAccount = await wallet.importFromSerializedAccount(serializedAccount);
     const balance = await wallet.getAccountBalance(unserializedAccount);
-    expect(balance).toEqual(111299);
+    expect(balance).toEqual(109088);
   });
 
   it('should allow to build a transaction', async () => {
     const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
     const tx = await wallet.buildAccountTx(account, receiveAddress.address, 100000, 1000);
-    expect(tx).toEqual('004ab82add183c2dad9d38f492f977e71c83056c');
+    expect(tx).toEqual('97beab79b87b6605b17829f08612640010676ce9');
   });
 });
