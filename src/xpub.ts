@@ -1,4 +1,5 @@
 import { flatten, maxBy, range, some, sortBy } from 'lodash';
+import BigNumber from 'bignumber.js';
 import { Address, IStorage, Output } from './storage/types';
 import EventEmitter from './utils/eventemitter';
 import { IExplorer } from './explorer/types';
@@ -168,7 +169,7 @@ class Xpub extends EventEmitter {
 
     const unspentUtxos = await this.storage.getAddressUnspentUtxos(address);
 
-    return unspentUtxos.reduce((total, { value }) => total + value, 0);
+    return unspentUtxos.reduce((total, { value }) => total.plus(value), new BigNumber(0));
   }
 
   async getXpubAddresses() {
@@ -200,7 +201,7 @@ class Xpub extends EventEmitter {
     return address;
   }
 
-  async buildTx(destAddress: string, amount: number, fee: number, changeAddress: string, utxosToUse?: Output[]) {
+  async buildTx(destAddress: string, amount: BigNumber, fee: number, changeAddress: string, utxosToUse?: Output[]) {
     await this.whenSynced('all');
 
     // get the utxos to use as input
@@ -212,19 +213,19 @@ class Xpub extends EventEmitter {
     unspentUtxos = sortBy(unspentUtxos, 'value');
 
     // now we select only the output needed to cover the amount + fee
-    let total = 0;
+    let total = new BigNumber(0);
     let unspentUtxoSelected: Output[] = [];
 
     if (utxosToUse) {
       unspentUtxoSelected = utxosToUse;
-      total = unspentUtxoSelected.reduce((totalacc, utxo) => totalacc + utxo.value, 0);
+      total = unspentUtxoSelected.reduce((totalacc, utxo) => totalacc.plus(utxo.value), new BigNumber(0));
     } else {
       let i = 0;
-      while (total < amount + fee) {
+      while (total.lt(amount.plus(fee))) {
         if (!unspentUtxos[i]) {
           throw new Error('amount bigger than the total balance');
         }
-        total += unspentUtxos[i].value;
+        total = total.plus(unspentUtxos[i].value);
         unspentUtxoSelected.push(unspentUtxos[i]);
         i += 1;
       }
@@ -250,7 +251,7 @@ class Xpub extends EventEmitter {
       },
       {
         script: this.crypto.toOutputScript(changeAddress),
-        value: total - amount - fee,
+        value: total.minus(amount).minus(fee),
       },
     ];
 
@@ -269,7 +270,7 @@ class Xpub extends EventEmitter {
   async getAddressesBalance(addresses: Address[]) {
     const balances = await Promise.all(addresses.map((address) => this.getAddressBalance(address)));
 
-    return balances.reduce((total, balance) => (total || 0) + (balance || 0), 0);
+    return balances.reduce((total, balance) => total.plus(balance), new BigNumber(0));
   }
 
   // TODO : test the different syncing protection logic
