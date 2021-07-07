@@ -41,4 +41,11 @@ describe('testing wallet', () => {
     const tx = await wallet.buildAccountTx(account, receiveAddress.address, new BigNumber(100000), 1000);
     expect(tx).toEqual('97beab79b87b6605b17829f08612640010676ce9');
   });
+
+  it('should allow to build a transaction splitting outputs', async () => {
+    const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
+    account.xpub.OUTPUT_VALUE_MAX = 60000;
+    const tx = await wallet.buildAccountTx(account, receiveAddress.address, new BigNumber(100000), 1000);
+    expect(tx).toEqual('33d6fede13bb736e497f2b38195d20065fc60a90');
+  });
 });

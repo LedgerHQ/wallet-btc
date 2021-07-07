@@ -17,6 +17,10 @@ class Xpub extends EventEmitter {
 
   derivationMode: string;
 
+  // https://github.com/bitcoinjs/bitcoinjs-lib/blob/27a840aac4a12338f1e40c54f3759bbd7a559944/src/bufferutils.js#L24
+  // only works with number so we need to be sure to pass correct numbers
+  OUTPUT_VALUE_MAX: number = Number.MAX_SAFE_INTEGER;
+
   GAP = 20;
 
   syncing: { [key: string]: boolean } = {};
@@ -244,16 +248,33 @@ class Xpub extends EventEmitter {
       txs[index].account,
       txs[index].index,
     ]);
-    const outputs = [
-      {
-        script: this.crypto.toOutputScript(destAddress),
-        value: amount,
-      },
-      {
-        script: this.crypto.toOutputScript(changeAddress),
-        value: total.minus(amount).minus(fee),
-      },
-    ];
+
+    const outputs = [];
+
+    // outputs splitting
+    // btc only support value fitting in uint64 and the lib
+    // we use to serialize output only take js number in params
+    // that are actually even more restricted
+    const desiredOutputLeftToFit = {
+      script: this.crypto.toOutputScript(destAddress),
+      value: amount,
+    };
+
+    while (desiredOutputLeftToFit.value.gt(this.OUTPUT_VALUE_MAX)) {
+      outputs.push({
+        script: desiredOutputLeftToFit.script,
+        value: new BigNumber(this.OUTPUT_VALUE_MAX),
+      });
+      desiredOutputLeftToFit.value = desiredOutputLeftToFit.value.minus(this.OUTPUT_VALUE_MAX);
+    }
+
+    if (desiredOutputLeftToFit.value.gt(0)) {
+      outputs.push(desiredOutputLeftToFit);
+    }
+    outputs.push({
+      script: this.crypto.toOutputScript(changeAddress),
+      value: total.minus(amount).minus(fee),
+    });
 
     return {
       inputs,
