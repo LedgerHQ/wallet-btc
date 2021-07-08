@@ -1,4 +1,5 @@
 import { flatten, maxBy, range, some, sortBy } from 'lodash';
+import BigNumber from 'bignumber.js';
 import { Address, IStorage, Output } from './storage/types';
 import EventEmitter from './utils/eventemitter';
 import { IExplorer } from './explorer/types';
@@ -15,6 +16,10 @@ class Xpub extends EventEmitter {
   xpub: string;
 
   derivationMode: string;
+
+  // https://github.com/bitcoinjs/bitcoinjs-lib/blob/27a840aac4a12338f1e40c54f3759bbd7a559944/src/bufferutils.js#L24
+  // only works with number so we need to be sure to pass correct numbers
+  OUTPUT_VALUE_MAX: number = Number.MAX_SAFE_INTEGER;
 
   GAP = 20;
 
@@ -168,7 +173,7 @@ class Xpub extends EventEmitter {
 
     const unspentUtxos = await this.storage.getAddressUnspentUtxos(address);
 
-    return unspentUtxos.reduce((total, { value }) => total + value, 0);
+    return unspentUtxos.reduce((total, { value }) => total.plus(value), new BigNumber(0));
   }
 
   async getXpubAddresses() {
@@ -200,7 +205,7 @@ class Xpub extends EventEmitter {
     return address;
   }
 
-  async buildTx(destAddress: string, amount: number, fee: number, changeAddress: string, utxosToUse?: Output[]) {
+  async buildTx(destAddress: string, amount: BigNumber, fee: number, changeAddress: string, utxosToUse?: Output[]) {
     await this.whenSynced('all');
 
     // get the utxos to use as input
@@ -212,19 +217,19 @@ class Xpub extends EventEmitter {
     unspentUtxos = sortBy(unspentUtxos, 'value');
 
     // now we select only the output needed to cover the amount + fee
-    let total = 0;
+    let total = new BigNumber(0);
     let unspentUtxoSelected: Output[] = [];
 
     if (utxosToUse) {
       unspentUtxoSelected = utxosToUse;
-      total = unspentUtxoSelected.reduce((totalacc, utxo) => totalacc + utxo.value, 0);
+      total = unspentUtxoSelected.reduce((totalacc, utxo) => totalacc.plus(utxo.value), new BigNumber(0));
     } else {
       let i = 0;
-      while (total < amount + fee) {
+      while (total.lt(amount.plus(fee))) {
         if (!unspentUtxos[i]) {
           throw new Error('amount bigger than the total balance');
         }
-        total += unspentUtxos[i].value;
+        total = total.plus(unspentUtxos[i].value);
         unspentUtxoSelected.push(unspentUtxos[i]);
         i += 1;
       }
@@ -243,16 +248,33 @@ class Xpub extends EventEmitter {
       txs[index].account,
       txs[index].index,
     ]);
-    const outputs = [
-      {
-        script: this.crypto.toOutputScript(destAddress),
-        value: amount,
-      },
-      {
-        script: this.crypto.toOutputScript(changeAddress),
-        value: total - amount - fee,
-      },
-    ];
+
+    const outputs = [];
+
+    // outputs splitting
+    // btc only support value fitting in uint64 and the lib
+    // we use to serialize output only take js number in params
+    // that are actually even more restricted
+    const desiredOutputLeftToFit = {
+      script: this.crypto.toOutputScript(destAddress),
+      value: amount,
+    };
+
+    while (desiredOutputLeftToFit.value.gt(this.OUTPUT_VALUE_MAX)) {
+      outputs.push({
+        script: desiredOutputLeftToFit.script,
+        value: new BigNumber(this.OUTPUT_VALUE_MAX),
+      });
+      desiredOutputLeftToFit.value = desiredOutputLeftToFit.value.minus(this.OUTPUT_VALUE_MAX);
+    }
+
+    if (desiredOutputLeftToFit.value.gt(0)) {
+      outputs.push(desiredOutputLeftToFit);
+    }
+    outputs.push({
+      script: this.crypto.toOutputScript(changeAddress),
+      value: total.minus(amount).minus(fee),
+    });
 
     return {
       inputs,
@@ -269,7 +291,7 @@ class Xpub extends EventEmitter {
   async getAddressesBalance(addresses: Address[]) {
     const balances = await Promise.all(addresses.map((address) => this.getAddressBalance(address)));
 
-    return balances.reduce((total, balance) => (total || 0) + (balance || 0), 0);
+    return balances.reduce((total, balance) => total.plus(balance), new BigNumber(0));
   }
 
   // TODO : test the different syncing protection logic

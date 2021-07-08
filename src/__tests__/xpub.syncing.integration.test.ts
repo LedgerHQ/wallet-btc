@@ -219,7 +219,7 @@ describe('xpub integration sync', () => {
 
           const txs = orderBy(await storage.export(), ['derivationMode', 'account', 'index', 'block.height', 'id']);
           expect(JSON.stringify(txs, null, 2)).toMatchFile(truthDump);
-          expect(await xpub.getXpubBalance()).toEqual(dataset.balance);
+          expect((await xpub.getXpubBalance()).toNumber()).toEqual(dataset.balance);
           const addresses = await xpub.getXpubAddresses();
           expect(addresses.length).toEqual(dataset.addresses);
         },

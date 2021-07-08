@@ -9,14 +9,14 @@ export interface TX {
 }
 
 export interface Input {
-  value: number;
+  value: string;
   address: string;
   output_hash: string;
   output_index: number;
 }
 
 export interface Output {
-  value: number;
+  value: string;
   address: string;
   output_hash: string;
   output_index: number;

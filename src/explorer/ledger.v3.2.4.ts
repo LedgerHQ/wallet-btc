@@ -1,6 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 import axiosRetry from 'axios-retry';
 import * as https from 'https';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import JSONBigNumber from 'json-bignumber';
+import BigNumber from 'bignumber.js';
 import { Address, TX } from '../storage/types';
 import EventEmitter from '../utils/eventemitter';
 import { IExplorer } from './types';
@@ -70,6 +74,19 @@ class LedgerV3Dot2Dot4 extends EventEmitter implements IExplorer {
     const res: { txs: TX[] } = (
       await this.client.get(url, {
         params,
+        // some altcoin may have outputs with values > MAX_SAFE_INTEGER
+        transformResponse: (string) =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          JSONBigNumber.parse(string, (key: string, value: any) => {
+            if (BigNumber.isBigNumber(value)) {
+              if (key === 'value') {
+                return value.toString();
+              }
+
+              return value.toNumber();
+            }
+            return value;
+          }),
       })
     ).data;
 

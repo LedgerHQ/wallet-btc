@@ -10,7 +10,7 @@
         "output_hash": "191a5acf61e57222c0dcb121fb7f3709c6f42a8bfe54c775a83d30fe80d35bb1",
         "output_index": 1,
         "input_index": 0,
-        "value": 4740127,
+        "value": "4740127",
         "address": "ATNpzxxMzh9Akf9cc1cbQM2sFhgtxpFXb9",
         "script_signature": "160014b96282a2a97c90d13f6e6902025a7032a0abde51",
         "txinwitness": [
@@ -23,14 +23,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 794800,
+        "value": "794800",
         "address": "AHkRvWmBrF3JAy8WDiZ9bCh6zVow9uq9wU",
         "script_hex": "a91415aa5cc65b6837d862fcfb1fde309361f1a19da287",
         "output_hash": "17b4d80cd95c9b85dc405d1764b7293cf8fedaf2f7965793bfe00f3754422582"
       },
       {
         "output_index": 1,
-        "value": 3944823,
+        "value": "3944823",
         "address": "AMAZ3V3bdHCuT7jbub7mPa4ig2f6xRzsBu",
         "script_hex": "a9143b22aa9d456551f6e37123da81b4380a5fe06a8687",
         "output_hash": "17b4d80cd95c9b85dc405d1764b7293cf8fedaf2f7965793bfe00f3754422582"
@@ -56,7 +56,7 @@
         "output_hash": "17b4d80cd95c9b85dc405d1764b7293cf8fedaf2f7965793bfe00f3754422582",
         "output_index": 0,
         "input_index": 0,
-        "value": 794800,
+        "value": "794800",
         "address": "AHkRvWmBrF3JAy8WDiZ9bCh6zVow9uq9wU",
         "script_signature": "1600140d753a8fe15231222076e4f26dedcd93c78b1218",
         "txinwitness": [
@@ -69,14 +69,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 196999,
+        "value": "196999",
         "address": "GWPDWHLseVnbJshhaSYP64fEH1gZfiAFdo",
         "script_hex": "76a914898cab5797a2e5b0e3b27051b1dd60b6f756c8f488ac",
         "output_hash": "2dfec3a1e47999ecbe3e97567196d7e9ecac5fa54a5d92c8991edb9c73085a0e"
       },
       {
         "output_index": 1,
-        "value": 597297,
+        "value": "597297",
         "address": "AHPsbs4Vg8PUxjYm3vz48PEQKAs8xWVUYY",
         "script_hex": "a91411c70fff8849616a42eeea15d9e74ef96281a6e287",
         "output_hash": "2dfec3a1e47999ecbe3e97567196d7e9ecac5fa54a5d92c8991edb9c73085a0e"
@@ -102,7 +102,7 @@
         "output_hash": "2dfec3a1e47999ecbe3e97567196d7e9ecac5fa54a5d92c8991edb9c73085a0e",
         "output_index": 0,
         "input_index": 0,
-        "value": 196999,
+        "value": "196999",
         "address": "GWPDWHLseVnbJshhaSYP64fEH1gZfiAFdo",
         "script_signature": "483045022100c6b458a7def13e8989fe319d6f90251184b8a20595c782b11db8dabbabf7a24c02206253efae79e16e6158a08ef89846b140bdeca5cb312ad1f53c3aababaaa2150f412102662d2ed82409de94d1807d59635ffab997c6c489254a5bd7b488e2d282a6af1f",
         "txinwitness": [],
@@ -112,14 +112,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 94723,
+        "value": "94723",
         "address": "AZLg8yV5SyCXkesQVr77GSiu4kpvC13jVN",
         "script_hex": "a914c0ae41ffd8f48bd10bcfdc402a788301283f15dc87",
         "output_hash": "b1649cae8dd784609ae106faed90d473fe4463397ccd48574a7afa2473562680"
       },
       {
         "output_index": 1,
-        "value": 101598,
+        "value": "101598",
         "address": "GSGQoB9hDZnYy9jcmmbuNawoFmHiT4qi6f",
         "script_hex": "76a9145c62ae0e83f0eeda19e84679e5107dc9bdd1a2d588ac",
         "output_hash": "b1649cae8dd784609ae106faed90d473fe4463397ccd48574a7afa2473562680"
@@ -145,7 +145,7 @@
         "output_hash": "b1649cae8dd784609ae106faed90d473fe4463397ccd48574a7afa2473562680",
         "output_index": 0,
         "input_index": 0,
-        "value": 94723,
+        "value": "94723",
         "address": "AZLg8yV5SyCXkesQVr77GSiu4kpvC13jVN",
         "script_signature": "160014c87f82afc520e4f43d0623e98d18c45d51aee507",
         "txinwitness": [
@@ -158,7 +158,7 @@
         "output_hash": "2dfec3a1e47999ecbe3e97567196d7e9ecac5fa54a5d92c8991edb9c73085a0e",
         "output_index": 1,
         "input_index": 1,
-        "value": 597297,
+        "value": "597297",
         "address": "AHPsbs4Vg8PUxjYm3vz48PEQKAs8xWVUYY",
         "script_signature": "160014276425b81d43c96d14f832ede87b412705452f24",
         "txinwitness": [
@@ -171,14 +171,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 362139,
+        "value": "362139",
         "address": "GJfTsmr7Pf8yY6FKYus1KNPGdg6EAN2aCq",
         "script_hex": "76a91408fdcfabaa3819c73a3cfb748dde7650b86ad21b88ac",
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583"
       },
       {
         "output_index": 1,
-        "value": 329107,
+        "value": "329107",
         "address": "AdbrkNEYuN4cUgtKcCRLUfzB1XeZ2nm975",
         "script_hex": "a914ef6ddb79fd62d314dfdec26ed7b39a4494a98c4587",
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583"
@@ -204,7 +204,7 @@
         "output_hash": "b1649cae8dd784609ae106faed90d473fe4463397ccd48574a7afa2473562680",
         "output_index": 1,
         "input_index": 0,
-        "value": 101598,
+        "value": "101598",
         "address": "GSGQoB9hDZnYy9jcmmbuNawoFmHiT4qi6f",
         "script_signature": "483045022100ee546460f693d08b27d25c5dc8b9f2fce4b2cbc8f4239340bdde505c7ade102602205327461501a83c2a993fd9d555dd4fc19b9fd20a823ab1796920ba4223fca5b5412102ad1115ee3ac9e978f9a7df41a353656a874b833c860ff5c2a757c41d9fc188d0",
         "txinwitness": [],
@@ -214,7 +214,7 @@
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583",
         "output_index": 0,
         "input_index": 1,
-        "value": 362139,
+        "value": "362139",
         "address": "GJfTsmr7Pf8yY6FKYus1KNPGdg6EAN2aCq",
         "script_signature": "473044022000f7deab270023b59e6c483edf5672898cd7fa14174f8c1c686212e53946dd97022049ff39d44cd16a3639db4510f8826a0a5fadb12e1391f292fc7f513abebe99b74121037739286f8d124fa570e831d186e01fc3d3793335fdcbb23e4f05a36e3f77f8d8",
         "txinwitness": [],
@@ -224,7 +224,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 462717,
+        "value": "462717",
         "address": "AbAr7Ant3nAs8fhyCyt8Hz4e9QXUqSgSue",
         "script_hex": "a914d4c2abde475f77d0482aa9c04fc10a7f55dd5ffe87",
         "output_hash": "42af711ec7327e0787cba0be130f6da5b3e9cfbe5a6b45bb50e163a2818e5db2"
@@ -250,7 +250,7 @@
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583",
         "output_index": 1,
         "input_index": 0,
-        "value": 329107,
+        "value": "329107",
         "address": "AdbrkNEYuN4cUgtKcCRLUfzB1XeZ2nm975",
         "script_signature": "16001487a72c3674b559887c030a6d1a4562cc16c691fa",
         "txinwitness": [
@@ -263,7 +263,7 @@
         "output_hash": "42af711ec7327e0787cba0be130f6da5b3e9cfbe5a6b45bb50e163a2818e5db2",
         "output_index": 0,
         "input_index": 1,
-        "value": 462717,
+        "value": "462717",
         "address": "AbAr7Ant3nAs8fhyCyt8Hz4e9QXUqSgSue",
         "script_signature": "160014787cb1fb429c5bac4930ab18845e699b63e3bd2d",
         "txinwitness": [
@@ -276,14 +276,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 379737,
+        "value": "379737",
         "address": "GL8yRFGFh9VhsDnNq3sxWCkiX4ZV6VJJmB",
         "script_hex": "76a9141929d433a57fe67db965a003df7dbdcfa2ff5c5c88ac",
         "output_hash": "d425fe6a500208863f89297c461dcd8b34a110f3314dd766d1eb41038984903b"
       },
       {
         "output_index": 1,
-        "value": 411313,
+        "value": "411313",
         "address": "AWT1RCupcLQ2RWtK1GY8U2dAK4dwM95EkF",
         "script_hex": "a914a0f87861b0fd8c1e397fae816856f242a07fce5e87",
         "output_hash": "d425fe6a500208863f89297c461dcd8b34a110f3314dd766d1eb41038984903b"
@@ -309,7 +309,7 @@
         "output_hash": "c8a769695442618c5d78deba1654e6cb9f3e84ab062cce01c687c3aa18fbd2c2",
         "output_index": 0,
         "input_index": 0,
-        "value": 58848,
+        "value": "58848",
         "address": "GgMSnY4b42c8PU3DAhouLugzKUtm7mt3ee",
         "script_signature": "483045022100e8af55649a98063e3146394ec090e5559665a2f540eff2fced8762f5148468ca022045f18399bae6c2f5ca11dbfa002545f2bd12c7c630bd4eb284890438232e554d4121036cfb9f551c50916dfa2554174fb318b36ee36679c2c4b7035ae1412a7d407c10",
         "txinwitness": [],
@@ -319,7 +319,7 @@
         "output_hash": "93c3f820f07a70bc18762a898620aade599f5949ad7c7351da995de12499b5ca",
         "output_index": 1,
         "input_index": 1,
-        "value": 237603,
+        "value": "237603",
         "address": "GKqdhux2Eo49T7KxEsYnVekTFUnk3pRPdG",
         "script_signature": "473044022074a1eea3728045e685429ebb647343c38f4effd892606516edf975c3a93eb615022054ba8b9e29326b00a0531a665144717b3f8586749546a0aaf845248fbe0c2234412102cf1131eb71d1a3de542cf1a7e21275dc1b97d9bdc8f557b21cb1de66c3c587f5",
         "txinwitness": [],
@@ -329,7 +329,7 @@
         "output_hash": "a9cc20e9e3f6b253e49f896b4b25948ad36bbf39beab762c5388274a5ee7c3f7",
         "output_index": 0,
         "input_index": 2,
-        "value": 238124,
+        "value": "238124",
         "address": "GTkCnWpPMkzFRitqVy8qAkhfVsapLfTwyW",
         "script_signature": "4830450221009e2137acc949b1ed837d5e577cbcc4c834ac437eb851af53113d99624e4d42fd022006696782838af490bff0a95565223868bb49d13159e4b3c872707a60a69c3545412102910a57bffa86d324773068bb1cc6dc02c59b108247c43064d05d3449d8f02649",
         "txinwitness": [],
@@ -339,7 +339,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 533111,
+        "value": "533111",
         "address": "AVX7iUBjBU6xkg4xQiVptgetRXYdLsbKoF",
         "script_hex": "a91496c743eb8472ad9ef7bf4380f8233e37defe7f2a87",
         "output_hash": "6029af33060b0913ed5029d20a930b35cf160d7bb895e45124ddbe6adbcb31f3"
@@ -365,7 +365,7 @@
         "output_hash": "6029af33060b0913ed5029d20a930b35cf160d7bb895e45124ddbe6adbcb31f3",
         "output_index": 0,
         "input_index": 0,
-        "value": 533111,
+        "value": "533111",
         "address": "AVX7iUBjBU6xkg4xQiVptgetRXYdLsbKoF",
         "script_signature": "1600148952b6443b11cbab00a1e71e802cec60f28bf6e3",
         "txinwitness": [
@@ -378,7 +378,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 532709,
+        "value": "532709",
         "address": "GXvxskx6sdtEoT3fsPLUMjFQGs6KwiCRLW",
         "script_hex": "76a9149a85e4c226265206fca565163900a39df8b436d988ac",
         "output_hash": "dbc63f988589fa95b239f365aed630a9dbad4538ffb9e08e695a73f2b3d90ca7"
@@ -404,7 +404,7 @@
         "output_hash": "93c3f820f07a70bc18762a898620aade599f5949ad7c7351da995de12499b5ca",
         "output_index": 0,
         "input_index": 0,
-        "value": 172630,
+        "value": "172630",
         "address": "GNyapwnAfaTdwU4ueqdNsgGQK8k1PVd6iq",
         "script_signature": "47304402202e05a35d90a657d826e502185a0f102a591b87daee00ea47af0239f4871e7a23022012d62a9cdf447da164036809b1ce7eb0587cb0e66f9ed8fc9196436ce8408ef741210262246732e65bf5fc06b311a64abdc8f90b4a890ad6983da5264e0e119adc1b7b",
         "txinwitness": [],
@@ -414,7 +414,7 @@
         "output_hash": "a9cc20e9e3f6b253e49f896b4b25948ad36bbf39beab762c5388274a5ee7c3f7",
         "output_index": 1,
         "input_index": 1,
-        "value": 81409,
+        "value": "81409",
         "address": "GYZ4LS1NixfXZuwvGbPjeMpZ6izTKTtqJm",
         "script_signature": "47304402204364d8c1f02814c329732aef9001cdf21d28ece125fe927710cf97fa60203e93022035303f7d38eb33df4bd56cbbc8fa4acbd4cde4875a62f474d95bd4da38fbc6a7412102cf6457cbcea999b6d3b4adc24471309fe89e0d2e7af7771c3facfe1666c0228f",
         "txinwitness": [],
@@ -424,14 +424,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 199587,
+        "value": "199587",
         "address": "AQydwDTvzTCtFngRwuwWWPAfdybc54cjM7",
         "script_hex": "a91464f2ad7657f517133331c4abdac75fb413366b4287",
         "output_hash": "8edb118139adc8ef2839006cb0dca97f2e7e491fefec9a6ff54cff8948875b9e"
       },
       {
         "output_index": 1,
-        "value": 42470,
+        "value": "42470",
         "address": "GZi99srQP13tTTPYhpujnaRKTf939UoQzZ",
         "script_hex": "76a914ae0951357769fd85d190f84cbceb110e2579f59388ac",
         "output_hash": "8edb118139adc8ef2839006cb0dca97f2e7e491fefec9a6ff54cff8948875b9e"
@@ -457,7 +457,7 @@
         "output_hash": "8edb118139adc8ef2839006cb0dca97f2e7e491fefec9a6ff54cff8948875b9e",
         "output_index": 0,
         "input_index": 0,
-        "value": 199587,
+        "value": "199587",
         "address": "AQydwDTvzTCtFngRwuwWWPAfdybc54cjM7",
         "script_signature": "160014cdfc46d5d35beb4b5db1c6bdafea6b9fffd44794",
         "txinwitness": [
@@ -470,7 +470,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 199185,
+        "value": "199185",
         "address": "GQtaJCimc3sekGvVX8LdCpjJJPYjgiRtEd",
         "script_hex": "76a9144d495563ef5dc643e9f3ce59b7882993532aad0788ac",
         "output_hash": "34c8abba78dd876cb6e8f17a59d9ef655f2c3140e65cb1266860104151300cfd"
@@ -496,7 +496,7 @@
         "output_hash": "493c475f5912f088d4855d960daca4170b6b31ea0904e7bd20af67c4dd479754",
         "output_index": 0,
         "input_index": 0,
-        "value": 368352,
+        "value": "368352",
         "address": "GToXPjUccHETVZKVwcqyHqN7dkeY4iy56p",
         "script_signature": "4730440220364046d839e1c0a4b16d698b59024a2085803fefc83a10a3fe00f1e434103fe3022031f656688bd678adfa71463e4a4d635196dc0adc921e3a2a82ab6f5a04694bad4121031f7217710822f24128ed4818a53e94eaef30af4460de34d3cb91ab203cc48d0a",
         "txinwitness": [],
@@ -506,7 +506,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 367776,
+        "value": "367776",
         "address": "AX4rbQohxz3M4G76es7sjSrUvnJhqrxNYN",
         "script_hex": "a914a7c01434053a098fca4ca47c09d67fc6565f3f9d87",
         "output_hash": "a7993ee99a82c57307decc61a7c453abbbb4f3f8f749a12e483a1da9b7432d75"
@@ -532,7 +532,7 @@
         "output_hash": "a7993ee99a82c57307decc61a7c453abbbb4f3f8f749a12e483a1da9b7432d75",
         "output_index": 0,
         "input_index": 0,
-        "value": 367776,
+        "value": "367776",
         "address": "AX4rbQohxz3M4G76es7sjSrUvnJhqrxNYN",
         "script_signature": "160014fdc7dcb2590e5ecdc31017cca15fc6da5fb1c495",
         "txinwitness": [
@@ -545,14 +545,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 196701,
+        "value": "196701",
         "address": "GVtWbo2Mz9bo6tG8ABbErtoomu81Rz9stU",
         "script_hex": "76a914841ee06a8c4fb5cda38dede5c5bc38953b6f1cd288ac",
         "output_hash": "64f2ca6fdfd32a36e6e1c6cd996f03593c3d287db1bc4b107d7155e04d3ad943"
       },
       {
         "output_index": 1,
-        "value": 170571,
+        "value": "170571",
         "address": "AMn22pjPyxwCjDokkcDVJT8Z9W9ZaeAkHR",
         "script_hex": "a91441d7c10b8d080819bb3c3da1a118321ee75f216087",
         "output_hash": "64f2ca6fdfd32a36e6e1c6cd996f03593c3d287db1bc4b107d7155e04d3ad943"
@@ -578,7 +578,7 @@
         "output_hash": "dcc6f0f8873919b74a3b990218a848c4bdc4a8c18f538ae131eb3d9a5485681c",
         "output_index": 1,
         "input_index": 0,
-        "value": 203032,
+        "value": "203032",
         "address": "GVQ3Mihq23HUpto2Y2RGdfYJUBuXLDCM8d",
         "script_signature": "483045022100bedb00574367a48417b34b8674da6dc404555427b9ca9d3440e0f2310b2df82b0220113131a442ddf95ab3db2db3b3d8eca5ff0aebd58be713eaa2065fd7372c8350412103741b64d48492c9480f9d7e0ac10dd0d73d330264cd906febf029a642e467352a",
         "txinwitness": [],
@@ -588,7 +588,7 @@
         "output_hash": "249b136ae57b3927b90bd5cad41d858011edc1cb531367b2a366cb5754d4afee",
         "output_index": 0,
         "input_index": 1,
-        "value": 394719,
+        "value": "394719",
         "address": "GRh6BV4qEsW5Tf7rRWCraUr7VzShVR8XrP",
         "script_signature": "47304402204bd4f42f0d9ff90385a266b59f7761200847a6ff2ebca2be8c7d4e4d6e3667e80220225cf6edcd586880f3ad47b2e6eeda1bf9b8bf15d1eef8e4f84450b7c6c844e84121034067d237b12628c7441629f45db1fc917f661cff50f9535deed3bf8067958749",
         "txinwitness": [],
@@ -598,14 +598,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 299965,
+        "value": "299965",
         "address": "AeMibphvT5YWxjZs8HzfNzgZkZqhGiHbts",
         "script_hex": "a914f7b95bceb1b2eaad254733090dfc61d09edc4dac87",
         "output_hash": "828bd3e058f8bafdebe16dc6f5c343db5e876dbee441a79039ade821854d28f8"
       },
       {
         "output_index": 1,
-        "value": 296664,
+        "value": "296664",
         "address": "GWZosqZMdUPE26d1qwvAprQt5jHBJh4UWE",
         "script_hex": "76a9148b8d855b878940da5c8a699802968c657bb94fd188ac",
         "output_hash": "828bd3e058f8bafdebe16dc6f5c343db5e876dbee441a79039ade821854d28f8"
@@ -631,7 +631,7 @@
         "output_hash": "64f2ca6fdfd32a36e6e1c6cd996f03593c3d287db1bc4b107d7155e04d3ad943",
         "output_index": 1,
         "input_index": 0,
-        "value": 170571,
+        "value": "170571",
         "address": "AMn22pjPyxwCjDokkcDVJT8Z9W9ZaeAkHR",
         "script_signature": "1600145db2f16802ac94527778d7a004e1a3f3ff20bb7d",
         "txinwitness": [
@@ -644,7 +644,7 @@
         "output_hash": "828bd3e058f8bafdebe16dc6f5c343db5e876dbee441a79039ade821854d28f8",
         "output_index": 0,
         "input_index": 1,
-        "value": 299965,
+        "value": "299965",
         "address": "AeMibphvT5YWxjZs8HzfNzgZkZqhGiHbts",
         "script_signature": "160014bc2750b176659846b6ee667acea725402070fde4",
         "txinwitness": [
@@ -657,14 +657,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 224490,
+        "value": "224490",
         "address": "Gf8bohuBokyEgg5qcfxhsgcwNYonkpBMUc",
         "script_hex": "76a914e9822d683c9415d3201b278d3f8d16e466f2826788ac",
         "output_hash": "69a2b48c345c5502a0133408e879540d12748637ad2c7a1dc1e60267609e2522"
       },
       {
         "output_index": 1,
-        "value": 245272,
+        "value": "245272",
         "address": "AQutaSA3tE6D1jUjfcnkNeVrukcAgC2rdU",
         "script_hex": "a914643d3c6bb9226aef9a1688fc655c0d90e8c0c7c387",
         "output_hash": "69a2b48c345c5502a0133408e879540d12748637ad2c7a1dc1e60267609e2522"
@@ -690,7 +690,7 @@
         "output_hash": "c900fe8929fec69de5b5c4ff216a85cc33a23508492122cfe589ec28747e6730",
         "output_index": 1,
         "input_index": 0,
-        "value": 199185,
+        "value": "199185",
         "address": "ASev9tjUTgYsmg91mAbNQ54Ub7Yk2FoF95",
         "script_signature": "1600149ebd2aad1f530e0d902454b43d34b3ca739478d9",
         "txinwitness": [
@@ -703,7 +703,7 @@
         "output_hash": "6e8c9083dead72e3f2532adef0eb957612065b01f5f0ffb58a15b957dcdf87bb",
         "output_index": 0,
         "input_index": 1,
-        "value": 340651,
+        "value": "340651",
         "address": "AXLHGQArKAev75eKZaNMGbsMaCH4Yg1Tvy",
         "script_signature": "160014f33de650f5fca69c32cdd0f0fafda028df29817f",
         "txinwitness": [
@@ -716,14 +716,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 264135,
+        "value": "264135",
         "address": "GJPAviS2Vx67N1JHJTcdgnuZSaPCmBXkbW",
         "script_hex": "76a91405e901dc5eba02a7f3a344a0c8088d7f0246949888ac",
         "output_hash": "1f2f3046c1fa39f8ea90b9da36e403931b13ef0056f79d9f3e9f56591c9480d8"
       },
       {
         "output_index": 1,
-        "value": 274927,
+        "value": "274927",
         "address": "ASFLc4ZRzNAf7ebZLbeLFMAXekqerwQ3Um",
         "script_hex": "a91472e2fe016ab90785f1a035367df30c57a0884cce87",
         "output_hash": "1f2f3046c1fa39f8ea90b9da36e403931b13ef0056f79d9f3e9f56591c9480d8"
@@ -749,7 +749,7 @@
         "output_hash": "ecc0b416fba258d69cd9362e1806a35f611674d055c59c74bff18f2e5a4401ea",
         "output_index": 0,
         "input_index": 0,
-        "value": 296088,
+        "value": "296088",
         "address": "GWfJjkrKntyFtHf4SVya1xYHX3kLFRto5D",
         "script_signature": "483045022100da050cd01e3f277cc66e3b3d21b87ae06f830434373e3491f45961f6f198b31702204876402b9aa2d81a82cc39c4fac74991ae2dae74b99742756c3fc89d5eb4853b412102c98b1ebcab9fa21cfa638504f1d9550b865292b1174946c25904d6b7080042a8",
         "txinwitness": [],
@@ -759,7 +759,7 @@
         "output_hash": "c900fe8929fec69de5b5c4ff216a85cc33a23508492122cfe589ec28747e6730",
         "output_index": 0,
         "input_index": 1,
-        "value": 45583,
+        "value": "45583",
         "address": "GKxSzmnpPyrBnbcdmX8W6jicghNMWzs2TA",
         "script_signature": "47304402207219b14dd01e0bc1600f16b00a2588c9cf166ee2e6ddd8bd6d6e9b263cf83228022036378a467c59922bd4e544bda28aa8a34a0d6a4f2d0a339a852ca64869c316224121027f46ad64241fef81b5f1bbc101a91f3e8625947554e1d1227b681bb962984069",
         "txinwitness": [],
@@ -769,7 +769,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 340651,
+        "value": "340651",
         "address": "AXLHGQArKAev75eKZaNMGbsMaCH4Yg1Tvy",
         "script_hex": "a914aaaae9e70c874b7f428bd67348ad22dc3f03601587",
         "output_hash": "6e8c9083dead72e3f2532adef0eb957612065b01f5f0ffb58a15b957dcdf87bb"
@@ -795,7 +795,7 @@
         "output_hash": "cc43cb0a24aad185cd79241a05798ebf1c03b3b3f477f484d3bb5600bec0ad57",
         "output_index": 0,
         "input_index": 0,
-        "value": 383805,
+        "value": "383805",
         "address": "ALDT9rrHtJt6LmQJjkSBBvfBZGiTjxsphB",
         "script_signature": "1600144398dbd7bd0ea5530a40e73161a7f0a43332eb37",
         "txinwitness": [
@@ -808,7 +808,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 383403,
+        "value": "383403",
         "address": "GSG3wHUTAAXHQvnVJzvZ24awGMUmTi8eAN",
         "script_hex": "76a9145c514446726c9209870d2713faad2982c81c9ac288ac",
         "output_hash": "5fd8906d0788f4af1713343f42ccc301cff66d5223cefd1eaeb62bf032196931"
@@ -834,7 +834,7 @@
         "output_hash": "1f2f3046c1fa39f8ea90b9da36e403931b13ef0056f79d9f3e9f56591c9480d8",
         "output_index": 0,
         "input_index": 0,
-        "value": 264135,
+        "value": "264135",
         "address": "GJPAviS2Vx67N1JHJTcdgnuZSaPCmBXkbW",
         "script_signature": "47304402206179576cb11d8082b415459f05c915e3f39450a3f57234019cfa355d5ad9b0f00220350657b48a719f2a7c2ed0d89ad074de242dbb50fd64d6ca444d91c7f2ff116e412102108d8f62f470b00c2b0f681eede38d188fc240bb8a225cddcdb83550b713cb29",
         "txinwitness": [],
@@ -844,7 +844,7 @@
         "output_hash": "2d3bab589acb139b25ed61f56163ab61d1f9e9bfc560aae9b336a7900a9b65df",
         "output_index": 0,
         "input_index": 1,
-        "value": 223914,
+        "value": "223914",
         "address": "Ge7NnkLz6Toi1nGH6FjZBDZv35ZmcJw3cN",
         "script_signature": "483045022100e506c72c35ba22e1a7391eeefba4e9990d8001bed517045b3b8c1617b2c433ce022032a7e3af62d02f1de95cd4826146c8a506305888f77ba705550ded7164b5b6b7412103f9dfcae0894328e621d68f87dbbf882b35d0cb87719de2a98a6bf91a3a03f33d",
         "txinwitness": [],
@@ -854,14 +854,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 383805,
+        "value": "383805",
         "address": "ALDT9rrHtJt6LmQJjkSBBvfBZGiTjxsphB",
         "script_hex": "a91430b6df2d0ce72038411edd5197c7fd71c8ab6fb787",
         "output_hash": "cc43cb0a24aad185cd79241a05798ebf1c03b3b3f477f484d3bb5600bec0ad57"
       },
       {
         "output_index": 1,
-        "value": 92262,
+        "value": "92262",
         "address": "GJJeg1qM9HcBrQGdgS1ahWWgXNsrSQR6aC",
         "script_hex": "76a914050e16d043cda9a478833afd8459a5b68d385a8988ac",
         "output_hash": "cc43cb0a24aad185cd79241a05798ebf1c03b3b3f477f484d3bb5600bec0ad57"
@@ -887,7 +887,7 @@
         "output_hash": "921c9a3731170b100f01b9fd1e2172b17c271aaef1692117be07670f576c95d5",
         "output_index": 0,
         "input_index": 0,
-        "value": 152184,
+        "value": "152184",
         "address": "GXtZZJpzotRsEJ7kecVQbGdJH2GhtoLDMo",
         "script_signature": "483045022100b0732bd047ff39d96da84784072687835aac0dc51ff9e0ad7c8e2f23dc80bf310220337ed709961545e37b948a4021d5fb23845798c40c501903ba03b292221a7458412102b5d0bd2022d5922c130007bdfc4a5c6494a71bbfda96c035d1f25cfcfb8a961f",
         "txinwitness": [],
@@ -897,14 +897,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 73087,
+        "value": "73087",
         "address": "AVrK8hHRH79s4gT8ojyJfZrNJkRbief8TH",
         "script_hex": "a9149a68b3186b393814d6f067c415b1183f90f92c0687",
         "output_hash": "84c13aa730903db63f6d4d657a1746c4e312a4a7f381ae2c14129ef503bffa61"
       },
       {
         "output_index": 1,
-        "value": 78419,
+        "value": "78419",
         "address": "GLaDDDFq5qfoiwcGaUUEfudzpFDhhGiBJU",
         "script_hex": "76a9141defbdc9f0b0cd5f2e231252e43ac2854195b2fa88ac",
         "output_hash": "84c13aa730903db63f6d4d657a1746c4e312a4a7f381ae2c14129ef503bffa61"
@@ -930,7 +930,7 @@
         "output_hash": "84c13aa730903db63f6d4d657a1746c4e312a4a7f381ae2c14129ef503bffa61",
         "output_index": 0,
         "input_index": 0,
-        "value": 73087,
+        "value": "73087",
         "address": "AVrK8hHRH79s4gT8ojyJfZrNJkRbief8TH",
         "script_signature": "160014fd062ff5a698540a49aeee3b7e21e8ce09d95af1",
         "txinwitness": [
@@ -943,7 +943,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 72685,
+        "value": "72685",
         "address": "GLGggJqfgqMJFBh8NSbFFiUYkXWjFrACPz",
         "script_hex": "76a9141a9f2eb7ff9b10ace0733b85ac388cca4f3c0d7288ac",
         "output_hash": "756b46951aba061f32551614a38e7f6fc9411a3cac2ba41449f889c9e5d1d4a4"
@@ -969,7 +969,7 @@
         "output_hash": "534a317fb888fc060bbb229cb7dae864b80617c1e322e300569efa98de6bf413",
         "output_index": 0,
         "input_index": 0,
-        "value": 186679,
+        "value": "186679",
         "address": "AJ7jPiutzqXs7PsXQJBcuaxDMn6a5r96mJ",
         "script_signature": "1600148b70afe39b7e7d4b8ed5d1a8491d88237786521d",
         "txinwitness": [
@@ -982,14 +982,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 97479,
+        "value": "97479",
         "address": "GTEa1cm128Sd51Si5wcp5GXmpsygYP4hr9",
         "script_hex": "76a9146701aa684dd994c2bad6cf57aef1fd45bb34445b88ac",
         "output_hash": "48059a872cb87b6318b79c706905318b776862c5bc1dd36c30a29c3d8affcd2e"
       },
       {
         "output_index": 1,
-        "value": 88696,
+        "value": "88696",
         "address": "ANMPTMyZzUHzfKEdr7qVkTxzxgXYMseamA",
         "script_hex": "a91448275d29230c6aed8aa26b5027b7f566bd395dc587",
         "output_hash": "48059a872cb87b6318b79c706905318b776862c5bc1dd36c30a29c3d8affcd2e"
@@ -1015,7 +1015,7 @@
         "output_hash": "d4062a38f4c80ef94864e4918051752d27a4adc6fba21151c6cf8e00656f99c3",
         "output_index": 1,
         "input_index": 0,
-        "value": 131020,
+        "value": "131020",
         "address": "GSqG29cdsy7hUDHSDejVFzLCKT9b9GJYi7",
         "script_signature": "47304402204e980fa2cd20a9d4afc1ed158a78516a40eb3d223d5afd75f042b967f8dd836f02203b080fbae3c226965016f4a3d27e76e75102c01335253857741a131febecfebb4121028af4c6c0b9d7f04153acbe007731dde62c4103f34dd6b5d435f405d1484bea35",
         "txinwitness": [],
@@ -1025,7 +1025,7 @@
         "output_hash": "84c13aa730903db63f6d4d657a1746c4e312a4a7f381ae2c14129ef503bffa61",
         "output_index": 1,
         "input_index": 1,
-        "value": 78419,
+        "value": "78419",
         "address": "GLaDDDFq5qfoiwcGaUUEfudzpFDhhGiBJU",
         "script_signature": "483045022100ff5e5bb79415222e9525042df5bc994f7e4742043d6bd624dd407337bb09613d022046ec09d1832c6f258f4b0169a9a1df26f5738ca9a0c42ec972bf893f1bc347fa412102242afd1ecd06ff58123a7f92615bea0221a51ee0b35019930953c215406c1279",
         "txinwitness": [],
@@ -1035,14 +1035,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 186679,
+        "value": "186679",
         "address": "AJ7jPiutzqXs7PsXQJBcuaxDMn6a5r96mJ",
         "script_hex": "a91419b1ae1aa12937cdf5139ddde4d081b64619b5ac87",
         "output_hash": "534a317fb888fc060bbb229cb7dae864b80617c1e322e300569efa98de6bf413"
       },
       {
         "output_index": 1,
-        "value": 10778,
+        "value": "10778",
         "address": "GSoQkKEyeorWSi2UkbBJNy7QLKuNwQHRoz",
         "script_hex": "76a914623f889710ccdafd975e624921b4c6b1281b92ad88ac",
         "output_hash": "534a317fb888fc060bbb229cb7dae864b80617c1e322e300569efa98de6bf413"
@@ -1068,7 +1068,7 @@
         "output_hash": "756b46951aba061f32551614a38e7f6fc9411a3cac2ba41449f889c9e5d1d4a4",
         "output_index": 0,
         "input_index": 0,
-        "value": 72685,
+        "value": "72685",
         "address": "GLGggJqfgqMJFBh8NSbFFiUYkXWjFrACPz",
         "script_signature": "483045022100e25338400280d33ca665957b5c78b607cffa246098898cad5c3fd02910ee2a01022033abad39d17d4cbd2fad4f91d7dcdfff1382e7b50defa70791ad2a6b8604cb3341210286447245e22327341fe4b02bdd2908206c3d3b0758e3d5f9cb175366e3e581c5",
         "txinwitness": [],
@@ -1078,14 +1078,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 39865,
+        "value": "39865",
         "address": "AMdN6arZUvdCux5WAB7t8F8hZkc5LtfiRd",
         "script_hex": "a9144034c27c789ab5e7909301219b0768838e4b09a787",
         "output_hash": "4557c7c451ca854fa16b8cf1df8935a7e9e7a6878c35567025b874aed167afcc"
       },
       {
         "output_index": 1,
-        "value": 32142,
+        "value": "32142",
         "address": "Gd9Cv5URGJkRS58mL1kfSadrpRPLERVbD1",
         "script_hex": "76a914d3af3bea11d4ab46f14ffc5c7e06a86ed2cf584688ac",
         "output_hash": "4557c7c451ca854fa16b8cf1df8935a7e9e7a6878c35567025b874aed167afcc"
@@ -1111,7 +1111,7 @@
         "output_hash": "48059a872cb87b6318b79c706905318b776862c5bc1dd36c30a29c3d8affcd2e",
         "output_index": 1,
         "input_index": 0,
-        "value": 88696,
+        "value": "88696",
         "address": "ANMPTMyZzUHzfKEdr7qVkTxzxgXYMseamA",
         "script_signature": "160014ca96ffdd797d4ec8fa9a4416d8f5490f9fd75004",
         "txinwitness": [
@@ -1124,7 +1124,7 @@
         "output_hash": "4557c7c451ca854fa16b8cf1df8935a7e9e7a6878c35567025b874aed167afcc",
         "output_index": 0,
         "input_index": 1,
-        "value": 39865,
+        "value": "39865",
         "address": "AMdN6arZUvdCux5WAB7t8F8hZkc5LtfiRd",
         "script_signature": "1600146d4b0197570621abbd74620d58820ad5c4cdf3e8",
         "txinwitness": [
@@ -1137,7 +1137,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 127889,
+        "value": "127889",
         "address": "GSyYM8jsKEW9tr7ikNT3TscHGJNDzgrFSv",
         "script_hex": "76a914642a09a08b87f6906d991e5632fe4404b71cc3d188ac",
         "output_hash": "c0f7d364f75b3db56bba5e55f398ed8d82053fe693175400db7ba028d5afd39e"
@@ -1163,7 +1163,7 @@
         "output_hash": "534a317fb888fc060bbb229cb7dae864b80617c1e322e300569efa98de6bf413",
         "output_index": 1,
         "input_index": 0,
-        "value": 10778,
+        "value": "10778",
         "address": "GSoQkKEyeorWSi2UkbBJNy7QLKuNwQHRoz",
         "script_signature": "47304402207ddf17f324376f4cffb18b44dd050d2606fffd71e6f718558ac75060cbfac14302207f5fae8f688c070cba45c0e014d82e0a477b5be24850bc7833558329fafab2054121020306329a1bbce54872dd6cb20359bbdafb89f59c0e616d3b6150453cf35d863e",
         "txinwitness": [],
@@ -1173,7 +1173,7 @@
         "output_hash": "72bc0f1c0b416baeb6c799fc6dbc6f9c2e8f915f39a3bed1c069d6862aba12b9",
         "output_index": 0,
         "input_index": 1,
-        "value": 278863,
+        "value": "278863",
         "address": "GKfEYUej5pSEx3p6FgPKFBB5BPHZkBjRsd",
         "script_signature": "483045022100f586cd8d9bc37202276e01dc0ac0217f8ce53e57098750a81a5efa8820f247af02201902f97c3e170d5e5b9d1a71a5fe6bfc81cffab9076d9b42ab26f0564653334941210345f9361d4db9d9f95fdb188774ce497311f21d8eb2340280e2bc3e36c31c58e1",
         "txinwitness": [],
@@ -1183,7 +1183,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 288621,
+        "value": "288621",
         "address": "AWNWCgFFMk8gC1CGXpsi19JtgkdNJVopaJ",
         "script_hex": "a914a01e6b0840f6bcca907579bc3af8401e25c0303487",
         "output_hash": "f77d345762f5e2d1d5cff8c738a7010428b3acbf41f4f9ec84475818c00a0839"
@@ -1209,7 +1209,7 @@
         "output_hash": "f77d345762f5e2d1d5cff8c738a7010428b3acbf41f4f9ec84475818c00a0839",
         "output_index": 0,
         "input_index": 0,
-        "value": 288621,
+        "value": "288621",
         "address": "AWNWCgFFMk8gC1CGXpsi19JtgkdNJVopaJ",
         "script_signature": "160014f010a82f84b696456a80a4efbff42b6b8d168bee",
         "txinwitness": [
@@ -1222,7 +1222,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 288219,
+        "value": "288219",
         "address": "GanUwcUyRXLrg5kNUEeuifzKyN1CC54cap",
         "script_hex": "76a914b9d3a0201a776dbc77d263edccd902bc55a37c4188ac",
         "output_hash": "8cba7293eb0fec7a82b07a93543da3dd59ef8d4388f96799d6dc507a48c20b92"
@@ -1248,7 +1248,7 @@
         "output_hash": "5048cbb1df9e7ef383ccd66b4804ad9b86f0487d5e3fd66a5863410c9867bd99",
         "output_index": 1,
         "input_index": 0,
-        "value": 240145,
+        "value": "240145",
         "address": "GPobLFV7o3HVZGatBUo7GBCqeZKikyrUqq",
         "script_signature": "483045022100cb402e40ca119c6f4e389453f802d8bf9be96b5b8b5d80c099b5a9dc43bcaf880220070e43f5883e62a8673f5496956d1eafa63b46391cb98c1091846c2e5f0880b04121031e6a0dd1032f7419c0d40df34a23fcdfb35c4220a459c850aeb8c7f4d25a64ee",
         "txinwitness": [],
@@ -1258,14 +1258,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 126035,
+        "value": "126035",
         "address": "ALoBg2y31FrpEaFb3ZJ1jeRA5tmaippq9P",
         "script_hex": "a914371817b7029ef1f21ef8154d1c706de8641cd81787",
         "output_hash": "6b7011c365082d71867d126ecb65fbb4697f9b437b00a4914a1c6e601df7978c"
       },
       {
         "output_index": 1,
-        "value": 113432,
+        "value": "113432",
         "address": "GWvJPmzgSWuCTUSSGRfEkXD4So4diTPeUP",
         "script_hex": "76a9148f6da4ef1f713d3ee71ff74bee5a2a1ac55ad6be88ac",
         "output_hash": "6b7011c365082d71867d126ecb65fbb4697f9b437b00a4914a1c6e601df7978c"
@@ -1291,7 +1291,7 @@
         "output_hash": "6b7011c365082d71867d126ecb65fbb4697f9b437b00a4914a1c6e601df7978c",
         "output_index": 0,
         "input_index": 0,
-        "value": 126035,
+        "value": "126035",
         "address": "ALoBg2y31FrpEaFb3ZJ1jeRA5tmaippq9P",
         "script_signature": "160014765160d8a167f726c066b950969cd571eeabfaa8",
         "txinwitness": [
@@ -1304,14 +1304,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 51543,
+        "value": "51543",
         "address": "GZGgPeC1ARbKz5Mai5DdCHtTZKBjmg6sh5",
         "script_hex": "76a914a93893ebb7afe5faf3526364c9e50735567ff6c488ac",
         "output_hash": "53f02b9c374f4e953f16bc7472d99caefc09d6d8f90ad567ffacf7704f862a57"
       },
       {
         "output_index": 1,
-        "value": 73988,
+        "value": "73988",
         "address": "ANhiA54a5J8khGX2s1TQJq3m4wDF45Mzi1",
         "script_hex": "a9144bff4b700d1b35449f02d035d94dedd0a67f964587",
         "output_hash": "53f02b9c374f4e953f16bc7472d99caefc09d6d8f90ad567ffacf7704f862a57"
@@ -1337,7 +1337,7 @@
         "output_hash": "332d2fab924588bbaefe5a99dee9789ee9d9ce4a5545e3f6ab5cbf093b1f3147",
         "output_index": 0,
         "input_index": 0,
-        "value": 210194,
+        "value": "210194",
         "address": "GXrD9zcXPnPC7JQ7SAF9Egpv1uSkFSYYS6",
         "script_signature": "483045022100999aa102c29dfaf72020299a130a20b0b77233c7281b7a10e3fdce6d1be04a4e02206bd3a78fba90f782b98753a2b750374e1a77b692b45d5fb41196c87b009ab673412102dc300bc3cd4a088a903cf02667f7bf0f1d94dd38eda26b94fe8d611efc1eba3f",
         "txinwitness": [],
@@ -1347,14 +1347,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 107191,
+        "value": "107191",
         "address": "AWU6Z9L7HCjKR84xbQGLgjAgwwp18Wn3Hu",
         "script_hex": "a914a12d2c9b29f0f7e8030f6cf98aeedee62c6ab51487",
         "output_hash": "a65723a0ce087abc74066bd5360f1ddfc115d7f878252a8704a70c169e70f7ff"
       },
       {
         "output_index": 1,
-        "value": 102325,
+        "value": "102325",
         "address": "GaUkfB6azPf9ephS9HvtgjuTjdZ27UUpcA",
         "script_hex": "76a914b67941fa6f81bb37f437ddb039012cb2fd14d14288ac",
         "output_hash": "a65723a0ce087abc74066bd5360f1ddfc115d7f878252a8704a70c169e70f7ff"
@@ -1380,7 +1380,7 @@
         "output_hash": "a65723a0ce087abc74066bd5360f1ddfc115d7f878252a8704a70c169e70f7ff",
         "output_index": 0,
         "input_index": 0,
-        "value": 107191,
+        "value": "107191",
         "address": "AWU6Z9L7HCjKR84xbQGLgjAgwwp18Wn3Hu",
         "script_signature": "1600140835497688819835884e5914b6eb492fe0205175",
         "txinwitness": [
@@ -1393,14 +1393,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 93468,
+        "value": "93468",
         "address": "Ga9SuWHfo9PqddxiaqDPVAvT88cAos7AT6",
         "script_hex": "76a914b2d288fa119792f389473b5e96e8baaf1a1169c588ac",
         "output_hash": "87576d806937b06bad1cb6b0ebdc479b12e73a4e6d417fffe8cd63218169fd6f"
       },
       {
         "output_index": 1,
-        "value": 13219,
+        "value": "13219",
         "address": "AGEnBePYLufcePxevW1G184uG3FBXjEsXm",
         "script_hex": "a9140516abb31b30f776b4d52543156563c8099724c987",
         "output_hash": "87576d806937b06bad1cb6b0ebdc479b12e73a4e6d417fffe8cd63218169fd6f"
@@ -1426,7 +1426,7 @@
         "output_hash": "332d2fab924588bbaefe5a99dee9789ee9d9ce4a5545e3f6ab5cbf093b1f3147",
         "output_index": 1,
         "input_index": 0,
-        "value": 77347,
+        "value": "77347",
         "address": "GXo6xDndvkD5waiGw8WitCBk147Ru65f2W",
         "script_signature": "483045022100978f5d8a127757ccab57e13880a62554a66faca294ecfbe11d454f1b85196722022025e98080cf73549b40ce2ee2a213bafd219901d32b99037970970f9bc7def52c41210243ec03ce0a423d4b26ac641de9a576017cdde7f2c6a4d0e24c4d5086094b8645",
         "txinwitness": [],
@@ -1436,7 +1436,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 76771,
+        "value": "76771",
         "address": "AUaGGcG3R9Q3Ch8VBKfyp31CNWLA2KuTJf",
         "script_hex": "a9148c67872d76cbff135ddeab2586a26847483f18f787",
         "output_hash": "a1fef95ed4f5e76afa6799d3f71f27fffdb78410704cd52dd045b1f406577d76"
@@ -1462,7 +1462,7 @@
         "output_hash": "a1fef95ed4f5e76afa6799d3f71f27fffdb78410704cd52dd045b1f406577d76",
         "output_index": 0,
         "input_index": 0,
-        "value": 76771,
+        "value": "76771",
         "address": "AUaGGcG3R9Q3Ch8VBKfyp31CNWLA2KuTJf",
         "script_signature": "160014caa4c94f80b67340147f3233d7e9df1ec444af4e",
         "txinwitness": [
@@ -1475,7 +1475,7 @@
         "output_hash": "53f02b9c374f4e953f16bc7472d99caefc09d6d8f90ad567ffacf7704f862a57",
         "output_index": 1,
         "input_index": 1,
-        "value": 73988,
+        "value": "73988",
         "address": "ANhiA54a5J8khGX2s1TQJq3m4wDF45Mzi1",
         "script_signature": "160014ff6f0769f1cb90ad103b4226011e42d13391315b",
         "txinwitness": [
@@ -1488,14 +1488,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 76448,
+        "value": "76448",
         "address": "Ge4dM2P5EGnqxaowdn6P4wG4GDEAyswvLp",
         "script_hex": "76a914ddc9ac5a02a7859912a6d723a72a872568727bf088ac",
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796"
       },
       {
         "output_index": 1,
-        "value": 62677,
+        "value": "62677",
         "address": "ASTXvGnpwmTEMnSz6LqaSkbXHCGC6n5Vhu",
         "script_hex": "a91475316d9d9990960f2e90bd98912c4d08248f7c5b87",
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796"
@@ -1521,7 +1521,7 @@
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796",
         "output_index": 0,
         "input_index": 0,
-        "value": 76448,
+        "value": "76448",
         "address": "Ge4dM2P5EGnqxaowdn6P4wG4GDEAyswvLp",
         "script_signature": "483045022100a245798611e0bc51bd5d646c0dda01fb74059296e378ae2a745324c7c2b3928a02205d2f9e2d07535fb7d73763fc4758db01c14dac5450bfb60a1e14a93077847938412102a3a024fa3e99f9a21bf449a7b0947ed462ae072c59fa77f94689b4ff7d43c8db",
         "txinwitness": [],
@@ -1531,7 +1531,7 @@
         "output_hash": "e6071f6c9c5b702fcb7698c1cb2c04e0ab3a74702f9088f22cddede9b5f40248",
         "output_index": 0,
         "input_index": 1,
-        "value": 92892,
+        "value": "92892",
         "address": "GXNb8m9vu2X75eEbNTXhM9LUNpHeSRqvbr",
         "script_signature": "483045022100ba126fec0cec705b405a74d262e42ffc66ec869b9b289ef6ff5c6e8b9af0764e022033f575a58aa7c6b5b63564fef5a4f473f102b1f79fd6f55d77f4784b66c9f6764121025b2f25b9b0d8011d2452402834c1897786c73028b81df507b074a221f37364e0",
         "txinwitness": [],
@@ -1541,14 +1541,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 82207,
+        "value": "82207",
         "address": "AH3pkxaQaiAi7GZgCCsZvQb4SBdofHfaZp",
         "script_hex": "a9140dfc5eb0abfe8baeaa8873d8424c18d2a133ae3e87",
         "output_hash": "e03d2944871fb7549036f48353cbca598ade2c51c601554e8adcc03e75d2846e"
       },
       {
         "output_index": 1,
-        "value": 86011,
+        "value": "86011",
         "address": "Gd7UJN4JmNv84so377xCCX4MDNLTpQ5tMY",
         "script_hex": "76a914d35b3e861bfaf7dec8a8bd35e393837bde59ce6088ac",
         "output_hash": "e03d2944871fb7549036f48353cbca598ade2c51c601554e8adcc03e75d2846e"
@@ -1574,7 +1574,7 @@
         "output_hash": "87576d806937b06bad1cb6b0ebdc479b12e73a4e6d417fffe8cd63218169fd6f",
         "output_index": 1,
         "input_index": 0,
-        "value": 13219,
+        "value": "13219",
         "address": "AGEnBePYLufcePxevW1G184uG3FBXjEsXm",
         "script_signature": "16001443dcf688aef3f3712e03a2fc3b00111643ade122",
         "txinwitness": [
@@ -1587,7 +1587,7 @@
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796",
         "output_index": 1,
         "input_index": 1,
-        "value": 62677,
+        "value": "62677",
         "address": "ASTXvGnpwmTEMnSz6LqaSkbXHCGC6n5Vhu",
         "script_signature": "1600148cb4dff1bc440f23a84eb71559035dd4381168a4",
         "txinwitness": [
@@ -1600,7 +1600,7 @@
         "output_hash": "e03d2944871fb7549036f48353cbca598ade2c51c601554e8adcc03e75d2846e",
         "output_index": 0,
         "input_index": 2,
-        "value": 82207,
+        "value": "82207",
         "address": "AH3pkxaQaiAi7GZgCCsZvQb4SBdofHfaZp",
         "script_signature": "160014ea57ace3e1021031f98171b8987bd3db30f7b58d",
         "txinwitness": [
@@ -1613,7 +1613,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 157161,
+        "value": "157161",
         "address": "GWtszx1YDc3tsmcZL43WB1SHFE4rsnJ7u9",
         "script_hex": "76a9148f28dd96bbb96a57bd8749fe11036ae16d239cda88ac",
         "output_hash": "5593af8ba552bd744080413f6e752cff911a6e5719a0ce05db60ffbba141eeb6"
@@ -1639,7 +1639,7 @@
         "output_hash": "f5109d9ad915da5ce81d1e1cd2b758a862e81d9cf927c01563bf093c1ce5f710",
         "output_index": 0,
         "input_index": 0,
-        "value": 241165,
+        "value": "241165",
         "address": "Ga2ZeYsFuWfg8tEjMfu4RTuVmqWg9KBUjY",
         "script_signature": "483045022100c6c30c2404edb2ff9cb8502d8fefa5da3cfc5b57533c112ee052eb3a5cefa4d90220672b16ad67d1f4d73e650891b037ba70d3d2ce17f6ba8fa5df13965dde372ecb4121024a70ab57bb0cc75758766a49735221646db5f871cb642555b7b5701d773ffaf7",
         "txinwitness": [],
@@ -1649,14 +1649,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 214581,
+        "value": "214581",
         "address": "Aa4WbRgDksayyMrEaHXaLkqtuizcY3oYMz",
         "script_hex": "a914c897c2e6532c06acb9ed3cc36fa2bdeeb40e584287",
         "output_hash": "074e2fd5c5b2297219240abc9a628a542e8b140e241c4ae60086fe69bb924b3b"
       },
       {
         "output_index": 1,
-        "value": 25906,
+        "value": "25906",
         "address": "GRwMzsXN74pUCVMq2X72DH4wCcV9NpkSqV",
         "script_hex": "76a91458c870d1700210a0f12c0c4b98de91e2b6b8cab288ac",
         "output_hash": "074e2fd5c5b2297219240abc9a628a542e8b140e241c4ae60086fe69bb924b3b"
@@ -1682,7 +1682,7 @@
         "output_hash": "074e2fd5c5b2297219240abc9a628a542e8b140e241c4ae60086fe69bb924b3b",
         "output_index": 0,
         "input_index": 0,
-        "value": 214581,
+        "value": "214581",
         "address": "Aa4WbRgDksayyMrEaHXaLkqtuizcY3oYMz",
         "script_signature": "16001478fec32aac3936c7a615f8e7f8dd6fc57390c8db",
         "txinwitness": [
@@ -1695,7 +1695,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 214179,
+        "value": "214179",
         "address": "GdcejeYk7BniW9E7GzfNvxEdwXXNT3UhfR",
         "script_hex": "76a914d8e004c36a33c2210b3fc9a6f8f3a512f86e0a9c88ac",
         "output_hash": "b70085b674c7ad72a31406af32b97de245c8d9ff1fb22ec800a0c54b85abbe8b"
@@ -1721,7 +1721,7 @@
         "output_hash": "5048cbb1df9e7ef383ccd66b4804ad9b86f0487d5e3fd66a5863410c9867bd99",
         "output_index": 0,
         "input_index": 0,
-        "value": 46422,
+        "value": "46422",
         "address": "GSXjbieD2axAyp7NBncm6BVy2mTqTpqBn7",
         "script_signature": "483045022100f2677bb7cb7f5b6ff56ed8dbd298816bf9bdc19f3b1c71dd0a3b101b88384fc60220276233ee08a61f48bd40357c85540e30f1609c7a25beb26a6d42e4dcfdadde92412103ee60627a9b093ba7f6ed537028ae3d6e378eea05bbe6e66e5b8fd29837244947",
         "txinwitness": [],
@@ -1731,7 +1731,7 @@
         "output_hash": "074e2fd5c5b2297219240abc9a628a542e8b140e241c4ae60086fe69bb924b3b",
         "output_index": 1,
         "input_index": 1,
-        "value": 25906,
+        "value": "25906",
         "address": "GRwMzsXN74pUCVMq2X72DH4wCcV9NpkSqV",
         "script_signature": "483045022100945b952ee424dd919def45111c10526f894bf2f1acc481bc1f3750708c77adc40220179abe81d464607126bf23ab0939b3c59d85ea9a63bd6c695f34f8b9f249ddfc412103bc4ea732e61fa998fe88463d7974874875b47b4d987a09b9ee9d415991fa1b07",
         "txinwitness": [],
@@ -1741,14 +1741,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 59897,
+        "value": "59897",
         "address": "AVtzk5CWXfSgQFaw2BWQ7A2Cgc71fpkAyR",
         "script_hex": "a9149aea98a3a28932a87e06ee4b7f8847fbd0fe471f87",
         "output_hash": "3b2a135147abb964e54eb732379c378444bad3684fe433f47cb3795aead2cf58"
       },
       {
         "output_index": 1,
-        "value": 11309,
+        "value": "11309",
         "address": "GdAp1ZZoXtBWiPzMxofPpgyrsneWLHWwk8",
         "script_hex": "76a914d3fcf209ea58696a1f6095657f2b4d80ffaad3d588ac",
         "output_hash": "3b2a135147abb964e54eb732379c378444bad3684fe433f47cb3795aead2cf58"
@@ -1774,7 +1774,7 @@
         "output_hash": "3b2a135147abb964e54eb732379c378444bad3684fe433f47cb3795aead2cf58",
         "output_index": 0,
         "input_index": 0,
-        "value": 59897,
+        "value": "59897",
         "address": "AVtzk5CWXfSgQFaw2BWQ7A2Cgc71fpkAyR",
         "script_signature": "160014a9729ab615a8646008f2e9259021f5b280faf6d4",
         "txinwitness": [
@@ -1787,7 +1787,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 59495,
+        "value": "59495",
         "address": "GTYaxu7HG16FbKTioFpMNwhdqKBXABdEpP",
         "script_hex": "76a9146a69f2d7b8f263354432f538b410f962831b3daa88ac",
         "output_hash": "94a37d150f1392241ace9889ef84fd82feec41c9c978bf82006f8e6535bb4905"
@@ -1813,7 +1813,7 @@
         "output_hash": "f2e1061148e19df553ab0aec9d18a1e43b25c543147f452750f485c1480a0b8a",
         "output_index": 1,
         "input_index": 0,
-        "value": 281617,
+        "value": "281617",
         "address": "GMoHUrT8cKHzrdjG2T29bHF4YaxuJJmhPQ",
         "script_signature": "473044022026f3e8c6ccb82510d07955fc7ba19c138419ae22f76b71482c15fdcec75d379a022014a825d28e83dfb7d610fb7796be334bcc692376fd9e1624b0e08fd54c5f0f69412102b7064a6cfbe158ae4e645324e24f83e6a77bdca24f81afa5c23a14c4eb64ba8b",
         "txinwitness": [],
@@ -1823,7 +1823,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 281041,
+        "value": "281041",
         "address": "Ad4NShu4SRFPbQunyc4p2fX5VCYhx7rBmu",
         "script_hex": "a914e97955c9aadf6ec93ac0bd4bf308e2c937aa403387",
         "output_hash": "3405cf6f76b62757477b92147f9c172726d51b97e02388824f3c42b4c8832086"
@@ -1849,7 +1849,7 @@
         "output_hash": "3405cf6f76b62757477b92147f9c172726d51b97e02388824f3c42b4c8832086",
         "output_index": 0,
         "input_index": 0,
-        "value": 281041,
+        "value": "281041",
         "address": "Ad4NShu4SRFPbQunyc4p2fX5VCYhx7rBmu",
         "script_signature": "1600147795dc46758fd5754481be9a01e61b4d140c94f2",
         "txinwitness": [
@@ -1862,7 +1862,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 280639,
+        "value": "280639",
         "address": "GeCLRVYhH9P4Dqq2ggyx74vzqH6bjt3Ywi",
         "script_hex": "76a914df3edfd694a4de8f23f10f29ae53b48fa62a4e0088ac",
         "output_hash": "5079a50380af56cc0e7f56447202bf4d2112dd5103e2a8556cad2377be5cede1"
@@ -1888,7 +1888,7 @@
         "output_hash": "465f19522acbef0bac14a7f489f618a25cfeeb91c8d67c07c5539677e12c4e46",
         "output_index": 0,
         "input_index": 0,
-        "value": 669994,
+        "value": "669994",
         "address": "GSw7Kr7xcMsV9gLDr4nLvjTx72weWsGZ3y",
         "script_signature": "47304402204c817e0d5b7c161a0f794c6e32fe3264ee398cf1aeb8aeb4c8cc6a278ca3466502205d530b0f13e271e93d0ba3e2faa2f7a0ff142ccbfacb4fea96835422b1fd4e164121027e301c4458b033af0a7997e78faeaf143c90ef2d48ac0af9a057ea40fb46f22b",
         "txinwitness": [],
@@ -1898,14 +1898,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 579755,
+        "value": "579755",
         "address": "AMVzYVBzubWUewbYLibPwgfGL4jnr3YrWC",
         "script_hex": "a9143ecfdb29628d53252f739596b2140a74f19dbe6387",
         "output_hash": "59d8a0707f897b429cd00f8b808c0745ca255711f3ca6e1268dde9abe830ce5f"
       },
       {
         "output_index": 1,
-        "value": 89561,
+        "value": "89561",
         "address": "GJJ4A8qtp971ea1xqBajwnBgsNWhLJa7dF",
         "script_hex": "76a91404f146fdf6484b48cade3b096b49de65775b649c88ac",
         "output_hash": "59d8a0707f897b429cd00f8b808c0745ca255711f3ca6e1268dde9abe830ce5f"
@@ -1931,7 +1931,7 @@
         "output_hash": "59d8a0707f897b429cd00f8b808c0745ca255711f3ca6e1268dde9abe830ce5f",
         "output_index": 0,
         "input_index": 0,
-        "value": 579755,
+        "value": "579755",
         "address": "AMVzYVBzubWUewbYLibPwgfGL4jnr3YrWC",
         "script_signature": "1600140fefad444390f40e2c1c0d7b58229bfbd02c2b15",
         "txinwitness": [
@@ -1944,14 +1944,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 283095,
+        "value": "283095",
         "address": "GafuR2qEHrrY2WRrgDRMPAbdtKTezaacVp",
         "script_hex": "76a914b89524806f8b4ed85e0ad3ebc1e63688d1eddd4788ac",
         "output_hash": "89a6674f1e966d38dfe2feabfc52f5f485f2055f26c76f86f56afd14e0274d96"
       },
       {
         "output_index": 1,
-        "value": 296156,
+        "value": "296156",
         "address": "AJVEbhASHdXzum7GpQJTb9QDUeLR5ZJFPH",
         "script_hex": "a9141dc2cba8f3e467b98df1a2a3e57f6091ef6237a587",
         "output_hash": "89a6674f1e966d38dfe2feabfc52f5f485f2055f26c76f86f56afd14e0274d96"
@@ -1977,7 +1977,7 @@
         "output_hash": "59d8a0707f897b429cd00f8b808c0745ca255711f3ca6e1268dde9abe830ce5f",
         "output_index": 1,
         "input_index": 0,
-        "value": 89561,
+        "value": "89561",
         "address": "GJJ4A8qtp971ea1xqBajwnBgsNWhLJa7dF",
         "script_signature": "483045022100e723af96ef0c1ca49e95af1cfc11b83876f53e28dade5c4ff4a955ec01c086b702202446d218595d2811e28f6ffaeae7e9d095f27ce74b345ee1ee8413b6ec2bb9bc412102dcadac14d0294182b94f8670744f55b535b571f85757bbe4d6b2c2c0577dce21",
         "txinwitness": [],
@@ -1987,7 +1987,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 88985,
+        "value": "88985",
         "address": "ARk8kexjzPoJSgrigT6vh3UtyJzMvE3fmk",
         "script_hex": "a9146d5d093091c03dfbdfdd4493c7a0872e9c9d3bd687",
         "output_hash": "43db85bf5d7f25abafde55aaedea5114261e9810b620927cf4b8e50154313aec"
@@ -2013,7 +2013,7 @@
         "output_hash": "43db85bf5d7f25abafde55aaedea5114261e9810b620927cf4b8e50154313aec",
         "output_index": 0,
         "input_index": 0,
-        "value": 88985,
+        "value": "88985",
         "address": "ARk8kexjzPoJSgrigT6vh3UtyJzMvE3fmk",
         "script_signature": "160014f4df057863f3071ba5396858f72a53f95773d4e9",
         "txinwitness": [
@@ -2026,14 +2026,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 45085,
+        "value": "45085",
         "address": "GcQXwuMnchr3pJsu1dywRjQjZN5XLz24w3",
         "script_hex": "76a914cb9d3bfefe669df9861be9439da2f4e5053d2cef88ac",
         "output_hash": "9318b18135e9062330834539f3131f43b937005d2549f654bc95e18f3d0d1dc0"
       },
       {
         "output_index": 1,
-        "value": 43396,
+        "value": "43396",
         "address": "AQLzvtCmGbKEQkBwEvoNUdavBvqoNiFxmv",
         "script_hex": "a9145e04cfe84d2d967a9c31a200029b395f0e0e87b987",
         "output_hash": "9318b18135e9062330834539f3131f43b937005d2549f654bc95e18f3d0d1dc0"
@@ -2059,7 +2059,7 @@
         "output_hash": "cdbad6ccabfd70fc1351413b01cacca0113a7d3f2a47f7049d7aabb86ada88c3",
         "output_index": 0,
         "input_index": 0,
-        "value": 256664,
+        "value": "256664",
         "address": "GfedLsAvESM8iPFg13Tp2xKKnVrf5Bpnsm",
         "script_signature": "483045022100a659e69b85ef2f29bf5f2f186530bd245269435a5f84d4c1ee692fb550bf3c8502207123ef0e78cf0b418cc0137fded7170e72e517aaec1e7ff7d0815057e0a2bf694121029dd0bb6413f80d890c06d16b1b2ffec9a62f271c7bcf594e0a0b51c07a25db1b",
         "txinwitness": [],
@@ -2069,14 +2069,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 184730,
+        "value": "184730",
         "address": "AGeLCPkvfLgmMg6yakiqVHD3jKR3S7yJmH",
         "script_hex": "a914098af5f990fed8666ef9542829d9535eaf9c461187",
         "output_hash": "5f50503073184ce55e12cf763b2d6c235a404cffc5ae617e1499181a49a4f983"
       },
       {
         "output_index": 1,
-        "value": 71256,
+        "value": "71256",
         "address": "GYTU1G95Z2KeyApjHUX1dhML7wkkGmQSsc",
         "script_hex": "76a914a04ab03bc267d65463734d9659e0467297bd5d9288ac",
         "output_hash": "5f50503073184ce55e12cf763b2d6c235a404cffc5ae617e1499181a49a4f983"
@@ -2102,7 +2102,7 @@
         "output_hash": "5f50503073184ce55e12cf763b2d6c235a404cffc5ae617e1499181a49a4f983",
         "output_index": 0,
         "input_index": 0,
-        "value": 184730,
+        "value": "184730",
         "address": "AGeLCPkvfLgmMg6yakiqVHD3jKR3S7yJmH",
         "script_signature": "160014c3825e0bed51eb87d10121f983b7cdc92f9e0fbc",
         "txinwitness": [
@@ -2115,7 +2115,7 @@
         "output_hash": "4d40895320303cd38c474a6a8fbbbf245afdb99a29630ef39b6bb4f20b747e9f",
         "output_index": 1,
         "input_index": 1,
-        "value": 51732,
+        "value": "51732",
         "address": "ANAdMdykxsoSQBQjFWapXs13nn4uXh8TSy",
         "script_signature": "16001479fabdaec368e71735ad795e7f7edc4613c7fe18",
         "txinwitness": [
@@ -2128,7 +2128,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 235790,
+        "value": "235790",
         "address": "GQEbKCyCiaBhHjqFTdrHnvcsLmj9zTZKhV",
         "script_hex": "76a914461a604ff825eb26c9a0476ce732da3832be10d288ac",
         "output_hash": "a8608d7573137398c54d96f95d479f49620a29e678ba92748d1b85923039cb56"
@@ -2154,7 +2154,7 @@
         "output_hash": "4657d90e894857bde57424fb454d2120ec0e534d99163c0a7eb60ef7876af1d1",
         "output_index": 0,
         "input_index": 0,
-        "value": 88800,
+        "value": "88800",
         "address": "GfsJpE4LW5k3cRHGybaNsKwzizLsodeLS5",
         "script_signature": "47304402206b1b1630af34d811a1d8dbe7e8117568735147eac3f91e2afbedbd3162928975022052e0aa39c74235249c10e7422153d6721c707dc28d4b7eb230cf158cf7a44f344121037f339a4b909deb5baf8de98b6e513aaffac2bc8fa1b4d51ef17167c58383f00d",
         "txinwitness": [],
@@ -2164,7 +2164,7 @@
         "output_hash": "5f50503073184ce55e12cf763b2d6c235a404cffc5ae617e1499181a49a4f983",
         "output_index": 1,
         "input_index": 1,
-        "value": 71256,
+        "value": "71256",
         "address": "GYTU1G95Z2KeyApjHUX1dhML7wkkGmQSsc",
         "script_signature": "473044022031da753c2c4eb53e46c77e0503efa5bb4eb721b516d783c40d586b91d69b41600220158bb03bdecf1817da9d7d2d5600503c1d9d371645d89d2a1cbff3ba9d5df764412102602b4868615116d1991effa63a1e9d47e3b99e36fd8b2d7a9ea690877532d288",
         "txinwitness": [],
@@ -2174,7 +2174,7 @@
         "output_hash": "205e1eaf518b623663c22f1fe8f3ae14358e01e1bdac1a1e4c7e94146520c6b6",
         "output_index": 0,
         "input_index": 2,
-        "value": 22488,
+        "value": "22488",
         "address": "GTaneH2b65itjQzQCF2gMAUx8DjirHW87w",
         "script_signature": "47304402205299c444394c5c28a4f40bfc7f03fd195953e17bf14aaebc1334d0837c4bcbba0220354a40bde98d97bb39911d194e4c0ef79bfa36c26239ac1b798ff5c19a08650b412102ce9e64f2737238ccfdd0fc6b7cce6317883bfe4fb1db424ab4fcfd4f61ad2461",
         "txinwitness": [],
@@ -2184,7 +2184,7 @@
         "output_hash": "4d40895320303cd38c474a6a8fbbbf245afdb99a29630ef39b6bb4f20b747e9f",
         "output_index": 0,
         "input_index": 3,
-        "value": 243920,
+        "value": "243920",
         "address": "GKdAefvbeR7XrvdDJMRENRNyUceBLJmLPk",
         "script_signature": "47304402201903fb478f11d2ee2942e2f3c37dea8e7d94a15d07a1cf63489b38215593bf230220273dad5a03112c6a20be81c8f40d5b21242d877b1cad209670ce7f544ae490ce412103e7cf78b03ba5fa1dfef326033c5794ab03109c205fe07e3f937c1c6690d4d109",
         "txinwitness": [],
@@ -2194,7 +2194,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 424556,
+        "value": "424556",
         "address": "ANxmDmmAnjgyAKCx7RQXQXzcGcjcMipgbC",
         "script_hex": "a9144ed81776c1fbbb779e0ced1af1b46b60254be78687",
         "output_hash": "da6df21b0ca31d11390cfeb4a2f451da3942709a65250f41e5ecb83a54c4bbb7"
@@ -2220,7 +2220,7 @@
         "output_hash": "da6df21b0ca31d11390cfeb4a2f451da3942709a65250f41e5ecb83a54c4bbb7",
         "output_index": 0,
         "input_index": 0,
-        "value": 424556,
+        "value": "424556",
         "address": "ANxmDmmAnjgyAKCx7RQXQXzcGcjcMipgbC",
         "script_signature": "160014a38d581752df90daa9444cfe357e1140888be515",
         "txinwitness": [
@@ -2233,7 +2233,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 424154,
+        "value": "424154",
         "address": "GeE3SQijoqWTPH1ZHLTVajLQCKbjDVixqV",
         "script_hex": "76a914df91875262884ac3bad7049acf890e3681d69db588ac",
         "output_hash": "d32316be48f0cfd5fa7776d30f92cfe1af4d3e47f4a4b40116d466a2559bd214"
@@ -2259,7 +2259,7 @@
         "output_hash": "68e00b17405308044341c106a6572a2d73a7be9952d2a501733cb02e304c10ab",
         "output_index": 0,
         "input_index": 0,
-        "value": 311349,
+        "value": "311349",
         "address": "GWCu4M8y73jX3VMUeJfr9A6CA8bUkRA6Nu",
         "script_signature": "47304402202e29b2b0f0ae9876ce68b1f00dc83f5cf69413378c3eddddca37e1bb257797690220377a4be4ff65336de925eb5154fa14790f7685c4d9e1381ea03f94da475353004121035e97b8711f3ef350a9d0d94b71eec628b2a94c11acc34e4513ab6b9cf477706e",
         "txinwitness": [],
@@ -2269,14 +2269,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 57582,
+        "value": "57582",
         "address": "AM26xTbFXeBDzpwQp92fErqBuedGbeXkKh",
         "script_hex": "a9143989900f9c17c4dc67e280eab4ea2d01195c4df887",
         "output_hash": "b6d43bc57492ea323703773633d8e3bfe94af42d720dc64f3bd7292b43dfd0be"
       },
       {
         "output_index": 1,
-        "value": 253089,
+        "value": "253089",
         "address": "GKnMFHRfBNyCNVuieFhLdv2G8CwcehNphf",
         "script_hex": "76a914154350a40fe89d6db6b027e0255c16de320d041c88ac",
         "output_hash": "b6d43bc57492ea323703773633d8e3bfe94af42d720dc64f3bd7292b43dfd0be"
@@ -2302,7 +2302,7 @@
         "output_hash": "b6d43bc57492ea323703773633d8e3bfe94af42d720dc64f3bd7292b43dfd0be",
         "output_index": 0,
         "input_index": 0,
-        "value": 57582,
+        "value": "57582",
         "address": "AM26xTbFXeBDzpwQp92fErqBuedGbeXkKh",
         "script_signature": "160014e7b83675a0eaccbef9ca4e8719026c679c1f2222",
         "txinwitness": [
@@ -2315,7 +2315,7 @@
         "output_hash": "fef647e078abf9041b8af4a3397feb220af7778366367c67fa377c1fe3acd3ef",
         "output_index": 0,
         "input_index": 1,
-        "value": 220966,
+        "value": "220966",
         "address": "AeKBk946FFdj2RdJ7q3FEYV1VTfHhVAJPY",
         "script_signature": "160014921b3c452314f0777cc00cf5869d493a8f7ca854",
         "txinwitness": [
@@ -2328,7 +2328,7 @@
         "output_hash": "842ab2cf950e30cee684785e14f310d0d08a5351b4cf21ea94412c4a6ee18bda",
         "output_index": 0,
         "input_index": 2,
-        "value": 14249,
+        "value": "14249",
         "address": "AY25xhm2Mi2QAy518h1ARyaUfvXkFbGLxh",
         "script_signature": "16001400fdd4cc7416fb189e20bd5d77b92f7a478f5c4c",
         "txinwitness": [
@@ -2341,7 +2341,7 @@
         "output_hash": "dc8d4fe4fefbef0674baccd85751d24b12ba1ed5b5cf06d59ed6cfa560e1cc6b",
         "output_index": 0,
         "input_index": 3,
-        "value": 113857,
+        "value": "113857",
         "address": "AY2iUS4Mqg5jYk2rmvqtD8CpSAvFgFD8iP",
         "script_signature": "160014259e57b48836868c72dce197ea66071d901f8938",
         "txinwitness": [
@@ -2354,7 +2354,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 405442,
+        "value": "405442",
         "address": "GTrmM2afYAGoNXcW6ZP28ZeqrEKKzPe8h8",
         "script_hex": "76a9146dda1a1b8641355781487b8433f9064facc6829388ac",
         "output_hash": "3e02ed11a9c36fab34c3951bae0bdde047ffb80183474121cc38510b80bc4209"
@@ -2380,7 +2380,7 @@
         "output_hash": "68e00b17405308044341c106a6572a2d73a7be9952d2a501733cb02e304c10ab",
         "output_index": 1,
         "input_index": 0,
-        "value": 111551,
+        "value": "111551",
         "address": "GbAEGUc3JyfVn2VaH9JrwkRs8U4oyg5zX1",
         "script_signature": "483045022100f265c2ed3bb118b0b5f8f6695d2ebc533a032aa96561452970cdd4048be8fc4c02206a40c9f2de82bb902ed9bef63eef0c123063179356a0742bd7087e5de6a41f27412102a813e128dd813e76bca9cbc730bb0c7dc8d2d8009d414bfd1a122a31fc532cc1",
         "txinwitness": [],
@@ -2390,7 +2390,7 @@
         "output_hash": "a8608d7573137398c54d96f95d479f49620a29e678ba92748d1b85923039cb56",
         "output_index": 0,
         "input_index": 1,
-        "value": 235790,
+        "value": "235790",
         "address": "GQEbKCyCiaBhHjqFTdrHnvcsLmj9zTZKhV",
         "script_signature": "473044022067753bc4ac3057efe6351d5a11443b0244b0ba2116259d2ea68497a88f867d9302200fbd86aae10d9eb5db3b11aadaddda8c7714c37bb14f67b7a14bc04cfee88ad641210347c06a30703277f02656024283d1bff7402069d251f33005db9c801d6457cfdb",
         "txinwitness": [],
@@ -2400,7 +2400,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 346321,
+        "value": "346321",
         "address": "AHSduHPgj5sghCz7n3c4fwPoRLMLHwu5Ax",
         "script_hex": "a914124cdfdd942b5e0c80cd9c5babf70fcd23e7d84c87",
         "output_hash": "185c4ea5f436cf8e55ba46f218b0ff9f865e7e87502f594cb1338c2eb7742b22"
@@ -2426,7 +2426,7 @@
         "output_hash": "185c4ea5f436cf8e55ba46f218b0ff9f865e7e87502f594cb1338c2eb7742b22",
         "output_index": 0,
         "input_index": 0,
-        "value": 346321,
+        "value": "346321",
         "address": "AHSduHPgj5sghCz7n3c4fwPoRLMLHwu5Ax",
         "script_signature": "1600146fef37dc8030c012e4c7431a8f01ff21a8bccce2",
         "txinwitness": [
@@ -2439,14 +2439,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 208338,
+        "value": "208338",
         "address": "Gd2TZ9vDbHkY3HcjcNoFih6564jzZyADe2",
         "script_hex": "76a914d2688ae3eb622ee40f8cfe48e8eab634ff8762a588ac",
         "output_hash": "965c90f538658a746b5021c577394a0c4575e755065a7613bcfa79903683401f"
       },
       {
         "output_index": 1,
-        "value": 137479,
+        "value": "137479",
         "address": "AGdnWz6VQPL5k4Vn1aNHQtaHBpQg1mtEBe",
         "script_hex": "a9140970842395b97a8fe66985735b996d5c0934a51787",
         "output_hash": "965c90f538658a746b5021c577394a0c4575e755065a7613bcfa79903683401f"
@@ -2472,7 +2472,7 @@
         "output_hash": "09ce5f7c96b04dfebb92b5b661fb8dfdec937e5c77ee810804aecae244ad536d",
         "output_index": 0,
         "input_index": 0,
-        "value": 460407,
+        "value": "460407",
         "address": "GMWNQg8deQycrogzwfGb8qFfXnJP5HcWVr",
         "script_signature": "483045022100fcb035d410f233a1437ab25d322158f47c38a11b7383552d524f93140494f9a9022043debafe4962e3da768dd7836d8440402cceed2d3bbf304a730ba3baa8c25ec4412102e441cf52030624e788aeef3c08c95eb1e813a57611a19108c4e7afca104c1cd1",
         "txinwitness": [],
@@ -2482,14 +2482,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 220966,
+        "value": "220966",
         "address": "AeKBk946FFdj2RdJ7q3FEYV1VTfHhVAJPY",
         "script_hex": "a914f73ec4d63fa55236608ea66b686a9c4b23bbc75b87",
         "output_hash": "fef647e078abf9041b8af4a3397feb220af7778366367c67fa377c1fe3acd3ef"
       },
       {
         "output_index": 1,
-        "value": 238763,
+        "value": "238763",
         "address": "GK1DZ6uknmYakV1fmahFuqjUHEpXRWyug2",
         "script_hex": "76a9140cba2cd42e1d0af551cbb36e72a97daddb603cb688ac",
         "output_hash": "fef647e078abf9041b8af4a3397feb220af7778366367c67fa377c1fe3acd3ef"
@@ -2515,7 +2515,7 @@
         "output_hash": "b6d43bc57492ea323703773633d8e3bfe94af42d720dc64f3bd7292b43dfd0be",
         "output_index": 0,
         "input_index": 0,
-        "value": 57582,
+        "value": "57582",
         "address": "AM26xTbFXeBDzpwQp92fErqBuedGbeXkKh",
         "script_signature": "160014e7b83675a0eaccbef9ca4e8719026c679c1f2222",
         "txinwitness": [
@@ -2528,7 +2528,7 @@
         "output_hash": "fef647e078abf9041b8af4a3397feb220af7778366367c67fa377c1fe3acd3ef",
         "output_index": 0,
         "input_index": 1,
-        "value": 220966,
+        "value": "220966",
         "address": "AeKBk946FFdj2RdJ7q3FEYV1VTfHhVAJPY",
         "script_signature": "160014921b3c452314f0777cc00cf5869d493a8f7ca854",
         "txinwitness": [
@@ -2541,7 +2541,7 @@
         "output_hash": "842ab2cf950e30cee684785e14f310d0d08a5351b4cf21ea94412c4a6ee18bda",
         "output_index": 0,
         "input_index": 2,
-        "value": 14249,
+        "value": "14249",
         "address": "AY25xhm2Mi2QAy518h1ARyaUfvXkFbGLxh",
         "script_signature": "16001400fdd4cc7416fb189e20bd5d77b92f7a478f5c4c",
         "txinwitness": [
@@ -2554,7 +2554,7 @@
         "output_hash": "dc8d4fe4fefbef0674baccd85751d24b12ba1ed5b5cf06d59ed6cfa560e1cc6b",
         "output_index": 0,
         "input_index": 3,
-        "value": 113857,
+        "value": "113857",
         "address": "AY2iUS4Mqg5jYk2rmvqtD8CpSAvFgFD8iP",
         "script_signature": "160014259e57b48836868c72dce197ea66071d901f8938",
         "txinwitness": [
@@ -2567,7 +2567,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 405442,
+        "value": "405442",
         "address": "GTrmM2afYAGoNXcW6ZP28ZeqrEKKzPe8h8",
         "script_hex": "76a9146dda1a1b8641355781487b8433f9064facc6829388ac",
         "output_hash": "3e02ed11a9c36fab34c3951bae0bdde047ffb80183474121cc38510b80bc4209"
@@ -2593,7 +2593,7 @@
         "output_hash": "c2b1bff9a803e847347c49f489c5ddfa88eb6339862c7fbcb1cb60251f0d1456",
         "output_index": 0,
         "input_index": 0,
-        "value": 137077,
+        "value": "137077",
         "address": "GbBpEYZKafArE5pw423NDh463obs1GvJeJ",
         "script_signature": "4830450221008dd33d072e1d8a5462198e8cf0cc89a97d515ee830ea1c61436052ba4245b81602200bcce8a4e520aac60a48eafdf8221f050a85b68e66fbdfedc82d3bab03a8b48b412102251494e348210eeeedd3c626b5541a990f24abb5f0fb8479aac8db6d07292511",
         "txinwitness": [],
@@ -2603,14 +2603,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 14249,
+        "value": "14249",
         "address": "AY25xhm2Mi2QAy518h1ARyaUfvXkFbGLxh",
         "script_hex": "a914b2321d78590ac196170ee206021e19df8df04bb887",
         "output_hash": "842ab2cf950e30cee684785e14f310d0d08a5351b4cf21ea94412c4a6ee18bda"
       },
       {
         "output_index": 1,
-        "value": 122150,
+        "value": "122150",
         "address": "GTCo9Y4hC7bhFBkxppdLwHfsXfKHzjuA5N",
         "script_hex": "76a91466abccafd4f9daf730c54a7f36e114c0d44bfbd088ac",
         "output_hash": "842ab2cf950e30cee684785e14f310d0d08a5351b4cf21ea94412c4a6ee18bda"
@@ -2636,7 +2636,7 @@
         "output_hash": "b6d43bc57492ea323703773633d8e3bfe94af42d720dc64f3bd7292b43dfd0be",
         "output_index": 0,
         "input_index": 0,
-        "value": 57582,
+        "value": "57582",
         "address": "AM26xTbFXeBDzpwQp92fErqBuedGbeXkKh",
         "script_signature": "160014e7b83675a0eaccbef9ca4e8719026c679c1f2222",
         "txinwitness": [
@@ -2649,7 +2649,7 @@
         "output_hash": "fef647e078abf9041b8af4a3397feb220af7778366367c67fa377c1fe3acd3ef",
         "output_index": 0,
         "input_index": 1,
-        "value": 220966,
+        "value": "220966",
         "address": "AeKBk946FFdj2RdJ7q3FEYV1VTfHhVAJPY",
         "script_signature": "160014921b3c452314f0777cc00cf5869d493a8f7ca854",
         "txinwitness": [
@@ -2662,7 +2662,7 @@
         "output_hash": "842ab2cf950e30cee684785e14f310d0d08a5351b4cf21ea94412c4a6ee18bda",
         "output_index": 0,
         "input_index": 2,
-        "value": 14249,
+        "value": "14249",
         "address": "AY25xhm2Mi2QAy518h1ARyaUfvXkFbGLxh",
         "script_signature": "16001400fdd4cc7416fb189e20bd5d77b92f7a478f5c4c",
         "txinwitness": [
@@ -2675,7 +2675,7 @@
         "output_hash": "dc8d4fe4fefbef0674baccd85751d24b12ba1ed5b5cf06d59ed6cfa560e1cc6b",
         "output_index": 0,
         "input_index": 3,
-        "value": 113857,
+        "value": "113857",
         "address": "AY2iUS4Mqg5jYk2rmvqtD8CpSAvFgFD8iP",
         "script_signature": "160014259e57b48836868c72dce197ea66071d901f8938",
         "txinwitness": [
@@ -2688,7 +2688,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 405442,
+        "value": "405442",
         "address": "GTrmM2afYAGoNXcW6ZP28ZeqrEKKzPe8h8",
         "script_hex": "76a9146dda1a1b8641355781487b8433f9064facc6829388ac",
         "output_hash": "3e02ed11a9c36fab34c3951bae0bdde047ffb80183474121cc38510b80bc4209"
@@ -2714,7 +2714,7 @@
         "output_hash": "fef647e078abf9041b8af4a3397feb220af7778366367c67fa377c1fe3acd3ef",
         "output_index": 1,
         "input_index": 0,
-        "value": 238763,
+        "value": "238763",
         "address": "GK1DZ6uknmYakV1fmahFuqjUHEpXRWyug2",
         "script_signature": "4830450221008362e130bc01f7b08debe1b98edd34c3128759cc17d7a60b351169d8b6bd11bd02205faac7ebffce38e757841ab47d95b6c2ba90bc4067b6aeac28343d09409c18004121036432e8db1b34a0be05cdf0f9733db52a9efe90d8844533b93834043e8d4b5e0c",
         "txinwitness": [],
@@ -2724,14 +2724,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 113857,
+        "value": "113857",
         "address": "AY2iUS4Mqg5jYk2rmvqtD8CpSAvFgFD8iP",
         "script_hex": "a914b2509822b2d1346ed9859a62f2834fd772823b0e87",
         "output_hash": "dc8d4fe4fefbef0674baccd85751d24b12ba1ed5b5cf06d59ed6cfa560e1cc6b"
       },
       {
         "output_index": 1,
-        "value": 124228,
+        "value": "124228",
         "address": "GbgqnG5RFZPpqyfBLrh4aCUik6mR1jqmCW",
         "script_hex": "76a914c3baa69c7812c0e33c06dea5a6da452c91cef5a488ac",
         "output_hash": "dc8d4fe4fefbef0674baccd85751d24b12ba1ed5b5cf06d59ed6cfa560e1cc6b"
@@ -2757,7 +2757,7 @@
         "output_hash": "b6d43bc57492ea323703773633d8e3bfe94af42d720dc64f3bd7292b43dfd0be",
         "output_index": 0,
         "input_index": 0,
-        "value": 57582,
+        "value": "57582",
         "address": "AM26xTbFXeBDzpwQp92fErqBuedGbeXkKh",
         "script_signature": "160014e7b83675a0eaccbef9ca4e8719026c679c1f2222",
         "txinwitness": [
@@ -2770,7 +2770,7 @@
         "output_hash": "fef647e078abf9041b8af4a3397feb220af7778366367c67fa377c1fe3acd3ef",
         "output_index": 0,
         "input_index": 1,
-        "value": 220966,
+        "value": "220966",
         "address": "AeKBk946FFdj2RdJ7q3FEYV1VTfHhVAJPY",
         "script_signature": "160014921b3c452314f0777cc00cf5869d493a8f7ca854",
         "txinwitness": [
@@ -2783,7 +2783,7 @@
         "output_hash": "842ab2cf950e30cee684785e14f310d0d08a5351b4cf21ea94412c4a6ee18bda",
         "output_index": 0,
         "input_index": 2,
-        "value": 14249,
+        "value": "14249",
         "address": "AY25xhm2Mi2QAy518h1ARyaUfvXkFbGLxh",
         "script_signature": "16001400fdd4cc7416fb189e20bd5d77b92f7a478f5c4c",
         "txinwitness": [
@@ -2796,7 +2796,7 @@
         "output_hash": "dc8d4fe4fefbef0674baccd85751d24b12ba1ed5b5cf06d59ed6cfa560e1cc6b",
         "output_index": 0,
         "input_index": 3,
-        "value": 113857,
+        "value": "113857",
         "address": "AY2iUS4Mqg5jYk2rmvqtD8CpSAvFgFD8iP",
         "script_signature": "160014259e57b48836868c72dce197ea66071d901f8938",
         "txinwitness": [
@@ -2809,7 +2809,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 405442,
+        "value": "405442",
         "address": "GTrmM2afYAGoNXcW6ZP28ZeqrEKKzPe8h8",
         "script_hex": "76a9146dda1a1b8641355781487b8433f9064facc6829388ac",
         "output_hash": "3e02ed11a9c36fab34c3951bae0bdde047ffb80183474121cc38510b80bc4209"
@@ -2835,7 +2835,7 @@
         "output_hash": "3e02ed11a9c36fab34c3951bae0bdde047ffb80183474121cc38510b80bc4209",
         "output_index": 0,
         "input_index": 0,
-        "value": 405442,
+        "value": "405442",
         "address": "GTrmM2afYAGoNXcW6ZP28ZeqrEKKzPe8h8",
         "script_signature": "4730440220704f4fabaef4308318c614b02eb716e10155e6d35f4c4510ddc1268f02a772fd022029d75372e15fec7fd3697e3c06e07a5a2fc4f961eaad0d53f0140d5b5ea94d95412103fe12dd3fb7c40340f3c9cf1a2094811e17fe4f40926038fc6ece8748d4b51ce0",
         "txinwitness": [],
@@ -2845,14 +2845,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 308018,
+        "value": "308018",
         "address": "AMSNdsW7aqPZBF74inWBFvVRCuFUD8RNj4",
         "script_hex": "a9143e20a269cbadf7bf91a5e6aec46900992f0ac1b187",
         "output_hash": "9397ecca44cbb4f6c3bce235f2e47f853d0d3553c6a85b6c8f26a754ee3853f4"
       },
       {
         "output_index": 1,
-        "value": 96746,
+        "value": "96746",
         "address": "GdDmmzHUencYo9YTTGmYaxPpKEkqNaqTA2",
         "script_hex": "76a914d48c5416da4d4721b6c2920fcbbc56d54b5a1e8088ac",
         "output_hash": "9397ecca44cbb4f6c3bce235f2e47f853d0d3553c6a85b6c8f26a754ee3853f4"
@@ -2878,7 +2878,7 @@
         "output_hash": "17b4d80cd95c9b85dc405d1764b7293cf8fedaf2f7965793bfe00f3754422582",
         "output_index": 0,
         "input_index": 0,
-        "value": 794800,
+        "value": "794800",
         "address": "AHkRvWmBrF3JAy8WDiZ9bCh6zVow9uq9wU",
         "script_signature": "1600140d753a8fe15231222076e4f26dedcd93c78b1218",
         "txinwitness": [
@@ -2891,14 +2891,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 196999,
+        "value": "196999",
         "address": "GWPDWHLseVnbJshhaSYP64fEH1gZfiAFdo",
         "script_hex": "76a914898cab5797a2e5b0e3b27051b1dd60b6f756c8f488ac",
         "output_hash": "2dfec3a1e47999ecbe3e97567196d7e9ecac5fa54a5d92c8991edb9c73085a0e"
       },
       {
         "output_index": 1,
-        "value": 597297,
+        "value": "597297",
         "address": "AHPsbs4Vg8PUxjYm3vz48PEQKAs8xWVUYY",
         "script_hex": "a91411c70fff8849616a42eeea15d9e74ef96281a6e287",
         "output_hash": "2dfec3a1e47999ecbe3e97567196d7e9ecac5fa54a5d92c8991edb9c73085a0e"
@@ -2924,7 +2924,7 @@
         "output_hash": "b1649cae8dd784609ae106faed90d473fe4463397ccd48574a7afa2473562680",
         "output_index": 0,
         "input_index": 0,
-        "value": 94723,
+        "value": "94723",
         "address": "AZLg8yV5SyCXkesQVr77GSiu4kpvC13jVN",
         "script_signature": "160014c87f82afc520e4f43d0623e98d18c45d51aee507",
         "txinwitness": [
@@ -2937,7 +2937,7 @@
         "output_hash": "2dfec3a1e47999ecbe3e97567196d7e9ecac5fa54a5d92c8991edb9c73085a0e",
         "output_index": 1,
         "input_index": 1,
-        "value": 597297,
+        "value": "597297",
         "address": "AHPsbs4Vg8PUxjYm3vz48PEQKAs8xWVUYY",
         "script_signature": "160014276425b81d43c96d14f832ede87b412705452f24",
         "txinwitness": [
@@ -2950,14 +2950,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 362139,
+        "value": "362139",
         "address": "GJfTsmr7Pf8yY6FKYus1KNPGdg6EAN2aCq",
         "script_hex": "76a91408fdcfabaa3819c73a3cfb748dde7650b86ad21b88ac",
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583"
       },
       {
         "output_index": 1,
-        "value": 329107,
+        "value": "329107",
         "address": "AdbrkNEYuN4cUgtKcCRLUfzB1XeZ2nm975",
         "script_hex": "a914ef6ddb79fd62d314dfdec26ed7b39a4494a98c4587",
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583"
@@ -2983,7 +2983,7 @@
         "output_hash": "b1649cae8dd784609ae106faed90d473fe4463397ccd48574a7afa2473562680",
         "output_index": 0,
         "input_index": 0,
-        "value": 94723,
+        "value": "94723",
         "address": "AZLg8yV5SyCXkesQVr77GSiu4kpvC13jVN",
         "script_signature": "160014c87f82afc520e4f43d0623e98d18c45d51aee507",
         "txinwitness": [
@@ -2996,7 +2996,7 @@
         "output_hash": "2dfec3a1e47999ecbe3e97567196d7e9ecac5fa54a5d92c8991edb9c73085a0e",
         "output_index": 1,
         "input_index": 1,
-        "value": 597297,
+        "value": "597297",
         "address": "AHPsbs4Vg8PUxjYm3vz48PEQKAs8xWVUYY",
         "script_signature": "160014276425b81d43c96d14f832ede87b412705452f24",
         "txinwitness": [
@@ -3009,14 +3009,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 362139,
+        "value": "362139",
         "address": "GJfTsmr7Pf8yY6FKYus1KNPGdg6EAN2aCq",
         "script_hex": "76a91408fdcfabaa3819c73a3cfb748dde7650b86ad21b88ac",
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583"
       },
       {
         "output_index": 1,
-        "value": 329107,
+        "value": "329107",
         "address": "AdbrkNEYuN4cUgtKcCRLUfzB1XeZ2nm975",
         "script_hex": "a914ef6ddb79fd62d314dfdec26ed7b39a4494a98c4587",
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583"
@@ -3042,7 +3042,7 @@
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583",
         "output_index": 1,
         "input_index": 0,
-        "value": 329107,
+        "value": "329107",
         "address": "AdbrkNEYuN4cUgtKcCRLUfzB1XeZ2nm975",
         "script_signature": "16001487a72c3674b559887c030a6d1a4562cc16c691fa",
         "txinwitness": [
@@ -3055,7 +3055,7 @@
         "output_hash": "42af711ec7327e0787cba0be130f6da5b3e9cfbe5a6b45bb50e163a2818e5db2",
         "output_index": 0,
         "input_index": 1,
-        "value": 462717,
+        "value": "462717",
         "address": "AbAr7Ant3nAs8fhyCyt8Hz4e9QXUqSgSue",
         "script_signature": "160014787cb1fb429c5bac4930ab18845e699b63e3bd2d",
         "txinwitness": [
@@ -3068,14 +3068,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 379737,
+        "value": "379737",
         "address": "GL8yRFGFh9VhsDnNq3sxWCkiX4ZV6VJJmB",
         "script_hex": "76a9141929d433a57fe67db965a003df7dbdcfa2ff5c5c88ac",
         "output_hash": "d425fe6a500208863f89297c461dcd8b34a110f3314dd766d1eb41038984903b"
       },
       {
         "output_index": 1,
-        "value": 411313,
+        "value": "411313",
         "address": "AWT1RCupcLQ2RWtK1GY8U2dAK4dwM95EkF",
         "script_hex": "a914a0f87861b0fd8c1e397fae816856f242a07fce5e87",
         "output_hash": "d425fe6a500208863f89297c461dcd8b34a110f3314dd766d1eb41038984903b"
@@ -3101,7 +3101,7 @@
         "output_hash": "3b3e7436d61effc84dc2dedc05eaa7ee9fcd5a5087f7c61c38bc81e2bf5ab583",
         "output_index": 1,
         "input_index": 0,
-        "value": 329107,
+        "value": "329107",
         "address": "AdbrkNEYuN4cUgtKcCRLUfzB1XeZ2nm975",
         "script_signature": "16001487a72c3674b559887c030a6d1a4562cc16c691fa",
         "txinwitness": [
@@ -3114,7 +3114,7 @@
         "output_hash": "42af711ec7327e0787cba0be130f6da5b3e9cfbe5a6b45bb50e163a2818e5db2",
         "output_index": 0,
         "input_index": 1,
-        "value": 462717,
+        "value": "462717",
         "address": "AbAr7Ant3nAs8fhyCyt8Hz4e9QXUqSgSue",
         "script_signature": "160014787cb1fb429c5bac4930ab18845e699b63e3bd2d",
         "txinwitness": [
@@ -3127,14 +3127,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 379737,
+        "value": "379737",
         "address": "GL8yRFGFh9VhsDnNq3sxWCkiX4ZV6VJJmB",
         "script_hex": "76a9141929d433a57fe67db965a003df7dbdcfa2ff5c5c88ac",
         "output_hash": "d425fe6a500208863f89297c461dcd8b34a110f3314dd766d1eb41038984903b"
       },
       {
         "output_index": 1,
-        "value": 411313,
+        "value": "411313",
         "address": "AWT1RCupcLQ2RWtK1GY8U2dAK4dwM95EkF",
         "script_hex": "a914a0f87861b0fd8c1e397fae816856f242a07fce5e87",
         "output_hash": "d425fe6a500208863f89297c461dcd8b34a110f3314dd766d1eb41038984903b"
@@ -3160,7 +3160,7 @@
         "output_hash": "d425fe6a500208863f89297c461dcd8b34a110f3314dd766d1eb41038984903b",
         "output_index": 1,
         "input_index": 0,
-        "value": 411313,
+        "value": "411313",
         "address": "AWT1RCupcLQ2RWtK1GY8U2dAK4dwM95EkF",
         "script_signature": "16001432d800ac352aeee1f85971b5b4592093d565d299",
         "txinwitness": [
@@ -3173,7 +3173,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 410911,
+        "value": "410911",
         "address": "Ga2aavPzza2HetnAxP49XJub7VuxvJ4ADm",
         "script_hex": "76a914b18608af42e2e0c3956323c3aa9b2faf21587c9e88ac",
         "output_hash": "7f1f3307d48ded0ac4a0862fffceb8de9c18420e23a4501b970486da9ef036c3"
@@ -3199,7 +3199,7 @@
         "output_hash": "a7993ee99a82c57307decc61a7c453abbbb4f3f8f749a12e483a1da9b7432d75",
         "output_index": 0,
         "input_index": 0,
-        "value": 367776,
+        "value": "367776",
         "address": "AX4rbQohxz3M4G76es7sjSrUvnJhqrxNYN",
         "script_signature": "160014fdc7dcb2590e5ecdc31017cca15fc6da5fb1c495",
         "txinwitness": [
@@ -3212,14 +3212,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 196701,
+        "value": "196701",
         "address": "GVtWbo2Mz9bo6tG8ABbErtoomu81Rz9stU",
         "script_hex": "76a914841ee06a8c4fb5cda38dede5c5bc38953b6f1cd288ac",
         "output_hash": "64f2ca6fdfd32a36e6e1c6cd996f03593c3d287db1bc4b107d7155e04d3ad943"
       },
       {
         "output_index": 1,
-        "value": 170571,
+        "value": "170571",
         "address": "AMn22pjPyxwCjDokkcDVJT8Z9W9ZaeAkHR",
         "script_hex": "a91441d7c10b8d080819bb3c3da1a118321ee75f216087",
         "output_hash": "64f2ca6fdfd32a36e6e1c6cd996f03593c3d287db1bc4b107d7155e04d3ad943"
@@ -3245,7 +3245,7 @@
         "output_hash": "64f2ca6fdfd32a36e6e1c6cd996f03593c3d287db1bc4b107d7155e04d3ad943",
         "output_index": 1,
         "input_index": 0,
-        "value": 170571,
+        "value": "170571",
         "address": "AMn22pjPyxwCjDokkcDVJT8Z9W9ZaeAkHR",
         "script_signature": "1600145db2f16802ac94527778d7a004e1a3f3ff20bb7d",
         "txinwitness": [
@@ -3258,7 +3258,7 @@
         "output_hash": "828bd3e058f8bafdebe16dc6f5c343db5e876dbee441a79039ade821854d28f8",
         "output_index": 0,
         "input_index": 1,
-        "value": 299965,
+        "value": "299965",
         "address": "AeMibphvT5YWxjZs8HzfNzgZkZqhGiHbts",
         "script_signature": "160014bc2750b176659846b6ee667acea725402070fde4",
         "txinwitness": [
@@ -3271,14 +3271,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 224490,
+        "value": "224490",
         "address": "Gf8bohuBokyEgg5qcfxhsgcwNYonkpBMUc",
         "script_hex": "76a914e9822d683c9415d3201b278d3f8d16e466f2826788ac",
         "output_hash": "69a2b48c345c5502a0133408e879540d12748637ad2c7a1dc1e60267609e2522"
       },
       {
         "output_index": 1,
-        "value": 245272,
+        "value": "245272",
         "address": "AQutaSA3tE6D1jUjfcnkNeVrukcAgC2rdU",
         "script_hex": "a914643d3c6bb9226aef9a1688fc655c0d90e8c0c7c387",
         "output_hash": "69a2b48c345c5502a0133408e879540d12748637ad2c7a1dc1e60267609e2522"
@@ -3304,7 +3304,7 @@
         "output_hash": "64f2ca6fdfd32a36e6e1c6cd996f03593c3d287db1bc4b107d7155e04d3ad943",
         "output_index": 1,
         "input_index": 0,
-        "value": 170571,
+        "value": "170571",
         "address": "AMn22pjPyxwCjDokkcDVJT8Z9W9ZaeAkHR",
         "script_signature": "1600145db2f16802ac94527778d7a004e1a3f3ff20bb7d",
         "txinwitness": [
@@ -3317,7 +3317,7 @@
         "output_hash": "828bd3e058f8bafdebe16dc6f5c343db5e876dbee441a79039ade821854d28f8",
         "output_index": 0,
         "input_index": 1,
-        "value": 299965,
+        "value": "299965",
         "address": "AeMibphvT5YWxjZs8HzfNzgZkZqhGiHbts",
         "script_signature": "160014bc2750b176659846b6ee667acea725402070fde4",
         "txinwitness": [
@@ -3330,14 +3330,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 224490,
+        "value": "224490",
         "address": "Gf8bohuBokyEgg5qcfxhsgcwNYonkpBMUc",
         "script_hex": "76a914e9822d683c9415d3201b278d3f8d16e466f2826788ac",
         "output_hash": "69a2b48c345c5502a0133408e879540d12748637ad2c7a1dc1e60267609e2522"
       },
       {
         "output_index": 1,
-        "value": 245272,
+        "value": "245272",
         "address": "AQutaSA3tE6D1jUjfcnkNeVrukcAgC2rdU",
         "script_hex": "a914643d3c6bb9226aef9a1688fc655c0d90e8c0c7c387",
         "output_hash": "69a2b48c345c5502a0133408e879540d12748637ad2c7a1dc1e60267609e2522"
@@ -3363,7 +3363,7 @@
         "output_hash": "69a2b48c345c5502a0133408e879540d12748637ad2c7a1dc1e60267609e2522",
         "output_index": 1,
         "input_index": 0,
-        "value": 245272,
+        "value": "245272",
         "address": "AQutaSA3tE6D1jUjfcnkNeVrukcAgC2rdU",
         "script_signature": "160014693bf5e39302802855bffcc69d48abef904d7504",
         "txinwitness": [
@@ -3376,14 +3376,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 45583,
+        "value": "45583",
         "address": "GKxSzmnpPyrBnbcdmX8W6jicghNMWzs2TA",
         "script_hex": "76a914172c4639f68222736e2ba72504c01fa83150a4b688ac",
         "output_hash": "c900fe8929fec69de5b5c4ff216a85cc33a23508492122cfe589ec28747e6730"
       },
       {
         "output_index": 1,
-        "value": 199185,
+        "value": "199185",
         "address": "ASev9tjUTgYsmg91mAbNQ54Ub7Yk2FoF95",
         "script_hex": "a914775890807e4e5d6238a9d60ee4005138a8f1c44387",
         "output_hash": "c900fe8929fec69de5b5c4ff216a85cc33a23508492122cfe589ec28747e6730"
@@ -3409,7 +3409,7 @@
         "output_hash": "c900fe8929fec69de5b5c4ff216a85cc33a23508492122cfe589ec28747e6730",
         "output_index": 1,
         "input_index": 0,
-        "value": 199185,
+        "value": "199185",
         "address": "ASev9tjUTgYsmg91mAbNQ54Ub7Yk2FoF95",
         "script_signature": "1600149ebd2aad1f530e0d902454b43d34b3ca739478d9",
         "txinwitness": [
@@ -3422,7 +3422,7 @@
         "output_hash": "6e8c9083dead72e3f2532adef0eb957612065b01f5f0ffb58a15b957dcdf87bb",
         "output_index": 0,
         "input_index": 1,
-        "value": 340651,
+        "value": "340651",
         "address": "AXLHGQArKAev75eKZaNMGbsMaCH4Yg1Tvy",
         "script_signature": "160014f33de650f5fca69c32cdd0f0fafda028df29817f",
         "txinwitness": [
@@ -3435,14 +3435,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 264135,
+        "value": "264135",
         "address": "GJPAviS2Vx67N1JHJTcdgnuZSaPCmBXkbW",
         "script_hex": "76a91405e901dc5eba02a7f3a344a0c8088d7f0246949888ac",
         "output_hash": "1f2f3046c1fa39f8ea90b9da36e403931b13ef0056f79d9f3e9f56591c9480d8"
       },
       {
         "output_index": 1,
-        "value": 274927,
+        "value": "274927",
         "address": "ASFLc4ZRzNAf7ebZLbeLFMAXekqerwQ3Um",
         "script_hex": "a91472e2fe016ab90785f1a035367df30c57a0884cce87",
         "output_hash": "1f2f3046c1fa39f8ea90b9da36e403931b13ef0056f79d9f3e9f56591c9480d8"
@@ -3468,7 +3468,7 @@
         "output_hash": "69a2b48c345c5502a0133408e879540d12748637ad2c7a1dc1e60267609e2522",
         "output_index": 1,
         "input_index": 0,
-        "value": 245272,
+        "value": "245272",
         "address": "AQutaSA3tE6D1jUjfcnkNeVrukcAgC2rdU",
         "script_signature": "160014693bf5e39302802855bffcc69d48abef904d7504",
         "txinwitness": [
@@ -3481,14 +3481,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 45583,
+        "value": "45583",
         "address": "GKxSzmnpPyrBnbcdmX8W6jicghNMWzs2TA",
         "script_hex": "76a914172c4639f68222736e2ba72504c01fa83150a4b688ac",
         "output_hash": "c900fe8929fec69de5b5c4ff216a85cc33a23508492122cfe589ec28747e6730"
       },
       {
         "output_index": 1,
-        "value": 199185,
+        "value": "199185",
         "address": "ASev9tjUTgYsmg91mAbNQ54Ub7Yk2FoF95",
         "script_hex": "a914775890807e4e5d6238a9d60ee4005138a8f1c44387",
         "output_hash": "c900fe8929fec69de5b5c4ff216a85cc33a23508492122cfe589ec28747e6730"
@@ -3514,7 +3514,7 @@
         "output_hash": "c900fe8929fec69de5b5c4ff216a85cc33a23508492122cfe589ec28747e6730",
         "output_index": 1,
         "input_index": 0,
-        "value": 199185,
+        "value": "199185",
         "address": "ASev9tjUTgYsmg91mAbNQ54Ub7Yk2FoF95",
         "script_signature": "1600149ebd2aad1f530e0d902454b43d34b3ca739478d9",
         "txinwitness": [
@@ -3527,7 +3527,7 @@
         "output_hash": "6e8c9083dead72e3f2532adef0eb957612065b01f5f0ffb58a15b957dcdf87bb",
         "output_index": 0,
         "input_index": 1,
-        "value": 340651,
+        "value": "340651",
         "address": "AXLHGQArKAev75eKZaNMGbsMaCH4Yg1Tvy",
         "script_signature": "160014f33de650f5fca69c32cdd0f0fafda028df29817f",
         "txinwitness": [
@@ -3540,14 +3540,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 264135,
+        "value": "264135",
         "address": "GJPAviS2Vx67N1JHJTcdgnuZSaPCmBXkbW",
         "script_hex": "76a91405e901dc5eba02a7f3a344a0c8088d7f0246949888ac",
         "output_hash": "1f2f3046c1fa39f8ea90b9da36e403931b13ef0056f79d9f3e9f56591c9480d8"
       },
       {
         "output_index": 1,
-        "value": 274927,
+        "value": "274927",
         "address": "ASFLc4ZRzNAf7ebZLbeLFMAXekqerwQ3Um",
         "script_hex": "a91472e2fe016ab90785f1a035367df30c57a0884cce87",
         "output_hash": "1f2f3046c1fa39f8ea90b9da36e403931b13ef0056f79d9f3e9f56591c9480d8"
@@ -3573,7 +3573,7 @@
         "output_hash": "1f2f3046c1fa39f8ea90b9da36e403931b13ef0056f79d9f3e9f56591c9480d8",
         "output_index": 1,
         "input_index": 0,
-        "value": 274927,
+        "value": "274927",
         "address": "ASFLc4ZRzNAf7ebZLbeLFMAXekqerwQ3Um",
         "script_signature": "160014b3de70782b19086453a808879cd22e6791a9e4c0",
         "txinwitness": [
@@ -3586,7 +3586,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 274525,
+        "value": "274525",
         "address": "GYLe63hY54JvUCVdFxHeuPfujAqjLSbn4v",
         "script_hex": "76a9149f00317137f5c9e23febc9ebdb3452d4f126c66688ac",
         "output_hash": "5a41c906f44f1a7df59647fb6914a0ed2423f4679e558f0540dde856d056f745"
@@ -3612,7 +3612,7 @@
         "output_hash": "534a317fb888fc060bbb229cb7dae864b80617c1e322e300569efa98de6bf413",
         "output_index": 0,
         "input_index": 0,
-        "value": 186679,
+        "value": "186679",
         "address": "AJ7jPiutzqXs7PsXQJBcuaxDMn6a5r96mJ",
         "script_signature": "1600148b70afe39b7e7d4b8ed5d1a8491d88237786521d",
         "txinwitness": [
@@ -3625,14 +3625,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 97479,
+        "value": "97479",
         "address": "GTEa1cm128Sd51Si5wcp5GXmpsygYP4hr9",
         "script_hex": "76a9146701aa684dd994c2bad6cf57aef1fd45bb34445b88ac",
         "output_hash": "48059a872cb87b6318b79c706905318b776862c5bc1dd36c30a29c3d8affcd2e"
       },
       {
         "output_index": 1,
-        "value": 88696,
+        "value": "88696",
         "address": "ANMPTMyZzUHzfKEdr7qVkTxzxgXYMseamA",
         "script_hex": "a91448275d29230c6aed8aa26b5027b7f566bd395dc587",
         "output_hash": "48059a872cb87b6318b79c706905318b776862c5bc1dd36c30a29c3d8affcd2e"
@@ -3658,7 +3658,7 @@
         "output_hash": "48059a872cb87b6318b79c706905318b776862c5bc1dd36c30a29c3d8affcd2e",
         "output_index": 1,
         "input_index": 0,
-        "value": 88696,
+        "value": "88696",
         "address": "ANMPTMyZzUHzfKEdr7qVkTxzxgXYMseamA",
         "script_signature": "160014ca96ffdd797d4ec8fa9a4416d8f5490f9fd75004",
         "txinwitness": [
@@ -3671,7 +3671,7 @@
         "output_hash": "4557c7c451ca854fa16b8cf1df8935a7e9e7a6878c35567025b874aed167afcc",
         "output_index": 0,
         "input_index": 1,
-        "value": 39865,
+        "value": "39865",
         "address": "AMdN6arZUvdCux5WAB7t8F8hZkc5LtfiRd",
         "script_signature": "1600146d4b0197570621abbd74620d58820ad5c4cdf3e8",
         "txinwitness": [
@@ -3684,7 +3684,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 127889,
+        "value": "127889",
         "address": "GSyYM8jsKEW9tr7ikNT3TscHGJNDzgrFSv",
         "script_hex": "76a914642a09a08b87f6906d991e5632fe4404b71cc3d188ac",
         "output_hash": "c0f7d364f75b3db56bba5e55f398ed8d82053fe693175400db7ba028d5afd39e"
@@ -3710,7 +3710,7 @@
         "output_hash": "6b7011c365082d71867d126ecb65fbb4697f9b437b00a4914a1c6e601df7978c",
         "output_index": 0,
         "input_index": 0,
-        "value": 126035,
+        "value": "126035",
         "address": "ALoBg2y31FrpEaFb3ZJ1jeRA5tmaippq9P",
         "script_signature": "160014765160d8a167f726c066b950969cd571eeabfaa8",
         "txinwitness": [
@@ -3723,14 +3723,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 51543,
+        "value": "51543",
         "address": "GZGgPeC1ARbKz5Mai5DdCHtTZKBjmg6sh5",
         "script_hex": "76a914a93893ebb7afe5faf3526364c9e50735567ff6c488ac",
         "output_hash": "53f02b9c374f4e953f16bc7472d99caefc09d6d8f90ad567ffacf7704f862a57"
       },
       {
         "output_index": 1,
-        "value": 73988,
+        "value": "73988",
         "address": "ANhiA54a5J8khGX2s1TQJq3m4wDF45Mzi1",
         "script_hex": "a9144bff4b700d1b35449f02d035d94dedd0a67f964587",
         "output_hash": "53f02b9c374f4e953f16bc7472d99caefc09d6d8f90ad567ffacf7704f862a57"
@@ -3756,7 +3756,7 @@
         "output_hash": "a1fef95ed4f5e76afa6799d3f71f27fffdb78410704cd52dd045b1f406577d76",
         "output_index": 0,
         "input_index": 0,
-        "value": 76771,
+        "value": "76771",
         "address": "AUaGGcG3R9Q3Ch8VBKfyp31CNWLA2KuTJf",
         "script_signature": "160014caa4c94f80b67340147f3233d7e9df1ec444af4e",
         "txinwitness": [
@@ -3769,7 +3769,7 @@
         "output_hash": "53f02b9c374f4e953f16bc7472d99caefc09d6d8f90ad567ffacf7704f862a57",
         "output_index": 1,
         "input_index": 1,
-        "value": 73988,
+        "value": "73988",
         "address": "ANhiA54a5J8khGX2s1TQJq3m4wDF45Mzi1",
         "script_signature": "160014ff6f0769f1cb90ad103b4226011e42d13391315b",
         "txinwitness": [
@@ -3782,14 +3782,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 76448,
+        "value": "76448",
         "address": "Ge4dM2P5EGnqxaowdn6P4wG4GDEAyswvLp",
         "script_hex": "76a914ddc9ac5a02a7859912a6d723a72a872568727bf088ac",
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796"
       },
       {
         "output_index": 1,
-        "value": 62677,
+        "value": "62677",
         "address": "ASTXvGnpwmTEMnSz6LqaSkbXHCGC6n5Vhu",
         "script_hex": "a91475316d9d9990960f2e90bd98912c4d08248f7c5b87",
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796"
@@ -3815,7 +3815,7 @@
         "output_hash": "a65723a0ce087abc74066bd5360f1ddfc115d7f878252a8704a70c169e70f7ff",
         "output_index": 0,
         "input_index": 0,
-        "value": 107191,
+        "value": "107191",
         "address": "AWU6Z9L7HCjKR84xbQGLgjAgwwp18Wn3Hu",
         "script_signature": "1600140835497688819835884e5914b6eb492fe0205175",
         "txinwitness": [
@@ -3828,14 +3828,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 93468,
+        "value": "93468",
         "address": "Ga9SuWHfo9PqddxiaqDPVAvT88cAos7AT6",
         "script_hex": "76a914b2d288fa119792f389473b5e96e8baaf1a1169c588ac",
         "output_hash": "87576d806937b06bad1cb6b0ebdc479b12e73a4e6d417fffe8cd63218169fd6f"
       },
       {
         "output_index": 1,
-        "value": 13219,
+        "value": "13219",
         "address": "AGEnBePYLufcePxevW1G184uG3FBXjEsXm",
         "script_hex": "a9140516abb31b30f776b4d52543156563c8099724c987",
         "output_hash": "87576d806937b06bad1cb6b0ebdc479b12e73a4e6d417fffe8cd63218169fd6f"
@@ -3861,7 +3861,7 @@
         "output_hash": "87576d806937b06bad1cb6b0ebdc479b12e73a4e6d417fffe8cd63218169fd6f",
         "output_index": 1,
         "input_index": 0,
-        "value": 13219,
+        "value": "13219",
         "address": "AGEnBePYLufcePxevW1G184uG3FBXjEsXm",
         "script_signature": "16001443dcf688aef3f3712e03a2fc3b00111643ade122",
         "txinwitness": [
@@ -3874,7 +3874,7 @@
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796",
         "output_index": 1,
         "input_index": 1,
-        "value": 62677,
+        "value": "62677",
         "address": "ASTXvGnpwmTEMnSz6LqaSkbXHCGC6n5Vhu",
         "script_signature": "1600148cb4dff1bc440f23a84eb71559035dd4381168a4",
         "txinwitness": [
@@ -3887,7 +3887,7 @@
         "output_hash": "e03d2944871fb7549036f48353cbca598ade2c51c601554e8adcc03e75d2846e",
         "output_index": 0,
         "input_index": 2,
-        "value": 82207,
+        "value": "82207",
         "address": "AH3pkxaQaiAi7GZgCCsZvQb4SBdofHfaZp",
         "script_signature": "160014ea57ace3e1021031f98171b8987bd3db30f7b58d",
         "txinwitness": [
@@ -3900,7 +3900,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 157161,
+        "value": "157161",
         "address": "GWtszx1YDc3tsmcZL43WB1SHFE4rsnJ7u9",
         "script_hex": "76a9148f28dd96bbb96a57bd8749fe11036ae16d239cda88ac",
         "output_hash": "5593af8ba552bd744080413f6e752cff911a6e5719a0ce05db60ffbba141eeb6"
@@ -3926,7 +3926,7 @@
         "output_hash": "a1fef95ed4f5e76afa6799d3f71f27fffdb78410704cd52dd045b1f406577d76",
         "output_index": 0,
         "input_index": 0,
-        "value": 76771,
+        "value": "76771",
         "address": "AUaGGcG3R9Q3Ch8VBKfyp31CNWLA2KuTJf",
         "script_signature": "160014caa4c94f80b67340147f3233d7e9df1ec444af4e",
         "txinwitness": [
@@ -3939,7 +3939,7 @@
         "output_hash": "53f02b9c374f4e953f16bc7472d99caefc09d6d8f90ad567ffacf7704f862a57",
         "output_index": 1,
         "input_index": 1,
-        "value": 73988,
+        "value": "73988",
         "address": "ANhiA54a5J8khGX2s1TQJq3m4wDF45Mzi1",
         "script_signature": "160014ff6f0769f1cb90ad103b4226011e42d13391315b",
         "txinwitness": [
@@ -3952,14 +3952,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 76448,
+        "value": "76448",
         "address": "Ge4dM2P5EGnqxaowdn6P4wG4GDEAyswvLp",
         "script_hex": "76a914ddc9ac5a02a7859912a6d723a72a872568727bf088ac",
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796"
       },
       {
         "output_index": 1,
-        "value": 62677,
+        "value": "62677",
         "address": "ASTXvGnpwmTEMnSz6LqaSkbXHCGC6n5Vhu",
         "script_hex": "a91475316d9d9990960f2e90bd98912c4d08248f7c5b87",
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796"
@@ -3985,7 +3985,7 @@
         "output_hash": "87576d806937b06bad1cb6b0ebdc479b12e73a4e6d417fffe8cd63218169fd6f",
         "output_index": 1,
         "input_index": 0,
-        "value": 13219,
+        "value": "13219",
         "address": "AGEnBePYLufcePxevW1G184uG3FBXjEsXm",
         "script_signature": "16001443dcf688aef3f3712e03a2fc3b00111643ade122",
         "txinwitness": [
@@ -3998,7 +3998,7 @@
         "output_hash": "1ee24ad5af3d6f43ad226da5d4e62801919d5a04e05da796281ffc0f32d9e796",
         "output_index": 1,
         "input_index": 1,
-        "value": 62677,
+        "value": "62677",
         "address": "ASTXvGnpwmTEMnSz6LqaSkbXHCGC6n5Vhu",
         "script_signature": "1600148cb4dff1bc440f23a84eb71559035dd4381168a4",
         "txinwitness": [
@@ -4011,7 +4011,7 @@
         "output_hash": "e03d2944871fb7549036f48353cbca598ade2c51c601554e8adcc03e75d2846e",
         "output_index": 0,
         "input_index": 2,
-        "value": 82207,
+        "value": "82207",
         "address": "AH3pkxaQaiAi7GZgCCsZvQb4SBdofHfaZp",
         "script_signature": "160014ea57ace3e1021031f98171b8987bd3db30f7b58d",
         "txinwitness": [
@@ -4024,7 +4024,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 157161,
+        "value": "157161",
         "address": "GWtszx1YDc3tsmcZL43WB1SHFE4rsnJ7u9",
         "script_hex": "76a9148f28dd96bbb96a57bd8749fe11036ae16d239cda88ac",
         "output_hash": "5593af8ba552bd744080413f6e752cff911a6e5719a0ce05db60ffbba141eeb6"
@@ -4050,7 +4050,7 @@
         "output_hash": "59d8a0707f897b429cd00f8b808c0745ca255711f3ca6e1268dde9abe830ce5f",
         "output_index": 0,
         "input_index": 0,
-        "value": 579755,
+        "value": "579755",
         "address": "AMVzYVBzubWUewbYLibPwgfGL4jnr3YrWC",
         "script_signature": "1600140fefad444390f40e2c1c0d7b58229bfbd02c2b15",
         "txinwitness": [
@@ -4063,14 +4063,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 283095,
+        "value": "283095",
         "address": "GafuR2qEHrrY2WRrgDRMPAbdtKTezaacVp",
         "script_hex": "76a914b89524806f8b4ed85e0ad3ebc1e63688d1eddd4788ac",
         "output_hash": "89a6674f1e966d38dfe2feabfc52f5f485f2055f26c76f86f56afd14e0274d96"
       },
       {
         "output_index": 1,
-        "value": 296156,
+        "value": "296156",
         "address": "AJVEbhASHdXzum7GpQJTb9QDUeLR5ZJFPH",
         "script_hex": "a9141dc2cba8f3e467b98df1a2a3e57f6091ef6237a587",
         "output_hash": "89a6674f1e966d38dfe2feabfc52f5f485f2055f26c76f86f56afd14e0274d96"
@@ -4096,7 +4096,7 @@
         "output_hash": "89a6674f1e966d38dfe2feabfc52f5f485f2055f26c76f86f56afd14e0274d96",
         "output_index": 1,
         "input_index": 0,
-        "value": 296156,
+        "value": "296156",
         "address": "AJVEbhASHdXzum7GpQJTb9QDUeLR5ZJFPH",
         "script_signature": "1600142919be6452912a03ef1ba91002c791137d6c1560",
         "txinwitness": [
@@ -4109,14 +4109,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 243920,
+        "value": "243920",
         "address": "GKdAefvbeR7XrvdDJMRENRNyUceBLJmLPk",
         "script_hex": "76a9141386b9c20fec5a8a0977481298151f3367bf0e5c88ac",
         "output_hash": "4d40895320303cd38c474a6a8fbbbf245afdb99a29630ef39b6bb4f20b747e9f"
       },
       {
         "output_index": 1,
-        "value": 51732,
+        "value": "51732",
         "address": "ANAdMdykxsoSQBQjFWapXs13nn4uXh8TSy",
         "script_hex": "a914461e647ea75b3785727891609b8a9dee68cea11587",
         "output_hash": "4d40895320303cd38c474a6a8fbbbf245afdb99a29630ef39b6bb4f20b747e9f"
@@ -4142,7 +4142,7 @@
         "output_hash": "43db85bf5d7f25abafde55aaedea5114261e9810b620927cf4b8e50154313aec",
         "output_index": 0,
         "input_index": 0,
-        "value": 88985,
+        "value": "88985",
         "address": "ARk8kexjzPoJSgrigT6vh3UtyJzMvE3fmk",
         "script_signature": "160014f4df057863f3071ba5396858f72a53f95773d4e9",
         "txinwitness": [
@@ -4155,14 +4155,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 45085,
+        "value": "45085",
         "address": "GcQXwuMnchr3pJsu1dywRjQjZN5XLz24w3",
         "script_hex": "76a914cb9d3bfefe669df9861be9439da2f4e5053d2cef88ac",
         "output_hash": "9318b18135e9062330834539f3131f43b937005d2549f654bc95e18f3d0d1dc0"
       },
       {
         "output_index": 1,
-        "value": 43396,
+        "value": "43396",
         "address": "AQLzvtCmGbKEQkBwEvoNUdavBvqoNiFxmv",
         "script_hex": "a9145e04cfe84d2d967a9c31a200029b395f0e0e87b987",
         "output_hash": "9318b18135e9062330834539f3131f43b937005d2549f654bc95e18f3d0d1dc0"
@@ -4188,7 +4188,7 @@
         "output_hash": "9318b18135e9062330834539f3131f43b937005d2549f654bc95e18f3d0d1dc0",
         "output_index": 1,
         "input_index": 0,
-        "value": 43396,
+        "value": "43396",
         "address": "AQLzvtCmGbKEQkBwEvoNUdavBvqoNiFxmv",
         "script_signature": "160014a2087aa2e2a230d0ddf076ecbd54060171c3f0b6",
         "txinwitness": [
@@ -4201,14 +4201,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 20002,
+        "value": "20002",
         "address": "GYE5mh5LAiM2dffSJjgZLPGWw5LBrYzpc9",
         "script_hex": "76a9149dc2b88eb7e56cf13dd814c5685d1c261446e76188ac",
         "output_hash": "c3945bfb1f664316d4254a83d8d0d9fc856fb4e73fabcb4255029dde7259c882"
       },
       {
         "output_index": 1,
-        "value": 22890,
+        "value": "22890",
         "address": "AJ8jAN9BJud5yJpC55XGRs3dfkk847c1vR",
         "script_hex": "a91419e1e75f78080b42de7f51cc8f81696ce7332dcf87",
         "output_hash": "c3945bfb1f664316d4254a83d8d0d9fc856fb4e73fabcb4255029dde7259c882"
@@ -4234,7 +4234,7 @@
         "output_hash": "9318b18135e9062330834539f3131f43b937005d2549f654bc95e18f3d0d1dc0",
         "output_index": 1,
         "input_index": 0,
-        "value": 43396,
+        "value": "43396",
         "address": "AQLzvtCmGbKEQkBwEvoNUdavBvqoNiFxmv",
         "script_signature": "160014a2087aa2e2a230d0ddf076ecbd54060171c3f0b6",
         "txinwitness": [
@@ -4247,14 +4247,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 20002,
+        "value": "20002",
         "address": "GYE5mh5LAiM2dffSJjgZLPGWw5LBrYzpc9",
         "script_hex": "76a9149dc2b88eb7e56cf13dd814c5685d1c261446e76188ac",
         "output_hash": "c3945bfb1f664316d4254a83d8d0d9fc856fb4e73fabcb4255029dde7259c882"
       },
       {
         "output_index": 1,
-        "value": 22890,
+        "value": "22890",
         "address": "AJ8jAN9BJud5yJpC55XGRs3dfkk847c1vR",
         "script_hex": "a91419e1e75f78080b42de7f51cc8f81696ce7332dcf87",
         "output_hash": "c3945bfb1f664316d4254a83d8d0d9fc856fb4e73fabcb4255029dde7259c882"
@@ -4280,7 +4280,7 @@
         "output_hash": "c3945bfb1f664316d4254a83d8d0d9fc856fb4e73fabcb4255029dde7259c882",
         "output_index": 1,
         "input_index": 0,
-        "value": 22890,
+        "value": "22890",
         "address": "AJ8jAN9BJud5yJpC55XGRs3dfkk847c1vR",
         "script_signature": "1600140191e9c1eadb0ba847513fffce0775d2e0a33916",
         "txinwitness": [
@@ -4293,7 +4293,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 22488,
+        "value": "22488",
         "address": "GTaneH2b65itjQzQCF2gMAUx8DjirHW87w",
         "script_hex": "76a9146ad48794563f8326b3641123e6b5a75c0ab5f1c488ac",
         "output_hash": "205e1eaf518b623663c22f1fe8f3ae14358e01e1bdac1a1e4c7e94146520c6b6"
@@ -4319,7 +4319,7 @@
         "output_hash": "89a6674f1e966d38dfe2feabfc52f5f485f2055f26c76f86f56afd14e0274d96",
         "output_index": 1,
         "input_index": 0,
-        "value": 296156,
+        "value": "296156",
         "address": "AJVEbhASHdXzum7GpQJTb9QDUeLR5ZJFPH",
         "script_signature": "1600142919be6452912a03ef1ba91002c791137d6c1560",
         "txinwitness": [
@@ -4332,14 +4332,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 243920,
+        "value": "243920",
         "address": "GKdAefvbeR7XrvdDJMRENRNyUceBLJmLPk",
         "script_hex": "76a9141386b9c20fec5a8a0977481298151f3367bf0e5c88ac",
         "output_hash": "4d40895320303cd38c474a6a8fbbbf245afdb99a29630ef39b6bb4f20b747e9f"
       },
       {
         "output_index": 1,
-        "value": 51732,
+        "value": "51732",
         "address": "ANAdMdykxsoSQBQjFWapXs13nn4uXh8TSy",
         "script_hex": "a914461e647ea75b3785727891609b8a9dee68cea11587",
         "output_hash": "4d40895320303cd38c474a6a8fbbbf245afdb99a29630ef39b6bb4f20b747e9f"
@@ -4365,7 +4365,7 @@
         "output_hash": "5f50503073184ce55e12cf763b2d6c235a404cffc5ae617e1499181a49a4f983",
         "output_index": 0,
         "input_index": 0,
-        "value": 184730,
+        "value": "184730",
         "address": "AGeLCPkvfLgmMg6yakiqVHD3jKR3S7yJmH",
         "script_signature": "160014c3825e0bed51eb87d10121f983b7cdc92f9e0fbc",
         "txinwitness": [
@@ -4378,7 +4378,7 @@
         "output_hash": "4d40895320303cd38c474a6a8fbbbf245afdb99a29630ef39b6bb4f20b747e9f",
         "output_index": 1,
         "input_index": 1,
-        "value": 51732,
+        "value": "51732",
         "address": "ANAdMdykxsoSQBQjFWapXs13nn4uXh8TSy",
         "script_signature": "16001479fabdaec368e71735ad795e7f7edc4613c7fe18",
         "txinwitness": [
@@ -4391,7 +4391,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 235790,
+        "value": "235790",
         "address": "GQEbKCyCiaBhHjqFTdrHnvcsLmj9zTZKhV",
         "script_hex": "76a914461a604ff825eb26c9a0476ce732da3832be10d288ac",
         "output_hash": "a8608d7573137398c54d96f95d479f49620a29e678ba92748d1b85923039cb56"
@@ -4417,7 +4417,7 @@
         "output_hash": "185c4ea5f436cf8e55ba46f218b0ff9f865e7e87502f594cb1338c2eb7742b22",
         "output_index": 0,
         "input_index": 0,
-        "value": 346321,
+        "value": "346321",
         "address": "AHSduHPgj5sghCz7n3c4fwPoRLMLHwu5Ax",
         "script_signature": "1600146fef37dc8030c012e4c7431a8f01ff21a8bccce2",
         "txinwitness": [
@@ -4430,14 +4430,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 208338,
+        "value": "208338",
         "address": "Gd2TZ9vDbHkY3HcjcNoFih6564jzZyADe2",
         "script_hex": "76a914d2688ae3eb622ee40f8cfe48e8eab634ff8762a588ac",
         "output_hash": "965c90f538658a746b5021c577394a0c4575e755065a7613bcfa79903683401f"
       },
       {
         "output_index": 1,
-        "value": 137479,
+        "value": "137479",
         "address": "AGdnWz6VQPL5k4Vn1aNHQtaHBpQg1mtEBe",
         "script_hex": "a9140970842395b97a8fe66985735b996d5c0934a51787",
         "output_hash": "965c90f538658a746b5021c577394a0c4575e755065a7613bcfa79903683401f"
@@ -4463,7 +4463,7 @@
         "output_hash": "965c90f538658a746b5021c577394a0c4575e755065a7613bcfa79903683401f",
         "output_index": 1,
         "input_index": 0,
-        "value": 137479,
+        "value": "137479",
         "address": "AGdnWz6VQPL5k4Vn1aNHQtaHBpQg1mtEBe",
         "script_signature": "16001410d7c00907ed434ad1e4016c0aab248e06c3f9cf",
         "txinwitness": [
@@ -4476,7 +4476,7 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 137077,
+        "value": "137077",
         "address": "GbBpEYZKafArE5pw423NDh463obs1GvJeJ",
         "script_hex": "76a914be3d4bf51abe539f03a99a782d8d8e93b63e4b6688ac",
         "output_hash": "c2b1bff9a803e847347c49f489c5ddfa88eb6339862c7fbcb1cb60251f0d1456"
