@@ -209,6 +209,7 @@ class WalletLedger {
     return flatten(await Promise.all(addresses.map((address) => account.xpub.explorer.getPendings(address))));
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async buildAccountTx(
     fromAccount: Account,
     dest: string,
@@ -218,7 +219,20 @@ class WalletLedger {
   ) {
     const changeAddress = await fromAccount.xpub.getNewAddress(1, 1);
     const txinfos = await fromAccount.xpub.buildTx(dest, amount, fee, changeAddress.address, unspentUtxoSelected);
+    return txinfos;
+  }
 
+  async signAccounTx(
+    fromAccount: Account,
+    txinfos: {
+      inputs: [string, number][];
+      associatedDerivations: [number, number][];
+      outputs: {
+        script: Buffer;
+        value: BigNumber;
+      }[];
+    }
+  ) {
     const length = txinfos.outputs.reduce((sum, output) => {
       return sum + 8 + output.script.length + 1;
     }, 1);
