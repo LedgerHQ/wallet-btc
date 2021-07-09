@@ -1,3 +1,5 @@
+/* eslint-disable import/first */
+require('bitcore-lib');
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -9,7 +11,6 @@ import Storage from '../storage/mock';
 import ExplorerV3 from '../explorer/ledger.v3.2.4';
 import ExplorerV2 from '../explorer/ledger.v2';
 import Xpub from '../xpub';
-require('bitcore-lib');
 import Bitcoin from '../crypto/bitcoin';
 import BitcoinCash from '../crypto/bitcoincash';
 import Litecoin from '../crypto/litecoin';
