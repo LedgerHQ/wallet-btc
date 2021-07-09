@@ -2,7 +2,6 @@
   {
     "id": "778a3d91870fb2601a1e0b62768af759900beb0554288c26e1dda736f87265dc",
     "hash": "778a3d91870fb2601a1e0b62768af759900beb0554288c26e1dda736f87265dc",
-    "received_at": "2021-07-08T14:26:58Z",
     "lock_time": 0,
     "fees": 504,
     "inputs": [
@@ -10,7 +9,7 @@
         "output_hash": "df04287a8b409042a3b74098c202cdbbdbff2881eddeaccd8f604c896da35f1e",
         "output_index": 1,
         "input_index": 0,
-        "value": 500000000,
+        "value": "500000000",
         "address": "7hv1y2t1UbLgzX4Rzp1bBdZoif4FPnBtr8",
         "script_signature": "160014219329f015a763b26376890e75674e073681ebaf",
         "txinwitness": [
@@ -23,14 +22,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 100000000,
+        "value": "100000000",
         "address": "XvDTQEeuP6w5Qdaw6EydNv6HgQVGsLRg5d",
         "script_hex": "76a914d6348f5a7d27ee764be714e7069ae75c66ff923a88ac",
         "output_hash": "778a3d91870fb2601a1e0b62768af759900beb0554288c26e1dda736f87265dc"
       },
       {
         "output_index": 1,
-        "value": 399999496,
+        "value": "399999496",
         "address": "7cYh4Rhmzksg4kfcmWbhc6nYKtRW9sD6or",
         "script_hex": "a9146f368276f821ec8695373a38bc757ded2e083aff87",
         "output_hash": "778a3d91870fb2601a1e0b62768af759900beb0554288c26e1dda736f87265dc"

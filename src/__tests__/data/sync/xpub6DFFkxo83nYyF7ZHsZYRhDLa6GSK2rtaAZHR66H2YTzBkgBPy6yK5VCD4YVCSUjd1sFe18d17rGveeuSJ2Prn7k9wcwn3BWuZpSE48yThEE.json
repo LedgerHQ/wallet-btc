@@ -2,7 +2,6 @@
   {
     "id": "2de11c0faa46585ce73afac40515034ed3c8ddfd96dd0f1c74b80c8d41659060",
     "hash": "2de11c0faa46585ce73afac40515034ed3c8ddfd96dd0f1c74b80c8d41659060",
-    "received_at": "2021-07-08T15:50:24Z",
     "lock_time": 0,
     "fees": 258258,
     "inputs": [
@@ -10,7 +9,7 @@
         "output_hash": "98076181c4c65e4535e1e6e5aac43d66d714026715b25f927b9de8d39e157c4d",
         "output_index": 1,
         "input_index": 0,
-        "value": 732000,
+        "value": "732000",
         "address": "MDKYR7dxXHEcFdPFxnrgq9sMgWVLrjTJpg",
         "script_signature": "160014202bc6f829e45ce067ee6b1b482c2f3b344cd812",
         "txinwitness": [
@@ -23,7 +22,7 @@
         "output_hash": "9faaf2ff1617a3142e7817aa291dcc3b591ee883660a9b33460fc0c9208c4bae",
         "output_index": 0,
         "input_index": 1,
-        "value": 1000000,
+        "value": "1000000",
         "address": "MGQiQYg4qUgPssAF3w5js7ezxm2xuaA7Fk",
         "script_signature": "160014f6c15d12d1af6da03aad494b828fb50eff505cde",
         "txinwitness": [
@@ -36,14 +35,14 @@
     "outputs": [
       {
         "output_index": 0,
-        "value": 754825,
+        "value": "754825",
         "address": "QSSHpfHL4Y94eVVeNNqeP3YKxTtEeuLcmh",
         "script_hex": "76a9143ffb619ab7aeb821c544724092ef635c80e28e5c88ac",
         "output_hash": "2de11c0faa46585ce73afac40515034ed3c8ddfd96dd0f1c74b80c8d41659060"
       },
       {
         "output_index": 1,
-        "value": 718917,
+        "value": "718917",
         "address": "MQSz6x7HvMibNcR8ckr8obCrf7A5g3aDEd",
         "script_hex": "a914b586de3b6c8eaad0c8e9d412c38ebce489c26ed187",
         "output_hash": "2de11c0faa46585ce73afac40515034ed3c8ddfd96dd0f1c74b80c8d41659060"

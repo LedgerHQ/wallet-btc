@@ -2,7 +2,6 @@
   {
     "id": "d5e76be45d1abb2ff6292b93f3ebb35245a3d89291e1e5cd5b7af30cd241534e",
     "hash": "d5e76be45d1abb2ff6292b93f3ebb35245a3d89291e1e5cd5b7af30cd241534e",
-    "received_at": "2018-05-31T15:38:32Z",
     "lock_time": 0,
     "fees": 2260,
     "inputs": [
@@ -45,7 +44,6 @@
   {
     "id": "09708ff36e233983709d1c998a9f1f713690c737adfa587f0546cecc987947de",
     "hash": "09708ff36e233983709d1c998a9f1f713690c737adfa587f0546cecc987947de",
-    "received_at": "2018-05-31T22:43:40Z",
     "lock_time": 0,
     "fees": 2260,
     "inputs": [
@@ -88,7 +86,6 @@
   {
     "id": "09708ff36e233983709d1c998a9f1f713690c737adfa587f0546cecc987947de",
     "hash": "09708ff36e233983709d1c998a9f1f713690c737adfa587f0546cecc987947de",
-    "received_at": "2018-05-31T22:43:40Z",
     "lock_time": 0,
     "fees": 2260,
     "inputs": [
@@ -131,7 +128,6 @@
   {
     "id": "3d51896292c981e538a93fb3129810bdb8b7ba479adb05a83394eb22b7553e13",
     "hash": "3d51896292c981e538a93fb3129810bdb8b7ba479adb05a83394eb22b7553e13",
-    "received_at": "2018-06-14T13:17:34Z",
     "lock_time": 534633,
     "fees": 2260,
     "inputs": [
@@ -174,7 +170,6 @@
   {
     "id": "3d51896292c981e538a93fb3129810bdb8b7ba479adb05a83394eb22b7553e13",
     "hash": "3d51896292c981e538a93fb3129810bdb8b7ba479adb05a83394eb22b7553e13",
-    "received_at": "2018-06-14T13:17:34Z",
     "lock_time": 534633,
     "fees": 2260,
     "inputs": [
@@ -217,7 +212,6 @@
   {
     "id": "04547a742aa16fd171e26e756f8858b8f5c506797183d4ed0eaf1fcae3e178ff",
     "hash": "04547a742aa16fd171e26e756f8858b8f5c506797183d4ed0eaf1fcae3e178ff",
-    "received_at": "2018-07-03T12:28:19Z",
     "lock_time": 0,
     "fees": 1910,
     "inputs": [
@@ -253,7 +247,6 @@
   {
     "id": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
     "hash": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
-    "received_at": "2018-07-10T16:21:03Z",
     "lock_time": 0,
     "fees": 6700,
     "inputs": [
@@ -319,7 +312,6 @@
   {
     "id": "7de3b202cc27f7b2057e260bdd74e29cc088fb55a25dc8302c79b893ed3a2584",
     "hash": "7de3b202cc27f7b2057e260bdd74e29cc088fb55a25dc8302c79b893ed3a2584",
-    "received_at": "2018-07-02T23:47:58Z",
     "lock_time": 0,
     "fees": 3740,
     "inputs": [
@@ -372,7 +364,6 @@
   {
     "id": "4d3580caee429f4750a64852af90561706171370a50002194bdd67fac1c97e8a",
     "hash": "4d3580caee429f4750a64852af90561706171370a50002194bdd67fac1c97e8a",
-    "received_at": "2018-07-03T12:28:19Z",
     "lock_time": 537365,
     "fees": 2260,
     "inputs": [
@@ -415,7 +406,6 @@
   {
     "id": "e2e5203c1b6c09a79767b0497593da5bf7a56b2ab63e9339a11a9fc30e3cbee2",
     "hash": "e2e5203c1b6c09a79767b0497593da5bf7a56b2ab63e9339a11a9fc30e3cbee2",
-    "received_at": "2018-07-03T16:47:35Z",
     "lock_time": 537386,
     "fees": 2260,
     "inputs": [
@@ -458,7 +448,6 @@
   {
     "id": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
     "hash": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
-    "received_at": "2018-07-10T16:21:03Z",
     "lock_time": 0,
     "fees": 6700,
     "inputs": [
@@ -524,7 +513,6 @@
   {
     "id": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
     "hash": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
-    "received_at": "2018-07-10T16:21:03Z",
     "lock_time": 0,
     "fees": 6700,
     "inputs": [
@@ -590,7 +578,6 @@
   {
     "id": "08a2fe2169cf72527429475bf6f562c4bf0d81a04539e11371318167363d2c2d",
     "hash": "08a2fe2169cf72527429475bf6f562c4bf0d81a04539e11371318167363d2c2d",
-    "received_at": "2018-10-23T14:55:28Z",
     "lock_time": 0,
     "fees": 226,
     "inputs": [
@@ -633,7 +620,6 @@
   {
     "id": "08a2fe2169cf72527429475bf6f562c4bf0d81a04539e11371318167363d2c2d",
     "hash": "08a2fe2169cf72527429475bf6f562c4bf0d81a04539e11371318167363d2c2d",
-    "received_at": "2018-10-23T14:55:28Z",
     "lock_time": 0,
     "fees": 226,
     "inputs": [
@@ -676,7 +662,6 @@
   {
     "id": "09708ff36e233983709d1c998a9f1f713690c737adfa587f0546cecc987947de",
     "hash": "09708ff36e233983709d1c998a9f1f713690c737adfa587f0546cecc987947de",
-    "received_at": "2018-05-31T22:43:40Z",
     "lock_time": 0,
     "fees": 2260,
     "inputs": [
@@ -719,7 +704,6 @@
   {
     "id": "712bd68562b9e076539b74de4e4a85742fac30f67a62d827562c7a45cce447da",
     "hash": "712bd68562b9e076539b74de4e4a85742fac30f67a62d827562c7a45cce447da",
-    "received_at": "2018-06-01T07:05:25Z",
     "lock_time": 0,
     "fees": 2260,
     "inputs": [
@@ -762,7 +746,6 @@
   {
     "id": "712bd68562b9e076539b74de4e4a85742fac30f67a62d827562c7a45cce447da",
     "hash": "712bd68562b9e076539b74de4e4a85742fac30f67a62d827562c7a45cce447da",
-    "received_at": "2018-06-01T07:05:25Z",
     "lock_time": 0,
     "fees": 2260,
     "inputs": [
@@ -805,7 +788,6 @@
   {
     "id": "5a33f2a7810a1938378ec216fbfc39c8409aaba16cb41ceaadc2055edf437941",
     "hash": "5a33f2a7810a1938378ec216fbfc39c8409aaba16cb41ceaadc2055edf437941",
-    "received_at": "2018-06-14T14:35:36Z",
     "lock_time": 534641,
     "fees": 2260,
     "inputs": [
@@ -848,7 +830,6 @@
   {
     "id": "3d51896292c981e538a93fb3129810bdb8b7ba479adb05a83394eb22b7553e13",
     "hash": "3d51896292c981e538a93fb3129810bdb8b7ba479adb05a83394eb22b7553e13",
-    "received_at": "2018-06-14T13:17:34Z",
     "lock_time": 534633,
     "fees": 2260,
     "inputs": [
@@ -891,7 +872,6 @@
   {
     "id": "7de3b202cc27f7b2057e260bdd74e29cc088fb55a25dc8302c79b893ed3a2584",
     "hash": "7de3b202cc27f7b2057e260bdd74e29cc088fb55a25dc8302c79b893ed3a2584",
-    "received_at": "2018-07-02T23:47:58Z",
     "lock_time": 0,
     "fees": 3740,
     "inputs": [
@@ -944,7 +924,6 @@
   {
     "id": "5a33f2a7810a1938378ec216fbfc39c8409aaba16cb41ceaadc2055edf437941",
     "hash": "5a33f2a7810a1938378ec216fbfc39c8409aaba16cb41ceaadc2055edf437941",
-    "received_at": "2018-06-14T14:35:36Z",
     "lock_time": 534641,
     "fees": 2260,
     "inputs": [
@@ -987,7 +966,6 @@
   {
     "id": "7de3b202cc27f7b2057e260bdd74e29cc088fb55a25dc8302c79b893ed3a2584",
     "hash": "7de3b202cc27f7b2057e260bdd74e29cc088fb55a25dc8302c79b893ed3a2584",
-    "received_at": "2018-07-02T23:47:58Z",
     "lock_time": 0,
     "fees": 3740,
     "inputs": [
@@ -1040,7 +1018,6 @@
   {
     "id": "7de3b202cc27f7b2057e260bdd74e29cc088fb55a25dc8302c79b893ed3a2584",
     "hash": "7de3b202cc27f7b2057e260bdd74e29cc088fb55a25dc8302c79b893ed3a2584",
-    "received_at": "2018-07-02T23:47:58Z",
     "lock_time": 0,
     "fees": 3740,
     "inputs": [
@@ -1093,7 +1070,6 @@
   {
     "id": "882625d5c8094b845c3a941f31217cbb5aa36fd6c48fb2f3ee872bc7204c759c",
     "hash": "882625d5c8094b845c3a941f31217cbb5aa36fd6c48fb2f3ee872bc7204c759c",
-    "received_at": "2018-07-03T08:11:20Z",
     "lock_time": 0,
     "fees": 2260,
     "inputs": [
@@ -1136,7 +1112,6 @@
   {
     "id": "882625d5c8094b845c3a941f31217cbb5aa36fd6c48fb2f3ee872bc7204c759c",
     "hash": "882625d5c8094b845c3a941f31217cbb5aa36fd6c48fb2f3ee872bc7204c759c",
-    "received_at": "2018-07-03T08:11:20Z",
     "lock_time": 0,
     "fees": 2260,
     "inputs": [
@@ -1179,7 +1154,6 @@
   {
     "id": "e2e5203c1b6c09a79767b0497593da5bf7a56b2ab63e9339a11a9fc30e3cbee2",
     "hash": "e2e5203c1b6c09a79767b0497593da5bf7a56b2ab63e9339a11a9fc30e3cbee2",
-    "received_at": "2018-07-03T16:47:35Z",
     "lock_time": 537386,
     "fees": 2260,
     "inputs": [
@@ -1222,7 +1196,6 @@
   {
     "id": "4d3580caee429f4750a64852af90561706171370a50002194bdd67fac1c97e8a",
     "hash": "4d3580caee429f4750a64852af90561706171370a50002194bdd67fac1c97e8a",
-    "received_at": "2018-07-03T12:28:19Z",
     "lock_time": 537365,
     "fees": 2260,
     "inputs": [
@@ -1265,7 +1238,6 @@
   {
     "id": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
     "hash": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
-    "received_at": "2018-07-10T16:21:03Z",
     "lock_time": 0,
     "fees": 6700,
     "inputs": [
@@ -1331,7 +1303,6 @@
   {
     "id": "e2e5203c1b6c09a79767b0497593da5bf7a56b2ab63e9339a11a9fc30e3cbee2",
     "hash": "e2e5203c1b6c09a79767b0497593da5bf7a56b2ab63e9339a11a9fc30e3cbee2",
-    "received_at": "2018-07-03T16:47:35Z",
     "lock_time": 537386,
     "fees": 2260,
     "inputs": [
@@ -1374,7 +1345,6 @@
   {
     "id": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
     "hash": "6290d4fda7cfb7885b2d2172b655029f51a6ee2ce803dea83c5906d85ebbca2c",
-    "received_at": "2018-07-10T16:21:03Z",
     "lock_time": 0,
     "fees": 6700,
     "inputs": [
@@ -1440,7 +1410,6 @@
   {
     "id": "08a2fe2169cf72527429475bf6f562c4bf0d81a04539e11371318167363d2c2d",
     "hash": "08a2fe2169cf72527429475bf6f562c4bf0d81a04539e11371318167363d2c2d",
-    "received_at": "2018-10-23T14:55:28Z",
     "lock_time": 0,
     "fees": 226,
     "inputs": [

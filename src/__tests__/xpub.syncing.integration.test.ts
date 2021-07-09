@@ -2,11 +2,14 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
+import path from 'path';
+import { orderBy } from 'lodash';
 import { toMatchFile } from 'jest-file-snapshot';
 import Storage from '../storage/mock';
 import ExplorerV3 from '../explorer/ledger.v3.2.4';
 import ExplorerV2 from '../explorer/ledger.v2';
 import Xpub from '../xpub';
+require('bitcore-lib');
 import Bitcoin from '../crypto/bitcoin';
 import BitcoinCash from '../crypto/bitcoincash';
 import Litecoin from '../crypto/litecoin';
@@ -19,8 +22,6 @@ import Komodo from '../crypto/komodo';
 import Pivx from '../crypto/pivx';
 import Stakenet from '../crypto/stakenet';
 import Stealth from '../crypto/stealth';
-
-require('bitcore-lib');
 
 const startLogging = (emitters: any) => {
   emitters.forEach((emitter: any) =>
@@ -323,11 +324,9 @@ describe('xpub integration sync', () => {
         'should sync from zero correctly',
         async () => {
           await xpub.sync();
-
-          // const truthDump = path.join(__dirname, 'data', 'sync', `${dataset.xpub}.json`);
-
-          // const txs = orderBy(await storage.export(), ['derivationMode', 'account', 'index', 'block.height', 'id']);
-          // expect(JSON.stringify(txs, null, 2)).toMatchFile(truthDump);
+          const truthDump = path.join(__dirname, 'data', 'sync', `${dataset.xpub}.json`);
+          const txs = orderBy(await storage.export(), ['derivationMode', 'account', 'index', 'block.height', 'id']);
+          expect(JSON.stringify(txs, null, 2)).toMatchFile(truthDump);
           expect((await xpub.getXpubBalance()).toNumber()).toEqual(dataset.balance);
           const addresses = await xpub.getXpubAddresses();
           expect(addresses.length).toEqual(dataset.addresses);
