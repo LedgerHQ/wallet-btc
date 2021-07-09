@@ -1,9 +1,11 @@
-import { flatten, maxBy, range, some, sortBy } from 'lodash';
+import { maxBy, range, some } from 'lodash';
 import BigNumber from 'bignumber.js';
-import { Address, IStorage, Output } from './storage/types';
+import { Address, IStorage } from './storage/types';
 import EventEmitter from './utils/eventemitter';
 import { IExplorer } from './explorer/types';
 import { ICrypto } from './crypto/types';
+// eslint-disable-next-line import/no-cycle
+import { IPickingStrategy } from './pickingstrategies/types';
 
 // names inside this class and discovery logic respect BIP32 standard
 class Xpub extends EventEmitter {
@@ -205,35 +207,21 @@ class Xpub extends EventEmitter {
     return address;
   }
 
-  async buildTx(destAddress: string, amount: BigNumber, fee: number, changeAddress: string, utxosToUse?: Output[]) {
+  async buildTx(
+    destAddress: string,
+    amount: BigNumber,
+    fee: number,
+    changeAddress: string,
+    utxoPickingStrategy: IPickingStrategy
+  ) {
     await this.whenSynced('all');
 
-    // get the utxos to use as input
-    // from all addresses of the account
-    const addresses = await this.getXpubAddresses();
-    let unspentUtxos = flatten(
-      await Promise.all(addresses.map((address) => this.storage.getAddressUnspentUtxos(address)))
-    );
-    unspentUtxos = sortBy(unspentUtxos, 'value');
-
     // now we select only the output needed to cover the amount + fee
-    let total = new BigNumber(0);
-    let unspentUtxoSelected: Output[] = [];
-
-    if (utxosToUse) {
-      unspentUtxoSelected = utxosToUse;
-      total = unspentUtxoSelected.reduce((totalacc, utxo) => totalacc.plus(utxo.value), new BigNumber(0));
-    } else {
-      let i = 0;
-      while (total.lt(amount.plus(fee))) {
-        if (!unspentUtxos[i]) {
-          throw new Error('amount bigger than the total balance');
-        }
-        total = total.plus(unspentUtxos[i].value);
-        unspentUtxoSelected.push(unspentUtxos[i]);
-        i += 1;
-      }
-    }
+    const { totalValue: total, unspentUtxos: unspentUtxoSelected } = await utxoPickingStrategy.selectUnspentUtxosToUse(
+      this,
+      amount,
+      fee
+    );
 
     const txHexs = await Promise.all(
       unspentUtxoSelected.map((unspentUtxo) => this.explorer.getTxHex(unspentUtxo.output_hash))
