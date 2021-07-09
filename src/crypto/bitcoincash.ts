@@ -1,13 +1,11 @@
 // from https://github.com/LedgerHQ/xpub-scan/blob/master/src/actions/deriveAddresses.ts
-
+require('bitcore-lib');
 import * as bch from 'bitcore-lib-cash';
 import bchaddr from 'bchaddrjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
 import { ICrypto, DerivationMode } from './types';
-
-require('bitcore-lib');
 
 // a mock explorer class that just use js objects
 class BitcoinCash implements ICrypto {
