@@ -14,7 +14,7 @@ import LedgerV3Dot2Dot4 from './explorer/ledger.v3.2.4';
 import Bitcoin from './crypto/bitcoin';
 import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
-import { IStorage, Output, TX } from './storage/types';
+import { IStorage, TX } from './storage/types';
 import * as utils from './utils';
 import { IPickingStrategy } from './pickingstrategies/types';
 
