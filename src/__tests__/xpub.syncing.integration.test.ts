@@ -323,10 +323,12 @@ describe('xpub integration sync', () => {
         'should sync from zero correctly',
         async () => {
           await xpub.sync();
+
           // const truthDump = path.join(__dirname, 'data', 'sync', `${dataset.xpub}.json`);
+
           // const txs = orderBy(await storage.export(), ['derivationMode', 'account', 'index', 'block.height', 'id']);
           // expect(JSON.stringify(txs, null, 2)).toMatchFile(truthDump);
-          expect(await xpub.getXpubBalance()).toEqual(dataset.balance);
+          expect((await xpub.getXpubBalance()).toNumber()).toEqual(dataset.balance);
           const addresses = await xpub.getXpubAddresses();
           expect(addresses.length).toEqual(dataset.addresses);
         },

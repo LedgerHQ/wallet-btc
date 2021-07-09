@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import WalletLedger, { Account } from '..';
 import MockBtc from './mocks/Btc';
 
@@ -25,19 +26,26 @@ describe('testing wallet', () => {
     await wallet.syncAccount(account);
     const balance = await wallet.getAccountBalance(account);
 
-    expect(balance).toEqual(111299);
-  });
+    expect(balance.toNumber()).toEqual(109088);
+  }, 60000);
 
   it('should allow to store and load an account', async () => {
     const serializedAccount = await wallet.exportToSerializedAccount(account);
     const unserializedAccount = await wallet.importFromSerializedAccount(serializedAccount);
     const balance = await wallet.getAccountBalance(unserializedAccount);
-    expect(balance).toEqual(111299);
+    expect(balance.toNumber()).toEqual(109088);
   });
 
   it('should allow to build a transaction', async () => {
     const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
-    const tx = await wallet.buildAccountTx(account, receiveAddress.address, 100000, 1000);
-    expect(tx).toEqual('004ab82add183c2dad9d38f492f977e71c83056c');
+    const tx = await wallet.buildAccountTx(account, receiveAddress.address, new BigNumber(100000), 1000);
+    expect(tx).toEqual('97beab79b87b6605b17829f08612640010676ce9');
+  });
+
+  it('should allow to build a transaction splitting outputs', async () => {
+    const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
+    account.xpub.OUTPUT_VALUE_MAX = 60000;
+    const tx = await wallet.buildAccountTx(account, receiveAddress.address, new BigNumber(100000), 1000);
+    expect(tx).toEqual('33d6fede13bb736e497f2b38195d20065fc60a90');
   });
 });

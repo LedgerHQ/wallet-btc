@@ -5,6 +5,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 // @ts-ignore
 import coininfo from 'coininfo';
 import axios from 'axios';
+import BigNumber from 'bignumber.js';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import Explorer from '../explorer/ledger.v3.2.4';
@@ -74,7 +75,7 @@ describeToUse('testing xpub legacy transactions', () => {
   it('should be setup correctly', async () => {
     const balance1 = await xpubs[0].xpub.getXpubBalance();
 
-    expect(balance1).toEqual(5700000000);
+    expect(balance1.toNumber()).toEqual(5700000000);
   });
 
   it('should send a 1 btc tx to xpubs[1].xpub', async () => {
@@ -83,7 +84,12 @@ describeToUse('testing xpub legacy transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
-    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(address, 100000000, 500, change);
+    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
+      address,
+      new BigNumber(100000000),
+      500,
+      change
+    );
 
     inputs.forEach(([txHex, index]) => {
       const nonWitnessUtxo = Buffer.from(txHex, 'hex');
@@ -98,9 +104,10 @@ describeToUse('testing xpub legacy transactions', () => {
     outputs.forEach((output) => {
       psbt.addOutput({
         script: output.script,
-        value: output.value,
+        value: output.value.toNumber(),
       });
     });
+    expect(outputs.length).toEqual(2);
     inputs.forEach((_, i) => {
       psbt.signInput(i, xpubs[0].signer(associatedDerivations[i][0], associatedDerivations[i][1]));
       psbt.validateSignaturesOfInput(i);
@@ -130,7 +137,71 @@ describeToUse('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expect(await xpubs[0].xpub.getXpubBalance()).toEqual(5700000000 - 100000000 - 500);
-    expect(await xpubs[1].xpub.getXpubBalance()).toEqual(100000000);
+    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - 500);
+    expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
+  }, 30000);
+
+  it('should send a 1 btc tx to xpubs[1].xpub and handle output splitting', async () => {
+    const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
+    const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
+
+    const psbt = new bitcoin.Psbt({ network });
+
+    xpubs[0].xpub.OUTPUT_VALUE_MAX = 60000000;
+    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
+      address,
+      new BigNumber(100000000),
+      500,
+      change
+    );
+
+    inputs.forEach(([txHex, index]) => {
+      const nonWitnessUtxo = Buffer.from(txHex, 'hex');
+      const tx = bitcoin.Transaction.fromHex(txHex);
+
+      psbt.addInput({
+        hash: tx.getId(),
+        index,
+        nonWitnessUtxo,
+      });
+    });
+    outputs.forEach((output) => {
+      psbt.addOutput({
+        script: output.script,
+        value: output.value.toNumber(),
+      });
+    });
+    expect(outputs.length).toEqual(3);
+    inputs.forEach((_, i) => {
+      psbt.signInput(i, xpubs[0].signer(associatedDerivations[i][0], associatedDerivations[i][1]));
+      psbt.validateSignaturesOfInput(i);
+    });
+    psbt.finalizeAllInputs();
+    const rawTxHex = psbt.extractTransaction().toHex();
+    //
+
+    try {
+      await xpubs[0].xpub.broadcastTx(rawTxHex);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('broadcast error', e);
+    }
+
+    try {
+      const { address: mineAddress } = await xpubs[2].xpub.getNewAddress(0, 0);
+      await axios.post(`http://localhost:28443/chain/mine/${mineAddress}/1`);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('praline error');
+    }
+
+    // time for explorer to sync
+    await sleep(20000);
+
+    await xpubs[0].xpub.sync();
+    await xpubs[1].xpub.sync();
+
+    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - 500 - 100000000 - 500);
+    expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(200000000);
   }, 30000);
 });

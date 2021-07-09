@@ -8,6 +8,7 @@ import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
 // @ts-ignore
 import coininfo from 'coininfo';
 import { flatten } from 'lodash';
+import BigNumber from 'bignumber.js';
 import Xpub from './xpub';
 import LedgerV3Dot2Dot4 from './explorer/ledger.v3.2.4';
 import Bitcoin from './crypto/bitcoin';
@@ -211,7 +212,7 @@ class WalletLedger {
   async buildAccountTx(
     fromAccount: Account,
     dest: string,
-    amount: number,
+    amount: BigNumber,
     fee: number,
     unspentUtxoSelected?: Output[]
   ) {
@@ -225,7 +226,8 @@ class WalletLedger {
     const bufferWriter = new BufferWriter(buffer, 0);
     bufferWriter.writeVarInt(txinfos.outputs.length);
     txinfos.outputs.forEach((txOut) => {
-      bufferWriter.writeUInt64(txOut.value);
+      // xpub splits output into smaller outputs than SAFE_MAX_INT anyway
+      bufferWriter.writeUInt64(txOut.value.toNumber());
       bufferWriter.writeVarSlice(txOut.script);
     });
     const outputScriptHex = buffer.toString('hex');
