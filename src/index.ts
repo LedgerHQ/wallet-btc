@@ -187,7 +187,7 @@ class WalletLedger {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async getAccountOperations(account: Account) {
+  async getAccountTransactions(account: Account) {
     const txs = await account.xpub.storage.export();
     return txs;
   }
