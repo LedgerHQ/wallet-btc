@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@ledgerhq/hw-app-btc": "^6.0.2",
+    "@ledgerhq/json-bignumber": "^1.0.2",
     "@types/bchaddrjs": "^0.4.0",
     "@types/bitcore-lib-cash": "^8.23.3",
     "@types/bs58check": "^2.1.0",
@@ -67,7 +68,6 @@
     "bs58check": "^2.1.2",
     "buffer": "^6.0.3",
     "coininfo": "^5.1.0",
-    "json-bignumber": "^1.0.2",
     "lodash": "^4.17.21"
   }
 }

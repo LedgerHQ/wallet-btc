@@ -574,6 +574,13 @@
     "@ledgerhq/errors" "^6.0.2"
     events "^3.3.0"
 
+"@ledgerhq/json-bignumber@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/json-bignumber/-/json-bignumber-1.0.2.tgz#c08f7fa00316b0065b0ea153d6153808a302e0b1"
+  integrity sha512-jIh4Fe8ZQzAoYP93MJvmbv0I1GVYrqQZ+Rvk6h69E/1st67JES11z+tZx4NVEGNBmR3OFO32dtDX7ip1uwsScQ==
+  dependencies:
+    bignumber.js "^9.0.1"
+
 "@ledgerhq/logs@^6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.0.2.tgz#a6063ed99461c0d2c36a48de89ed0283f13cb908"
@@ -1150,11 +1157,6 @@ big-integer@1.6.36:
   version "1.6.36"
   resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.36.tgz#78631076265d4ae3555c04f85e7d9d2f3a071a36"
   integrity sha512-t70bfa7HYEA1D9idDbmuv7YbsbVkQ+Hp+8KFSul4aE5e/i1bjCNIRYJZlA8Q8p0r9T8cF/RVvwUgRA//FydEyg==
-
-bignumber.js@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
-  integrity sha512-S4XzBk5sMB+Rcb/LNcpzXr57VRTxgAvaAEDAl1AwRx27j00hT84O6OkteE7u8UB3NuaaygCRrEpqox4uDOrbdQ==
 
 bignumber.js@^9.0.1:
   version "9.0.1"
@@ -3475,13 +3477,6 @@ jsesc@^2.5.1:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
-
-json-bignumber@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/json-bignumber/-/json-bignumber-1.0.2.tgz#c4b46a5230693b923f4f7bce6cbbdc777ae821ad"
-  integrity sha512-CfvvCybXLMo3+ZW4gkSOM1OF+f6rWTeZ5AZvYHcmcEPzK0z4EDR9XrdQoARGoozw3+qdS4DLe+Q/et4NstxrNA==
-  dependencies:
-    bignumber.js "^7.2.1"
 
 json-parse-better-errors@^1.0.1:
   version "1.0.2"
