@@ -40,8 +40,8 @@ describe('synced xpub utilites functions', () => {
 
       expect((await xpub.getAccountAddresses(0)).length).toEqual(15);
 
-      expect((await xpub.getXpubBalance()).toNumber()).toEqual(12678243);
-      expect((await xpub.getAccountBalance(0)).toNumber()).toEqual(12678243);
+      expect((await xpub.getXpubBalance()).toNumber()).toEqual(12688908);
+      expect((await xpub.getAccountBalance(0)).toNumber()).toEqual(12688908);
       const addressesBalances = await Promise.all(addresses.map((address) => xpub.getAddressBalance(address)));
       expect(
         zipObject(
