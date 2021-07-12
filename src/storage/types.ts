@@ -41,6 +41,7 @@ export interface IStorage {
   getLastTx(txFilter: { account?: number; index?: number }): Promise<TX | undefined>;
   getTx(address: string, id: string): Promise<TX | undefined>;
   getUniquesAddresses(addressesFilter: { account?: number; index?: number }): Promise<Address[]>;
+  removeTxs(txsFilter: { account?: number; index?: number; block?: Block }): Promise<void>;
   export(): Promise<TX[]>;
   load(tx: TX[]): Promise<void>;
 }

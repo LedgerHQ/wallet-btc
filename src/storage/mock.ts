@@ -92,6 +92,27 @@ class Mock implements IStorage {
     );
   }
 
+  async removeTxs(txsFilter: { account: number; index: number }) {
+    const newTxs: TX[] = [];
+
+    this.txs.forEach((tx: TX) => {
+      if (tx.account !== txsFilter.account || tx.index !== txsFilter.index) {
+        newTxs.push(tx);
+        return;
+      }
+
+      // clean
+      const indexAddress = tx.address;
+      const index = `${indexAddress}-${tx.id}`;
+
+      delete this.primaryIndex[index];
+      delete this.unspentUtxos[indexAddress];
+      delete this.spentUtxos[indexAddress];
+    });
+
+    this.txs = newTxs;
+  }
+
   async export() {
     return this.txs;
   }
