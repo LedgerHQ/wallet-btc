@@ -215,11 +215,17 @@ class WalletLedger {
     fromAccount: Account,
     dest: string,
     amount: BigNumber,
-    fee: number,
+    feePerByte: number,
     utxoPickingStrategy: IPickingStrategy
   ) {
     const changeAddress = await fromAccount.xpub.getNewAddress(1, 1);
-    const txinfos = await fromAccount.xpub.buildTx(dest, amount, fee, changeAddress.address, utxoPickingStrategy);
+    const txinfos = await fromAccount.xpub.buildTx(
+      dest,
+      amount,
+      feePerByte,
+      changeAddress.address,
+      utxoPickingStrategy
+    );
     return txinfos;
   }
 

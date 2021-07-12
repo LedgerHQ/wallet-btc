@@ -44,11 +44,11 @@ describe('testing wallet', () => {
       account,
       receiveAddress.address,
       new BigNumber(100000),
-      1000,
+      5,
       utxoPickingStrategy
     );
     const tx = await wallet.signAccounTx(account, txinfos);
-    expect(tx).toEqual('97beab79b87b6605b17829f08612640010676ce9');
+    expect(tx).toEqual('02d5e970283203ed91da5e5e9bb125f2a490e189');
   });
 
   it('should allow to build a transaction splitting outputs', async () => {
@@ -59,10 +59,10 @@ describe('testing wallet', () => {
       account,
       receiveAddress.address,
       new BigNumber(100000),
-      1000,
+      5,
       utxoPickingStrategy
     );
     const tx = await wallet.signAccounTx(account, txinfos);
-    expect(tx).toEqual('33d6fede13bb736e497f2b38195d20065fc60a90');
+    expect(tx).toEqual('2ff622550c58695764bd942a8054649c167b28c6');
   });
 });
