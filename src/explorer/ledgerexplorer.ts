@@ -14,7 +14,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
   disableBatchSize = false;
 
-  explorerVersion = 'v2';
+  explorerVersion: 'v2' | 'v3';
 
   constructor({
     explorerURI,
@@ -22,7 +22,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     disableBatchSize,
   }: {
     explorerURI: string;
-    explorerVersion?: string;
+    explorerVersion: 'v2' | 'v3';
     disableBatchSize?: boolean;
   }) {
     super();
