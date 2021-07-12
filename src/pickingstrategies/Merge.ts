@@ -7,7 +7,7 @@ import { IPickingStrategy } from './types';
 // an Live explorer V3 class
 class Merge implements IPickingStrategy {
   // eslint-disable-next-line class-methods-use-this
-  async selectUnspentUtxosToUse(xpub: Xpub, amount: BigNumber, fee: number) {
+  async selectUnspentUtxosToUse(xpub: Xpub, amount: BigNumber, feePerByte: number, nbOutputsWithoutChange: number) {
     // get the utxos to use as input
     // from all addresses of the account
     const addresses = await xpub.getXpubAddresses();
@@ -15,6 +15,12 @@ class Merge implements IPickingStrategy {
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
     );
     unspentUtxos = sortBy(unspentUtxos, 'value');
+
+    // https://metamug.com/article/security/bitcoin-transaction-fee-satoshi-per-byte.html
+    // easy way, we consider inputs are not compressed
+    // and that we have extras
+    const bytes = 10 + (nbOutputsWithoutChange + 1) * 34;
+    let fee = bytes * feePerByte;
 
     let total = new BigNumber(0);
     const unspentUtxoSelected: Output[] = [];
@@ -26,12 +32,14 @@ class Merge implements IPickingStrategy {
       }
       total = total.plus(unspentUtxos[i].value);
       unspentUtxoSelected.push(unspentUtxos[i]);
+      fee += 180 * feePerByte;
       i += 1;
     }
 
     return {
       totalValue: total,
       unspentUtxos: unspentUtxoSelected,
+      fee,
     };
   }
 }
