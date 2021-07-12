@@ -72,7 +72,7 @@ class Xpub extends EventEmitter {
     let total = 0;
 
     try {
-      await this.checkReorg({ account, index });
+      await this.checkAddressReorg(account, index);
 
       // eslint-disable-next-line no-cond-assign,no-await-in-loop
       while ((added = await this.fetchHydrateAndStoreNewTxs(address, account, index))) {
@@ -339,8 +339,11 @@ class Xpub extends EventEmitter {
     return inserted;
   }
 
-  async checkReorg(filter: { account: number; index: number }) {
-    const lastTx = await this.storage.getLastTx(filter);
+  async checkAddressReorg(account: number, index: number) {
+    const lastTx = await this.storage.getLastTx({
+      account,
+      index,
+    });
 
     if (!lastTx) {
       return;
@@ -354,12 +357,14 @@ class Xpub extends EventEmitter {
     }
 
     // in this case the block is not valid so we delete everything
-    // for that block
+    // for that address
+    // TODO: delete only everything for this (address, block)
+    // but need to think if its possible with current storage implem
 
-    await this.storage.removeTxs(filter);
-
-    // keep going until we take the all good exit
-    await this.checkReorg(filter);
+    await this.storage.removeTxs({
+      account,
+      index,
+    });
   }
 }
 

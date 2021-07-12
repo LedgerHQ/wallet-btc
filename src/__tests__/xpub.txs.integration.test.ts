@@ -63,7 +63,7 @@ describeToUse('testing xpub legacy transactions', () => {
     }
 
     // time for explorer to sync
-    await sleep(20000);
+    await sleep(30000);
 
     try {
       await xpubs[0].xpub.sync();
@@ -71,7 +71,7 @@ describeToUse('testing xpub legacy transactions', () => {
       // eslint-disable-next-line no-console
       console.log('praline explorer setup error', e);
     }
-  }, 30000);
+  }, 60000);
 
   it('should be setup correctly', async () => {
     const balance1 = await xpubs[0].xpub.getXpubBalance();
@@ -136,14 +136,14 @@ describeToUse('testing xpub legacy transactions', () => {
     }
 
     // time for explorer to sync
-    await sleep(20000);
+    await sleep(30000);
 
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - 500);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
-  }, 30000);
+  }, 60000);
 
   it('should send a 1 btc tx to xpubs[1].xpub and handle output splitting', async () => {
     const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
@@ -203,12 +203,12 @@ describeToUse('testing xpub legacy transactions', () => {
     }
 
     // time for explorer to sync
-    await sleep(20000);
+    await sleep(30000);
 
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - 500 - 100000000 - 500);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(200000000);
-  }, 30000);
+  }, 60000);
 });
