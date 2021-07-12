@@ -53,7 +53,22 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     // TODO add a test for failure (at the sync level)
     const res = (await this.client.get(url)).data;
 
+    this.emit('fetched-transaction-tx', { url, tx: res[0] });
+
     return res[0].hex;
+  }
+
+  async getFees() {
+    const url = `/fees`;
+
+    this.emit('fetching-fees', { url });
+
+    // TODO add a test for failure (at the sync level)
+    const fees = (await this.client.get(url)).data;
+
+    this.emit('fetching-fees', { url, fees });
+
+    return fees;
   }
 
   async getPendings(address: Address, nbMax?: number) {
