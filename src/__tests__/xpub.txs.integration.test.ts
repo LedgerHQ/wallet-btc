@@ -10,6 +10,7 @@ import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
+import Merge from '../pickingstrategies/Merge';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -85,11 +86,14 @@ describeToUse('testing xpub legacy transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
+    const utxoPickingStrategy = new Merge();
+
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
       address,
       new BigNumber(100000000),
       500,
-      change
+      change,
+      utxoPickingStrategy
     );
 
     inputs.forEach(([txHex, index]) => {
@@ -148,12 +152,15 @@ describeToUse('testing xpub legacy transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
+    const utxoPickingStrategy = new Merge();
+
     xpubs[0].xpub.OUTPUT_VALUE_MAX = 60000000;
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
       address,
       new BigNumber(100000000),
       500,
-      change
+      change,
+      utxoPickingStrategy
     );
 
     inputs.forEach(([txHex, index]) => {

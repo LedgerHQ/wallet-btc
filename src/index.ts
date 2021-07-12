@@ -14,8 +14,9 @@ import LedgerExplorer from './explorer/ledgerexplorer';
 import Bitcoin from './crypto/bitcoin';
 import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
-import { IStorage, Output, TX } from './storage/types';
+import { IStorage, TX } from './storage/types';
 import * as utils from './utils';
+import { IPickingStrategy } from './pickingstrategies/types';
 
 export interface Account {
   params: {
@@ -210,16 +211,30 @@ class WalletLedger {
     return flatten(await Promise.all(addresses.map((address) => account.xpub.explorer.getPendings(address))));
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async buildAccountTx(
     fromAccount: Account,
     dest: string,
     amount: BigNumber,
     fee: number,
-    unspentUtxoSelected?: Output[]
+    utxoPickingStrategy: IPickingStrategy
   ) {
     const changeAddress = await fromAccount.xpub.getNewAddress(1, 1);
-    const txinfos = await fromAccount.xpub.buildTx(dest, amount, fee, changeAddress.address, unspentUtxoSelected);
+    const txinfos = await fromAccount.xpub.buildTx(dest, amount, fee, changeAddress.address, utxoPickingStrategy);
+    return txinfos;
+  }
 
+  async signAccounTx(
+    fromAccount: Account,
+    txinfos: {
+      inputs: [string, number][];
+      associatedDerivations: [number, number][];
+      outputs: {
+        script: Buffer;
+        value: BigNumber;
+      }[];
+    }
+  ) {
     const length = txinfos.outputs.reduce((sum, output) => {
       return sum + 8 + output.script.length + 1;
     }, 1);
