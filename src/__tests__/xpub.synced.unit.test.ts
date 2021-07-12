@@ -5,13 +5,14 @@ import fs from 'fs';
 import coininfo from 'coininfo';
 import { zipObject } from 'lodash';
 import Storage from '../storage/mock';
-import Explorer from '../explorer/ledger.v3.2.4';
+import LedgerExplorer from '../explorer/ledgerexplorer';
 import Crypto from '../crypto/bitcoin';
 import Xpub from '../xpub';
 
 describe('synced xpub utilites functions', () => {
-  const explorer = new Explorer({
+  const explorer = new LedgerExplorer({
     explorerURI: 'whatever',
+    explorerVersion: 'v3',
   });
   const crypto = new Crypto({
     network: coininfo.bitcoin.main.toBitcoinJS(),
