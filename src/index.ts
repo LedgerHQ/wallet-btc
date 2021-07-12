@@ -65,7 +65,7 @@ class WalletLedger {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   explorers: { [key: string]: (...args: any[]) => IExplorer } = {
-    ledgerExplorer: (explorerURI, explorerVersion, disableBatchSize) =>
+    ledgerv3: (explorerURI, explorerVersion, disableBatchSize) =>
       new LedgerExplorer({
         explorerURI,
         explorerVersion,
