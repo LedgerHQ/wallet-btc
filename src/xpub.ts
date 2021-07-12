@@ -356,10 +356,7 @@ class Xpub extends EventEmitter {
     // in this case the block is not valid so we delete everything
     // for that block
 
-    await this.storage.removeTxs({
-      ...filter,
-      block: lastTx.block,
-    });
+    await this.storage.removeTxs(filter);
 
     // keep going until we take the all good exit
     await this.checkReorg(filter);
