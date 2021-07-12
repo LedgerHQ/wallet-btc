@@ -81,7 +81,7 @@ describe('xpub integration sync', () => {
       xpub: 'xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz', // 3000ms
       derivationMode: 'Legacy',
       addresses: 15,
-      balance: 12678243,
+      balance: 12688908,
       network: coininfo.bitcoin.main.toBitcoinJS(),
       coin: 'btc',
       explorerVersion: 'v3',
