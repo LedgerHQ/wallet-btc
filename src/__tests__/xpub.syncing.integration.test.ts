@@ -8,8 +8,7 @@ import path from 'path';
 import { orderBy } from 'lodash';
 import { toMatchFile } from 'jest-file-snapshot';
 import Storage from '../storage/mock';
-import ExplorerV3 from '../explorer/ledger.v3.2.4';
-import ExplorerV2 from '../explorer/ledger.v2';
+import LedgerExplorer from '../explorer/ledgerexplorer';
 import Xpub from '../xpub';
 import Bitcoin from '../crypto/bitcoin';
 import BitcoinCash from '../crypto/bitcoincash';
@@ -295,14 +294,10 @@ describe('xpub integration sync', () => {
         default:
           throw new Error('Should not be reachable');
       }
-      const explorer =
-        dataset.explorerVersion === 'v3'
-          ? new ExplorerV3({
-              explorerURI: `https://explorers.api.vault.ledger.com/blockchain/${dataset.explorerVersion}/${dataset.coin}`,
-            })
-          : new ExplorerV2({
-              explorerURI: `https://explorers.api.vault.ledger.com/blockchain/${dataset.explorerVersion}/${dataset.coin}`,
-            });
+      const explorer = new LedgerExplorer({
+        explorerURI: `https://explorers.api.vault.ledger.com/blockchain/${dataset.explorerVersion}/${dataset.coin}`,
+        explorerVersion: dataset.explorerVersion,
+      });
       const xpub = new Xpub({
         storage,
         explorer,

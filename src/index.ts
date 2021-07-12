@@ -10,7 +10,7 @@ import coininfo from 'coininfo';
 import { flatten } from 'lodash';
 import BigNumber from 'bignumber.js';
 import Xpub from './xpub';
-import LedgerV3Dot2Dot4 from './explorer/ledger.v3.2.4';
+import LedgerExplorer from './explorer/ledgerexplorer';
 import Bitcoin from './crypto/bitcoin';
 import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
@@ -64,9 +64,10 @@ class WalletLedger {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   explorers: { [key: string]: (...args: any[]) => IExplorer } = {
-    ledgerv3: (explorerURI, disableBatchSize) =>
-      new LedgerV3Dot2Dot4({
+    ledgerExplorer: (explorerURI, explorerVersion, disableBatchSize) =>
+      new LedgerExplorer({
         explorerURI,
+        explorerVersion,
         disableBatchSize,
       }),
   };

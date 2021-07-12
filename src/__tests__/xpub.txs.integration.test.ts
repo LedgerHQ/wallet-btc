@@ -8,7 +8,7 @@ import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
-import Explorer from '../explorer/ledger.v3.2.4';
+import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -18,8 +18,9 @@ const describeToUse = process.env.CI ? describe.skip : describe;
 describeToUse('testing xpub legacy transactions', () => {
   const network = coininfo.bitcoin.test.toBitcoinJS();
 
-  const explorer = new Explorer({
+  const explorer = new LedgerExplorer({
     explorerURI: 'http://localhost:20000/blockchain/v3',
+    explorerVersion: 'v3',
     disableBatchSize: true, // https://ledgerhq.atlassian.net/browse/BACK-2191
   });
   const crypto = new Crypto({

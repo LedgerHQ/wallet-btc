@@ -14,9 +14,17 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
   disableBatchSize = false;
 
-  public httpParams: { no_token?: string; noToken?: string; batch_size?: number; block_hash?: string } = {};
+  explorerVersion = 'v2';
 
-  constructor({ explorerURI, disableBatchSize }: { explorerURI: string; disableBatchSize?: boolean }) {
+  constructor({
+    explorerURI,
+    explorerVersion,
+    disableBatchSize,
+  }: {
+    explorerURI: string;
+    explorerVersion?: string;
+    disableBatchSize?: boolean;
+  }) {
     super();
 
     this.client = axios.create({
@@ -26,7 +34,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     });
     // 3 retries per request
     axiosRetry(this.client, { retries: 3 });
-
+    this.explorerVersion = explorerVersion;
     if (disableBatchSize) {
       this.disableBatchSize = disableBatchSize;
     }
@@ -54,8 +62,15 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   }
 
   async getAddressTxsSinceLastTxBlock(batchSize: number, address: Address, lastTx: TX | undefined) {
-    const params = JSON.parse(JSON.stringify(this.httpParams));
-
+    const params: { no_token?: string; noToken?: string; batch_size?: number; block_hash?: string } =
+      this.explorerVersion === 'v2'
+        ? {
+            noToken: 'true',
+          }
+        : {
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            no_token: 'true',
+          };
     if (!this.disableBatchSize) {
       // eslint-disable-next-line @typescript-eslint/camelcase
       params.batch_size = batchSize;
