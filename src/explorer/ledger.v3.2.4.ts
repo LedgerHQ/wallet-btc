@@ -3,7 +3,7 @@ import axiosRetry from 'axios-retry';
 import * as https from 'https';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import JSONBigNumber from 'json-bignumber';
+import JSONBigNumber from '@ledgerhq/json-bignumber';
 import BigNumber from 'bignumber.js';
 import { Address, TX } from '../storage/types';
 import EventEmitter from '../utils/eventemitter';
