@@ -14,8 +14,9 @@ import LedgerV3Dot2Dot4 from './explorer/ledger.v3.2.4';
 import Bitcoin from './crypto/bitcoin';
 import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
-import { IStorage, Output, TX } from './storage/types';
+import { IStorage, TX } from './storage/types';
 import * as utils from './utils';
+import { IPickingStrategy } from './pickingstrategies/types';
 
 export interface Account {
   params: {
@@ -215,10 +216,10 @@ class WalletLedger {
     dest: string,
     amount: BigNumber,
     fee: number,
-    unspentUtxoSelected?: Output[]
+    utxoPickingStrategy: IPickingStrategy
   ) {
     const changeAddress = await fromAccount.xpub.getNewAddress(1, 1);
-    const txinfos = await fromAccount.xpub.buildTx(dest, amount, fee, changeAddress.address, unspentUtxoSelected);
+    const txinfos = await fromAccount.xpub.buildTx(dest, amount, fee, changeAddress.address, utxoPickingStrategy);
     return txinfos;
   }
 
