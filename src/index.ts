@@ -24,9 +24,9 @@ export interface Account {
     index: string;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
-    explorer: 'ledgerv3';
+    explorer: 'ledgerv3' | 'ledgerv2';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    explorerParams: any[];
+    explorerURI: string;
     storage: 'mock';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     storageParams: any[];
@@ -41,9 +41,9 @@ export interface SerializedAccount {
     index: string;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
-    explorer: 'ledgerv3';
+    explorer: 'ledgerv3' | 'ledgerv2';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    explorerParams: any[];
+    explorerURI: string;
     storage: 'mock';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     storageParams: any[];
@@ -64,12 +64,16 @@ class WalletLedger {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  explorers: { [key: string]: (...args: any[]) => IExplorer } = {
-    ledgerv3: (explorerURI, explorerVersion, disableBatchSize) =>
+  explorers: { [key: string]: (explorerURI: string) => IExplorer } = {
+    ledgerv3: (explorerURI) =>
       new LedgerExplorer({
         explorerURI,
-        explorerVersion,
-        disableBatchSize,
+        explorerVersion: 'v3',
+      }),
+    ledgerv2: (explorerURI) =>
+      new LedgerExplorer({
+        explorerURI,
+        explorerVersion: 'v2',
       }),
   };
 
@@ -87,9 +91,9 @@ class WalletLedger {
     index: string;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
-    explorer: 'ledgerv3';
+    explorer: 'ledgerv3' | 'ledgerv2';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    explorerParams: any[];
+    explorerURI: string;
     storage: 'mock';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     storageParams: any[];
@@ -122,7 +126,7 @@ class WalletLedger {
     );
 
     const storage = this.accountStorages[params.storage](...params.storageParams);
-    const explorer = this.explorers[params.explorer](...params.explorerParams);
+    const explorer = this.explorers[params.explorer](params.explorerURI);
 
     return {
       params,
@@ -152,7 +156,7 @@ class WalletLedger {
   async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
     const network = this.networks[account.params.network];
     const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
-    const explorer = this.explorers[account.params.explorer](...account.params.explorerParams);
+    const explorer = this.explorers[account.params.explorer](account.params.explorerURI);
 
     const xpub = new Xpub({
       storage,

@@ -13,7 +13,7 @@ describe('testing wallet', () => {
       network: 'mainnet',
       derivationMode: 'Legacy',
       explorer: 'ledgerv3',
-      explorerParams: ['https://explorers.api.vault.ledger.com/blockchain/v3/btc'],
+      explorerURI: 'https://explorers.api.vault.ledger.com/blockchain/v3/btc',
       storage: 'mock',
       storageParams: [],
     });

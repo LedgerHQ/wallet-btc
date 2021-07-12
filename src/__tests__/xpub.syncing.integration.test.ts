@@ -234,6 +234,9 @@ describe('xpub integration sync', () => {
 
   walletDatasets.forEach((dataset) =>
     describe(`xpub ${dataset.xpub} ${dataset.derivationMode}`, () => {
+      if (dataset.explorerVersion !== 'v2' && dataset.explorerVersion !== 'v3') {
+        throw new Error('wrong explorer version');
+      }
       const storage = new Storage();
       let crypto;
       switch (dataset.coin) {
