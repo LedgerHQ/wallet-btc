@@ -27,7 +27,7 @@ jobs:
           yarn --frozen-lockfile
       - uses: actions/checkout@v2
         with:
-          registry: LedgerHQ/blockchain-explorer
+          repository: LedgerHQ/blockchain-explorer
           path: explorers
           token: ${{ secrets.CI_BOT_TOKEN }}
       - name: Login to GitHub Container Registry
