@@ -7,18 +7,17 @@ import coininfo from 'coininfo';
 import axios from 'axios';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
-import Explorer from '../explorer/ledger.v3.2.4';
+import Explorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const describeToUse = process.env.CI ? describe.skip : describe;
-
-describeToUse('testing xpub reorg management', () => {
+describe('testing xpub reorg management', () => {
   const network = coininfo.bitcoin.test.toBitcoinJS();
 
   const explorer = new Explorer({
     explorerURI: 'http://localhost:20000/blockchain/v3',
+    explorerVersion: 'v3',
     disableBatchSize: true, // https://ledgerhq.atlassian.net/browse/BACK-2191
   });
   const crypto = new Crypto({
