@@ -61,7 +61,7 @@ describe('testing xpub reorg management', () => {
     }
 
     // time for explorer to sync
-    await sleep(20000);
+    await sleep(30000);
 
     try {
       await xpubs[0].xpub.sync();
@@ -70,7 +70,7 @@ describe('testing xpub reorg management', () => {
       console.log('praline explorer setup error', e);
       throw e;
     }
-  }, 60000);
+  }, 70000);
 
   it('should be setup correctly', async () => {
     const balance1 = await xpubs[0].xpub.getXpubBalance();
@@ -92,7 +92,7 @@ describe('testing xpub reorg management', () => {
     }
 
     // time for explorer to sync
-    await sleep(20000);
+    await sleep(30000);
 
     try {
       await xpubs[0].xpub.sync();
