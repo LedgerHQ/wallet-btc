@@ -25,22 +25,23 @@ jobs:
       - name: Install dependencies
         run: |
           yarn --frozen-lockfile
-      # - uses: actions/checkout@v2
-      #   with:
-      #     registry: LedgerHQ/blockchain-explorer
-      #     path: explorers
-      # - name: Login to GitHub Container Registry
-      #   uses: docker/login-action@v1
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.repository_owner }}
-      #     password: ${{ secrets.CI_BOT_TOKEN }}
-      # - name: Launch BTC environment
-      #   run: docker-compose -f explorers/environments/explorer-praline-btc.yml up -d
-      #   env:
-      #     TICKER: btc
-      #     TAG: latest
-      #     LOG_LEVEL: debug
+      - uses: actions/checkout@v2
+        with:
+          repository: LedgerHQ/blockchain-explorer
+          path: explorers
+          token: ${{ secrets.CI_BOT_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CI_BOT_TOKEN }}
+      - name: Launch BTC environment
+        run: docker-compose -f explorers/environments/explorer-praline-btc.yml up -d
+        env:
+          TICKER: btc
+          TAG: latest
+          LOG_LEVEL: debug
       - name: Run tests
         run: yarn test --silent
         timeout-minutes: 60
