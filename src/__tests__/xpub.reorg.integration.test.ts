@@ -92,7 +92,7 @@ describe('testing xpub reorg management', () => {
     }
 
     // time for explorer to sync
-    await sleep(40000);
+    await sleep(60000);
 
     try {
       await xpubs[0].xpub.sync();
@@ -104,7 +104,7 @@ describe('testing xpub reorg management', () => {
 
     const balance1 = await xpubs[0].xpub.getXpubBalance();
     expect(balance1.toNumber()).toEqual(700000000);
-  }, 80000);
+  }, 100000);
 
   it('should not remove any txs if there is no reorg', async () => {
     const old = xpubs[0].xpub.storage.removeTxs;
