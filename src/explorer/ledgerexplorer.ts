@@ -5,7 +5,7 @@ import * as https from 'https';
 // @ts-ignore
 import JSONBigNumber from '@ledgerhq/json-bignumber';
 import BigNumber from 'bignumber.js';
-import { Address, TX } from '../storage/types';
+import { Address, Block, TX } from '../storage/types';
 import EventEmitter from '../utils/eventemitter';
 import { IExplorer } from './types';
 
@@ -56,6 +56,27 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     this.emit('fetched-transaction-tx', { url, tx: res[0] });
 
     return res[0].hex;
+  }
+
+  async getBlockByHeight(height: number) {
+    const url = `/blocks/${height}`;
+
+    this.emit('fetching-block', { url, height });
+
+    const res = (await this.client.get(url)).data;
+
+    this.emit('fetched-block', { url, block: res[0] });
+
+    if (!res[0]) {
+      return null;
+    }
+
+    const block: Block = {
+      height: res[0].height,
+      hash: res[0].hash,
+    };
+
+    return block;
   }
 
   async getFees() {
