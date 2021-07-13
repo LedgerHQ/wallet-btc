@@ -14,9 +14,7 @@ import Merge from '../pickingstrategies/Merge';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const describeToUse = process.env.CI ? describe.skip : describe;
-
-describeToUse('testing xpub legacy transactions', () => {
+describe('testing xpub legacy transactions', () => {
   const network = coininfo.bitcoin.test.toBitcoinJS();
 
   const explorer = new LedgerExplorer({
