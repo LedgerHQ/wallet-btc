@@ -8,9 +8,11 @@ export interface IPickingStrategy {
   selectUnspentUtxosToUse(
     xpub: Xpub,
     amount: BigNumber,
-    fee: number
+    feePerByte: number,
+    nbOutputsWithoutChange: number
   ): Promise<{
     unspentUtxos: Output[];
     totalValue: BigNumber;
+    fee: number;
   }>;
 }

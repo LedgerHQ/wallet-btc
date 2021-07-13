@@ -2,7 +2,6 @@
   {
     "id": "a65701f03cc1026acb000309c8479dd76b83413a3e1bab07c1b640eba0f6df50",
     "hash": "a65701f03cc1026acb000309c8479dd76b83413a3e1bab07c1b640eba0f6df50",
-    "received_at": "2021-05-18T12:33:44Z",
     "lock_time": 0,
     "fees": 336,
     "inputs": [
@@ -48,7 +47,6 @@
   {
     "id": "dce9052576f2063776b63c888fb13009364c1f50b73dc32fc01806eee1bff5ed",
     "hash": "dce9052576f2063776b63c888fb13009364c1f50b73dc32fc01806eee1bff5ed",
-    "received_at": "2021-05-18T12:33:44Z",
     "lock_time": 0,
     "fees": 224,
     "inputs": [
@@ -87,7 +85,6 @@
   {
     "id": "01668297306226863541812a47c45aa165d4d7ae3be938d437e0f997992ef6ec",
     "hash": "01668297306226863541812a47c45aa165d4d7ae3be938d437e0f997992ef6ec",
-    "received_at": "2021-06-09T21:26:34Z",
     "lock_time": 0,
     "fees": 1800,
     "inputs": [
@@ -139,7 +136,6 @@
   {
     "id": "739a7040e8b84eeb887fb5ff0df6a0f6b9f8e844d4be68c1de0a4d43a58ed7ae",
     "hash": "739a7040e8b84eeb887fb5ff0df6a0f6b9f8e844d4be68c1de0a4d43a58ed7ae",
-    "received_at": "2021-06-09T21:26:34Z",
     "lock_time": 0,
     "fees": 2580,
     "inputs": [
@@ -198,7 +194,6 @@
   {
     "id": "99cbe97f4fbb95d27c0dd4829550a76dad1b7ab3774180e39cf4aead2266ea9d",
     "hash": "99cbe97f4fbb95d27c0dd4829550a76dad1b7ab3774180e39cf4aead2266ea9d",
-    "received_at": "2021-06-14T16:02:50Z",
     "lock_time": 0,
     "fees": 2548,
     "inputs": [
@@ -257,7 +252,6 @@
   {
     "id": "b0dc2d9b5f0e82763ba35963b18534e1fb7f43bdc1c2f5bec8ca6883559b1c31",
     "hash": "b0dc2d9b5f0e82763ba35963b18534e1fb7f43bdc1c2f5bec8ca6883559b1c31",
-    "received_at": "2021-06-14T16:02:50Z",
     "lock_time": 0,
     "fees": 2580,
     "inputs": [
@@ -316,7 +310,6 @@
   {
     "id": "a65701f03cc1026acb000309c8479dd76b83413a3e1bab07c1b640eba0f6df50",
     "hash": "a65701f03cc1026acb000309c8479dd76b83413a3e1bab07c1b640eba0f6df50",
-    "received_at": "2021-05-18T12:33:44Z",
     "lock_time": 0,
     "fees": 336,
     "inputs": [
@@ -362,7 +355,6 @@
   {
     "id": "739a7040e8b84eeb887fb5ff0df6a0f6b9f8e844d4be68c1de0a4d43a58ed7ae",
     "hash": "739a7040e8b84eeb887fb5ff0df6a0f6b9f8e844d4be68c1de0a4d43a58ed7ae",
-    "received_at": "2021-06-09T21:26:34Z",
     "lock_time": 0,
     "fees": 2580,
     "inputs": [
@@ -421,7 +413,6 @@
   {
     "id": "739a7040e8b84eeb887fb5ff0df6a0f6b9f8e844d4be68c1de0a4d43a58ed7ae",
     "hash": "739a7040e8b84eeb887fb5ff0df6a0f6b9f8e844d4be68c1de0a4d43a58ed7ae",
-    "received_at": "2021-06-09T21:26:34Z",
     "lock_time": 0,
     "fees": 2580,
     "inputs": [
@@ -480,7 +471,6 @@
   {
     "id": "04f38551988fbbdb5968866e5c172afc1172c6ed43c86891edbd6605486bab51",
     "hash": "04f38551988fbbdb5968866e5c172afc1172c6ed43c86891edbd6605486bab51",
-    "received_at": "2021-06-14T13:41:26Z",
     "lock_time": 0,
     "fees": 1680,
     "inputs": [
@@ -526,7 +516,6 @@
   {
     "id": "04f38551988fbbdb5968866e5c172afc1172c6ed43c86891edbd6605486bab51",
     "hash": "04f38551988fbbdb5968866e5c172afc1172c6ed43c86891edbd6605486bab51",
-    "received_at": "2021-06-14T13:41:26Z",
     "lock_time": 0,
     "fees": 1680,
     "inputs": [
@@ -572,7 +561,6 @@
   {
     "id": "b0dc2d9b5f0e82763ba35963b18534e1fb7f43bdc1c2f5bec8ca6883559b1c31",
     "hash": "b0dc2d9b5f0e82763ba35963b18534e1fb7f43bdc1c2f5bec8ca6883559b1c31",
-    "received_at": "2021-06-14T16:02:50Z",
     "lock_time": 0,
     "fees": 2580,
     "inputs": [
@@ -631,7 +619,6 @@
   {
     "id": "b0dc2d9b5f0e82763ba35963b18534e1fb7f43bdc1c2f5bec8ca6883559b1c31",
     "hash": "b0dc2d9b5f0e82763ba35963b18534e1fb7f43bdc1c2f5bec8ca6883559b1c31",
-    "received_at": "2021-06-14T16:02:50Z",
     "lock_time": 0,
     "fees": 2580,
     "inputs": [

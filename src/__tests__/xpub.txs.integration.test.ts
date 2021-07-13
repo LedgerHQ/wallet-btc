@@ -8,19 +8,18 @@ import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
-import Explorer from '../explorer/ledger.v3.2.4';
+import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
 import Merge from '../pickingstrategies/Merge';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const describeToUse = process.env.CI ? describe.skip : describe;
-
-describeToUse('testing xpub legacy transactions', () => {
+describe('testing xpub legacy transactions', () => {
   const network = coininfo.bitcoin.test.toBitcoinJS();
 
-  const explorer = new Explorer({
+  const explorer = new LedgerExplorer({
     explorerURI: 'http://localhost:20000/blockchain/v3',
+    explorerVersion: 'v3',
     disableBatchSize: true, // https://ledgerhq.atlassian.net/browse/BACK-2191
   });
   const crypto = new Crypto({
@@ -71,7 +70,7 @@ describeToUse('testing xpub legacy transactions', () => {
       // eslint-disable-next-line no-console
       console.log('praline explorer setup error', e);
     }
-  }, 60000);
+  }, 70000);
 
   it('should be setup correctly', async () => {
     const balance1 = await xpubs[0].xpub.getXpubBalance();
@@ -79,6 +78,7 @@ describeToUse('testing xpub legacy transactions', () => {
     expect(balance1.toNumber()).toEqual(5700000000);
   });
 
+  let expectedFee1: number;
   it('should send a 1 btc tx to xpubs[1].xpub', async () => {
     const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
     const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
@@ -90,7 +90,7 @@ describeToUse('testing xpub legacy transactions', () => {
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
       address,
       new BigNumber(100000000),
-      500,
+      100,
       change,
       utxoPickingStrategy
     );
@@ -141,10 +141,13 @@ describeToUse('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - 500);
-    expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
-  }, 60000);
+    expectedFee1 = 10 * 100 + inputs.length * 100 * 180 + outputs.length * 34 * 100;
 
+    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
+    expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
+  }, 70000);
+
+  let expectedFee2: number;
   it('should send a 1 btc tx to xpubs[1].xpub and handle output splitting', async () => {
     const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
     const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
@@ -153,11 +156,11 @@ describeToUse('testing xpub legacy transactions', () => {
 
     const utxoPickingStrategy = new Merge();
 
-    xpubs[0].xpub.OUTPUT_VALUE_MAX = 60000000;
+    xpubs[0].xpub.OUTPUT_VALUE_MAX = 70000000;
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
       address,
       new BigNumber(100000000),
-      500,
+      100,
       change,
       utxoPickingStrategy
     );
@@ -208,7 +211,11 @@ describeToUse('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - 500 - 100000000 - 500);
+    expectedFee2 = 10 * 100 + inputs.length * 100 * 180 + outputs.length * 34 * 100;
+
+    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(
+      5700000000 - 100000000 - expectedFee1 - 100000000 - expectedFee2
+    );
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(200000000);
-  }, 60000);
+  }, 70000);
 });

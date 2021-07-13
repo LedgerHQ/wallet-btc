@@ -212,32 +212,11 @@ class Xpub extends EventEmitter {
   async buildTx(
     destAddress: string,
     amount: BigNumber,
-    fee: number,
+    feePerByte: number,
     changeAddress: string,
     utxoPickingStrategy: IPickingStrategy
   ) {
     await this.whenSynced('all');
-
-    // now we select only the output needed to cover the amount + fee
-    const { totalValue: total, unspentUtxos: unspentUtxoSelected } = await utxoPickingStrategy.selectUnspentUtxosToUse(
-      this,
-      amount,
-      fee
-    );
-
-    const txHexs = await Promise.all(
-      unspentUtxoSelected.map((unspentUtxo) => this.explorer.getTxHex(unspentUtxo.output_hash))
-    );
-    const txs = await Promise.all(
-      unspentUtxoSelected.map((unspentUtxo) => this.storage.getTx(unspentUtxo.address, unspentUtxo.output_hash))
-    );
-
-    // formatting approx the ledger way; ledger for the win
-    const inputs: [string, number][] = unspentUtxoSelected.map((utxo, index) => [txHexs[index], utxo.output_index]);
-    const associatedDerivations: [number, number][] = unspentUtxoSelected.map((utxo, index) => [
-      txs[index].account,
-      txs[index].index,
-    ]);
 
     const outputs = [];
 
@@ -261,6 +240,28 @@ class Xpub extends EventEmitter {
     if (desiredOutputLeftToFit.value.gt(0)) {
       outputs.push(desiredOutputLeftToFit);
     }
+
+    // now we select only the output needed to cover the amount + fee
+    const {
+      totalValue: total,
+      unspentUtxos: unspentUtxoSelected,
+      fee,
+    } = await utxoPickingStrategy.selectUnspentUtxosToUse(this, amount, feePerByte, outputs.length);
+
+    const txHexs = await Promise.all(
+      unspentUtxoSelected.map((unspentUtxo) => this.explorer.getTxHex(unspentUtxo.output_hash))
+    );
+    const txs = await Promise.all(
+      unspentUtxoSelected.map((unspentUtxo) => this.storage.getTx(unspentUtxo.address, unspentUtxo.output_hash))
+    );
+
+    // formatting approx the ledger way; ledger for the win
+    const inputs: [string, number][] = unspentUtxoSelected.map((utxo, index) => [txHexs[index], utxo.output_index]);
+    const associatedDerivations: [number, number][] = unspentUtxoSelected.map((utxo, index) => [
+      txs[index].account,
+      txs[index].index,
+    ]);
+
     outputs.push({
       script: this.crypto.toOutputScript(changeAddress),
       value: total.minus(amount).minus(fee),

@@ -1,5 +1,4 @@
 // from https://github.com/LedgerHQ/xpub-scan/blob/master/src/actions/deriveAddresses.ts
-
 import * as bch from 'bitcore-lib-cash';
 import bchaddr from 'bchaddrjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
