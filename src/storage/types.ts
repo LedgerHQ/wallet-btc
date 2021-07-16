@@ -26,6 +26,7 @@ export interface Output {
 export interface Block {
   height: number;
   hash: string;
+  time: string;
 }
 
 export interface Address {
