@@ -17,7 +17,7 @@ class Mock implements IStorage {
   // returning unordered tx within the same block)
   spentUtxos: { [key: string]: Input[] } = {};
 
-  async getLastTx(txFilter: { account?: number; index?: number }) {
+  async getLastTx(txFilter: { account?: number; index?: number; address?: string }) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     const tx: TX | undefined = findLast(this.txs, txFilter);
