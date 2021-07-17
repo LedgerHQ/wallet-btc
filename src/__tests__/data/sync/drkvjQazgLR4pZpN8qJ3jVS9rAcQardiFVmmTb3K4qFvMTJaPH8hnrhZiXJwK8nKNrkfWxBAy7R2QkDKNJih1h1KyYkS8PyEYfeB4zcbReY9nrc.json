@@ -22,14 +22,16 @@
         "value": "771859",
         "address": "XiZDmM9C3shuXWBV3AhnbtQkzSfJihnoZU",
         "script_hex": "76a914564ffcaedf27b010c9c5bc704abed876d2af292888ac",
-        "output_hash": "8308b153f4ab00a5971645813aec23abb271f9b4bfc04312ec7f75f19a87c5fd"
+        "output_hash": "8308b153f4ab00a5971645813aec23abb271f9b4bfc04312ec7f75f19a87c5fd",
+        "block_height": 1500970
       },
       {
         "output_index": 1,
         "value": "7453106",
         "address": "XwuUTjHAmmR4v3aqbtMQCV3sXJhg25Nhgd",
         "script_hex": "76a914e8be359298ebb3ac7c9eb37d687a15c43954fb4488ac",
-        "output_hash": "8308b153f4ab00a5971645813aec23abb271f9b4bfc04312ec7f75f19a87c5fd"
+        "output_hash": "8308b153f4ab00a5971645813aec23abb271f9b4bfc04312ec7f75f19a87c5fd",
+        "block_height": 1500970
       }
     ],
     "block": {

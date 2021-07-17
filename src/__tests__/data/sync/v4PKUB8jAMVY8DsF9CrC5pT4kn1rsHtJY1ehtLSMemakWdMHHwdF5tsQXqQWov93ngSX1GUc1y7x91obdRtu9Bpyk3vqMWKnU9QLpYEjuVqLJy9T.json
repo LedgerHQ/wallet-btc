@@ -23,13 +23,15 @@
         "output_index": 0,
         "value": "200000000",
         "address": "RMAFS9VhcjEHzsDE81QG4vZepLCe8dku9H",
-        "script_hex": "76a9148251661ceecca8225189f2ab0dd3c304283d5be588ac"
+        "script_hex": "76a9148251661ceecca8225189f2ab0dd3c304283d5be588ac",
+        "block_height": 2471009
       },
       {
         "output_index": 1,
         "value": "365988660",
         "address": "RFUcrjRSAkZcbp8fHBtt3EsGJJURApY6u5",
-        "script_hex": "76a91443fa03e6dd61231a4d16e7f091662de4ebc5b9b188ac"
+        "script_hex": "76a91443fa03e6dd61231a4d16e7f091662de4ebc5b9b188ac",
+        "block_height": 2471009
       }
     ],
     "fees": 2486,
