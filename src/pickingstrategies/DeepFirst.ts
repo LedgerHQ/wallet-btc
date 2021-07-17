@@ -4,7 +4,7 @@ import { Output } from '../storage/types';
 import Xpub from '../xpub';
 import { IPickingStrategy } from './types';
 
-class Merge implements IPickingStrategy {
+class DeepFirst implements IPickingStrategy {
   // eslint-disable-next-line class-methods-use-this
   async selectUnspentUtxosToUse(xpub: Xpub, amount: BigNumber, feePerByte: number, nbOutputsWithoutChange: number) {
     // get the utxos to use as input
@@ -13,8 +13,7 @@ class Merge implements IPickingStrategy {
     let unspentUtxos = flatten(
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
     );
-    unspentUtxos = sortBy(unspentUtxos, 'value');
-
+    unspentUtxos = sortBy(unspentUtxos, 'block_height');
     // https://metamug.com/article/security/bitcoin-transaction-fee-satoshi-per-byte.html
     // easy way, we consider inputs are not compressed
     // and that we have extras
@@ -43,4 +42,4 @@ class Merge implements IPickingStrategy {
   }
 }
 
-export default Merge;
+export default DeepFirst;

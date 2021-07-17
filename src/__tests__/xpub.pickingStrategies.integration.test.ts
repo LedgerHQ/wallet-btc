@@ -11,6 +11,7 @@ import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
 import Merge from '../pickingstrategies/Merge';
+import DeepFirst from '../pickingstrategies/DeepFirst';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -81,20 +82,19 @@ describe('testing xpub legacy transactions', () => {
     const utxoPickingStrategy = new Merge();
     let res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(10000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(1); // only 1 utxo is enough
-    expect(Number(res.unspentUtxos[0].value)).toEqual(300000000);
+    expect(Number(res.unspentUtxos[0].value)).toEqual(300000000); // use cheaper utxo first
     res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(500000000), 0, 1);
-    expect(res.unspentUtxos.length).toEqual(2); // need 2 utxo is enough
-    expect(Number(res.unspentUtxos[0].value)).toEqual(300000000 + 5000000000);
+    expect(res.unspentUtxos.length).toEqual(2); // need 2 utxo
+    expect(Number(res.unspentUtxos[0].value)+Number(res.unspentUtxos[1].value)).toEqual(300000000 + 5000000000);
   }, 70000);
-/*
+
   it('deep first output strategy should be correct', async () => {
     const utxoPickingStrategy = new DeepFirst();
     let res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(10000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(1); // only 1 utxo is enough
     expect(Number(res.unspentUtxos[0].value)).toEqual(5000000000); // use old utxo first
-    res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(500000000), 0, 1);
-    expect(res.unspentUtxos.length).toEqual(2); // need 2 utxo is enough
-    expect(Number(res.unspentUtxos[0].value)).toEqual(300000000 + 5000000000);
+    res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(5200000000), 0, 1);
+    expect(res.unspentUtxos.length).toEqual(2); // need 2 utxo
+    expect(Number(res.unspentUtxos[0].value)+Number(res.unspentUtxos[1].value)).toEqual(300000000 + 5000000000);
   }, 70000);
-*/
 });
