@@ -2,6 +2,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import bs58 from 'bs58';
 import { padStart } from 'lodash';
+import { ICrypto } from './crypto/types';
 
 export function parseHexString(str: any) {
   const result = [];
@@ -65,4 +66,11 @@ export function createXPUB(depth: any, fingerprint: any, childnum: any, chaincod
   xpub += chaincode;
   xpub += publicKey;
   return xpub;
+}
+
+// todo support different coins
+export function estimateTxSize(inputCount: number, outputCount: number, currency: ICrypto, derivationMode: string) {
+  const fixedSize = 10;
+  const maxSize = fixedSize + 148 * inputCount + 34 * outputCount;
+  return maxSize;
 }

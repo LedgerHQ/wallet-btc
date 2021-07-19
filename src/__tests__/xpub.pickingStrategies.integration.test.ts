@@ -12,6 +12,7 @@ import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
 import Merge from '../pickingstrategies/Merge';
 import DeepFirst from '../pickingstrategies/DeepFirst';
+import CoinSelect from '../pickingstrategies/CoinSelect';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -68,7 +69,7 @@ describe('testing xpub legacy transactions', () => {
       await xpubs[0].xpub.sync();
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log('praline explorer setup error', e);
+      console.log('xpub sync error', e);
     }
   }, 70000);
   /*
@@ -78,6 +79,7 @@ describe('testing xpub legacy transactions', () => {
     expect(balance1.toNumber()).toEqual(5700000000);
   });
 */
+/*
   it('merge output strategy should be correct', async () => {
     const utxoPickingStrategy = new Merge();
     let res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(10000), 0, 1);
@@ -85,7 +87,7 @@ describe('testing xpub legacy transactions', () => {
     expect(Number(res.unspentUtxos[0].value)).toEqual(300000000); // use cheaper utxo first
     res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(500000000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(2); // need 2 utxo
-    expect(Number(res.unspentUtxos[0].value)+Number(res.unspentUtxos[1].value)).toEqual(300000000 + 5000000000);
+    expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(300000000 + 5000000000);
   }, 70000);
 
   it('deep first output strategy should be correct', async () => {
@@ -95,6 +97,42 @@ describe('testing xpub legacy transactions', () => {
     expect(Number(res.unspentUtxos[0].value)).toEqual(5000000000); // use old utxo first
     res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(5200000000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(2); // need 2 utxo
-    expect(Number(res.unspentUtxos[0].value)+Number(res.unspentUtxos[1].value)).toEqual(300000000 + 5000000000);
+    expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(300000000 + 5000000000);
+  }, 70000);*/
+
+  it('coin select strategy should be correct', async () => {
+    const { address } = await xpubs[0].xpub.getNewAddress(0, 0);
+    try {
+      await axios.post('http://localhost:28443/chain/clear/all');
+      await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
+      await axios.post(`http://localhost:28443/chain/faucet/${address}/3.0`);
+      await axios.post(`http://localhost:28443/chain/faucet/${address}/1.0`);
+      await axios.post(`http://localhost:28443/chain/faucet/${address}/2.0`);
+      await axios.post(`http://localhost:28443/chain/faucet/${address}/6.0`);
+      await sleep(30000);
+      await xpubs[0].xpub.sync();
+    }
+    catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('xpub sync error or praline setup error', e);
+    }
+    // we have 5 utxo now. 100000000, 200000000, 300000000, 600000000 and 5000000000
+    const utxoPickingStrategy = new CoinSelect();
+    let res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(10000), 0, 1);
+    expect(res.unspentUtxos.length).toEqual(1);
+    expect(Number(res.unspentUtxos[0].value)).toEqual(100000000);
+
+    res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(290000000), 10, 1);
+    expect(res.unspentUtxos.length).toEqual(1);
+    expect(Number(res.unspentUtxos[0].value)).toEqual(300000000);
+
+    res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(500000000), 0, 1);
+    expect(res.unspentUtxos.length).toEqual(2);
+    expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(200000000 + 300000000);
+
+    res = await utxoPickingStrategy.selectUnspentUtxosToUse(xpubs[0].xpub, new BigNumber(800000000), 0, 1);
+    expect(res.unspentUtxos.length).toEqual(2);
+    expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(200000000 + 600000000);
+
   }, 70000);
 });
