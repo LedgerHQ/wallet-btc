@@ -135,5 +135,5 @@ describe('testing xpub legacy transactions', () => {
     res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(800000000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(2);
     expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(200000000 + 600000000);
-  }, 70000);
+  }, 140000);
 });
