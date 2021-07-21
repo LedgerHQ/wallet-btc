@@ -56,8 +56,6 @@ export interface SerializedAccount {
 }
 
 class WalletLedger {
-  btc: Btc;
-
   networks: { [key: string]: bitcoin.Network } = {
     mainnet: coininfo.bitcoin.main.toBitcoinJS(),
     testnet: coininfo.bitcoin.test.toBitcoinJS(),
@@ -82,11 +80,9 @@ class WalletLedger {
     mock: () => new Mock(),
   };
 
-  constructor(btc: Btc) {
-    this.btc = btc;
-  }
-
   async generateAccount(params: {
+    xpub?: string;
+    btc?: Btc;
     path: string;
     index: string;
     network: 'mainnet' | 'testnet';
@@ -98,32 +94,44 @@ class WalletLedger {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     storageParams: any[];
   }): Promise<Account> {
-    const parentDerivation = await this.btc.getWalletPublicKey(`${params.path}`);
-    const accountDerivation = await this.btc.getWalletPublicKey(`${params.path}/${params.index}'`);
-
-    // parent
-    const publicKeyParentCompressed = utils.compressPublicKey(parentDerivation.publicKey);
-    const publicKeyParentCompressedHex = utils.parseHexString(publicKeyParentCompressed);
-    let result = bitcoin.crypto.sha256(Buffer.from(publicKeyParentCompressedHex));
-    result = bitcoin.crypto.ripemd160(result);
-    // eslint-disable-next-line no-bitwise
-    const fingerprint = ((result[0] << 24) | (result[1] << 16) | (result[2] << 8) | result[3]) >>> 0;
-
-    // account
-    const publicKeyAccountCompressed = utils.compressPublicKey(accountDerivation.publicKey);
-    // eslint-disable-next-line no-bitwise
-    const childnum = (0x80000000 | parseInt(params.index, 10)) >>> 0;
-
     const network = this.networks[params.network];
+    let { xpub } = params;
 
-    const xpub = utils.createXPUB(
-      3,
-      fingerprint,
-      childnum,
-      accountDerivation.chainCode,
-      publicKeyAccountCompressed,
-      network.bip32.public
-    );
+    // TODO Better use of TypeScript to avoid these conditions
+    if (!xpub) {
+      // Xpub not provided, generate it using the hwapp
+
+      if (!params.btc) {
+        // hwapp not provided
+        throw new Error('generateAccount need either a hwapp or xpub');
+      }
+
+      const parentDerivation = await params.btc.getWalletPublicKey(`${params.path}`);
+      const accountDerivation = await params.btc.getWalletPublicKey(`${params.path}/${params.index}'`);
+
+      // parent
+      const publicKeyParentCompressed = utils.compressPublicKey(parentDerivation.publicKey);
+      const publicKeyParentCompressedHex = utils.parseHexString(publicKeyParentCompressed);
+      let result = bitcoin.crypto.sha256(Buffer.from(publicKeyParentCompressedHex));
+      result = bitcoin.crypto.ripemd160(result);
+      // eslint-disable-next-line no-bitwise
+      const fingerprint = ((result[0] << 24) | (result[1] << 16) | (result[2] << 8) | result[3]) >>> 0;
+
+      // account
+      const publicKeyAccountCompressed = utils.compressPublicKey(accountDerivation.publicKey);
+      // eslint-disable-next-line no-bitwise
+      const childnum = (0x80000000 | parseInt(params.index, 10)) >>> 0;
+
+      const xpubRaw = utils.createXPUB(
+        3,
+        fingerprint,
+        childnum,
+        accountDerivation.chainCode,
+        publicKeyAccountCompressed,
+        network.bip32.public
+      );
+      xpub = utils.encodeBase58Check(xpubRaw);
+    }
 
     const storage = this.accountStorages[params.storage](...params.storageParams);
     const explorer = this.explorers[params.explorer](params.explorerURI);
@@ -134,7 +142,7 @@ class WalletLedger {
         storage,
         explorer,
         crypto: new Bitcoin({ network }),
-        xpub: utils.encodeBase58Check(xpub),
+        xpub,
         derivationMode: params.derivationMode,
       }),
     };
@@ -234,7 +242,9 @@ class WalletLedger {
     return txinfos;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async signAccounTx(
+    btc: Btc,
     fromAccount: Account,
     txinfos: {
       inputs: [string, number][];
@@ -263,13 +273,13 @@ class WalletLedger {
     );
     type Inputs = [Transaction, number, string | null | undefined, number | null | undefined][];
     const inputs: Inputs = txinfos.inputs.map(([txHex, index]) => [
-      this.btc.splitTransaction(txHex, true),
+      btc.splitTransaction(txHex, true),
       index,
       null,
       null,
     ]);
 
-    const tx = await this.btc.createPaymentTransactionNew({
+    const tx = await btc.createPaymentTransactionNew({
       inputs,
       associatedKeysets,
       outputScriptHex,
