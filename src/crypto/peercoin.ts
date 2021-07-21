@@ -6,6 +6,9 @@ class Peercoin extends Bitcoin {
     super({ network });
     // https://github.com/LedgerHQ/lib-ledger-core/blob/master/core/src/wallet/bitcoin/networks.cpp#L176
     this.network.bip32.public = 0xe6e8e9e5;
+    this.network.dustThreshold = 10000;
+    this.network.dustPolicy = 'FIXED';
+    this.network.usesTimestampedTransaction = true;
   }
 }
 

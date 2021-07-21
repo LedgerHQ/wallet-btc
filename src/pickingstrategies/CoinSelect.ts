@@ -2,82 +2,182 @@ import BigNumber from 'bignumber.js';
 import { flatten, sortBy } from 'lodash';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
-import { IPickingStrategy } from './types';
+import PickingStrategy from './types';
+import * as utils from '../utils';
+import Merge from './Merge';
 
-// refer to https://bitcoin.stackexchange.com/questions/1077/what-is-the-coin-selection-algorithm
-class CoinSelect implements IPickingStrategy {
+class CoinSelect extends PickingStrategy {
   // eslint-disable-next-line class-methods-use-this
   async selectUnspentUtxosToUse(xpub: Xpub, amount: BigNumber, feePerByte: number, nbOutputsWithoutChange: number) {
     // get the utxos to use as input
     // from all addresses of the account
     const addresses = await xpub.getXpubAddresses();
-    let unspentUtxos = flatten(
+    const unspentUtxos = flatten(
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
     );
-    unspentUtxos = sortBy(unspentUtxos, 'value');
+    /*
+     * This coin selection is inspired from the one used in Bitcoin Core
+     * for more details please refer to SelectCoinsBnB
+     * https://github.com/bitcoin/bitcoin/blob/0c5f67b8e5d9a502c6d321c5e0696bc3e9b4690d/src/wallet/coinselection.cpp
+     * A coin selection is considered valid if its total value is within the range : [targetAmount, targetAmount + costOfChange]
+     */
+    // refer to https://github.com/LedgerHQ/lib-ledger-core/blob/master/core/src/wallet/bitcoin/transaction_builders/BitcoinLikeStrategyUtxoPicker.cpp#L168
+    const TOTAL_TRIES = 100000;
+    const longTermFees = 20;
 
-    const bytes = 10 + (nbOutputsWithoutChange + 1) * 34;
-    let fee = bytes * feePerByte;
-    const outputFee = fee;
-    let total = new BigNumber(0);
-    const unspentUtxoSelected: Output[] = [];
-    let i = 0;
-    while (total.lt(amount.plus(fee))) {
-      if (!unspentUtxos[i]) {
-        throw new Error('amount bigger than the total balance');
+    // Compute cost of change
+    const fixedSize = utils.estimateTxSize(0, 0, this.crypto, this.derivationMode);
+    // Size of only 1 output (without fixed size)
+    const oneOutputSize = utils.estimateTxSize(0, 1, this.crypto, this.derivationMode) - fixedSize;
+    // Size 1 signed UTXO (signed input)
+    const signedUTXOSize = utils.estimateTxSize(1, 0, this.crypto, this.derivationMode) - fixedSize;
+
+    // Size of unsigned change
+    const changeSize = oneOutputSize;
+    // Size of signed change
+    const signedChangeSize = signedUTXOSize;
+
+    const effectiveFees = feePerByte;
+    // Here signedChangeSize should be multiplied by discard fees
+    // but since we don't have access to estimateSmartFees, we assume
+    // that discard fees are equal to effectiveFees
+    const costOfChange = effectiveFees * (signedChangeSize + changeSize);
+
+    // Calculate effective value of outputs
+    let currentAvailableValue = 0;
+    let effectiveUtxos = [];
+
+    for (let i = 0; i < unspentUtxos.length; i += 1) {
+      const outEffectiveValue = Number(unspentUtxos[i].value) - effectiveFees * signedUTXOSize;
+      if (outEffectiveValue > 0) {
+        const outEffectiveFees = effectiveFees * signedUTXOSize;
+        const outLongTermFees = longTermFees * signedUTXOSize;
+        const effectiveUtxo = {
+          index: i,
+          effectiveFees: outEffectiveFees,
+          longTermFees: outLongTermFees,
+          effectiveValue: outEffectiveValue,
+        };
+        effectiveUtxos.push(effectiveUtxo);
+        currentAvailableValue += outEffectiveValue;
       }
-      total = total.plus(unspentUtxos[i].value);
-      unspentUtxoSelected.push(unspentUtxos[i]);
-      fee += 180 * feePerByte;
-      i += 1;
     }
 
-    let bestUtxo = unspentUtxoSelected;
-    let bestTotal = total;
-    let range = 0;
-    for (let i=0; i < unspentUtxos.length; i++){
-      const singleUtxoValue = new BigNumber(Number(unspentUtxos[i].value));
-      // try to pick only one input utxo, check whether the utxo is enough for the transaction
-      if (singleUtxoValue.gte(amount.plus(outputFee).plus(180 * feePerByte))) {
-        // check whether it is better than the merge output strategy
-        if (bestTotal.gt(singleUtxoValue)) {
-          bestTotal = singleUtxoValue;
-          const unspentUtxoSelected: Output[] = [unspentUtxos[i]];
-          bestUtxo = unspentUtxoSelected;
-          range = i;
-          fee = outputFee + 180 * feePerByte;
+    // Get no inputs fees
+    // At beginning, there are no outputs in tx, so noInputFees are fixed fees
+    const notInputFees = effectiveFees * (fixedSize + oneOutputSize * nbOutputsWithoutChange); // at least fixed size and outputs(version...)
+
+    // Start coin selection algorithm (according to SelectCoinBnb from Bitcoin Core)
+    let currentValue = 0;
+    // std::vector<bool> currentSelection;
+    // currentSelection.reserve(utxos.size());
+    const currentSelection: boolean[] = [];
+
+    // Actual amount we are targetting
+    const actualTarget = notInputFees + amount.toNumber();
+
+    // Insufficient funds
+    if (currentAvailableValue < actualTarget) {
+      throw new Error('amount bigger than the total balance');
+    }
+    // Sort utxos by effectiveValue
+    effectiveUtxos = sortBy(effectiveUtxos, 'effectiveValue');
+    effectiveUtxos = effectiveUtxos.reverse();
+
+    let currentWaste = 0;
+    let bestWaste = Number.MAX_SAFE_INTEGER;
+    let bestSelection: boolean[] = [];
+
+    // Deep first search loop to choose UTXOs
+    for (let i = 0; i < TOTAL_TRIES; i += 1) {
+      // Condition for starting a backtrack
+      let backtrack = false;
+      if (
+        currentValue + currentAvailableValue < actualTarget || // Cannot reach target with the amount remaining in currentAvailableValue
+        currentValue > actualTarget + costOfChange || // Selected value is out of range, go back and try other branch
+        (currentWaste > bestWaste && effectiveUtxos[0].effectiveFees - effectiveUtxos[0].longTermFees > 0)
+      ) {
+        // avoid selecting utxos producing more waste
+        backtrack = true;
+      } else if (currentValue >= actualTarget) {
+        // Selected valued is within range
+        currentWaste += currentValue - actualTarget;
+        if (currentWaste <= bestWaste) {
+          bestSelection = currentSelection.slice();
+          while (effectiveUtxos.length > bestSelection.length) {
+            bestSelection.push(false);
+          }
+          bestSelection.length = effectiveUtxos.length;
+          bestWaste = currentWaste;
+        }
+        // remove the excess value as we will be selecting different coins now
+        currentWaste -= currentValue - actualTarget;
+        backtrack = true;
+      }
+      // Move backwards
+      if (backtrack) {
+        // Walk backwards to find the last included UTXO that still needs to have its omission branch traversed.
+        while (currentSelection.length > 0 && !currentSelection[currentSelection.length - 1]) {
+          currentSelection.pop();
+          currentAvailableValue += effectiveUtxos[currentSelection.length].effectiveValue;
+        }
+
+        // Case we walked back to the first utxos and all solutions searched.
+        if (currentSelection.length === 0) {
           break;
         }
-      }
-    }
-    if (range > 0){
-      // refer to https://github.com/bitcoin/bitcoin/blob/3015e0bca6bc2cb8beb747873fdf7b80e74d679f/src/wallet.cpp#L1129 for 1000 iteration to get the best coin select
-      for (let step=0; step<1000; step++){
-        const unspentUtxoSelected: Output[] = [];
-        let total = new BigNumber(0);
-        let nbInput = 0;
-        for (let i=0; i<range; i++){
-          if (Math.random()<0.5){
-            unspentUtxoSelected.push(unspentUtxos[i]);
-            nbInput++;
-            total = total.plus(unspentUtxos[i].value);
-          }
-        }
-        if (total.gt(amount.plus(outputFee).plus(nbInput * 180 * feePerByte))){
-          if (bestTotal.gt(total)) {
-            bestTotal = total;
-            bestUtxo = unspentUtxoSelected;
-            fee = outputFee + nbInput * 180 * feePerByte;
-          }
-        }
-      }
-    }
 
-    return {
-      totalValue: total,
-      unspentUtxos: bestUtxo,
-      fee,
-    };
+        // Output was included on previous iterations, try excluding now
+        currentSelection[currentSelection.length - 1] = false;
+        const eu = effectiveUtxos[currentSelection.length - 1];
+        currentValue -= eu.effectiveValue;
+        currentWaste -= eu.effectiveFees - eu.longTermFees;
+      } else {
+        // Moving forwards, continuing down this branch
+        const eu = effectiveUtxos[currentSelection.length];
+        // Remove this utxos from currentAvailableValue
+        currentAvailableValue -= eu.effectiveValue;
+
+        // Avoid searching a branch if the previous UTXO has the same value and same waste and was excluded. Since the ratio of fee to
+        // long term fee is the same, we only need to check if one of those values match in order to know that the waste is the same.
+        if (
+          currentSelection.length > 0 &&
+          !currentSelection[currentSelection.length - 1] &&
+          eu.effectiveValue === effectiveUtxos[currentSelection.length - 1].effectiveValue &&
+          eu.effectiveFees === effectiveUtxos[currentSelection.length - 1].effectiveFees
+        ) {
+          currentSelection.push(false);
+        } else {
+          // Inclusion branch first
+          currentSelection.push(true);
+          currentValue += eu.effectiveValue;
+          currentWaste += eu.effectiveFees - eu.longTermFees;
+        }
+      }
+    }
+    if (bestSelection.length > 0) {
+      let total = new BigNumber(0);
+      const unspentUtxoSelected: Output[] = [];
+      for (let i = 0; i < bestSelection.length; i += 1) {
+        if (bestSelection[i]) {
+          unspentUtxoSelected.push(unspentUtxos[effectiveUtxos[i].index]);
+          total = total.plus(unspentUtxos[effectiveUtxos[i].index].value);
+        }
+      }
+      const fee = utils.estimateTxSize(
+        unspentUtxoSelected.length,
+        nbOutputsWithoutChange + 1,
+        this.crypto,
+        this.derivationMode
+      );
+      return {
+        totalValue: total,
+        unspentUtxos: unspentUtxoSelected,
+        fee,
+      };
+    }
+    const pickingStrategy = new Merge(this.crypto, this.derivationMode);
+    return pickingStrategy.selectUnspentUtxosToUse(xpub, amount, feePerByte, nbOutputsWithoutChange);
   }
 }
 

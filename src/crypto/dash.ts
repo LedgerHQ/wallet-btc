@@ -15,6 +15,9 @@ class Dash extends Bitcoin {
       wif: 0xcc,
       dustThreshold: 5460,
     };
+    this.network.dustThreshold = 10000;
+    this.network.dustPolicy = 'FIXED';
+    this.network.usesTimestampedTransaction = false;
   }
 }
 

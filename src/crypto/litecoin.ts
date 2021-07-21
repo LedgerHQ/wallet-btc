@@ -17,6 +17,9 @@ class Litecoin implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
     this.network = network;
+    this.network.dustThreshold = 10000;
+    this.network.dustPolicy = 'FIXED';
+    this.network.usesTimestampedTransaction = false;
   }
 
   getLegacyAddress(xpub: string, account: number, index: number): string {

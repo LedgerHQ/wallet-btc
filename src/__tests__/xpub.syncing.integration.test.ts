@@ -43,7 +43,6 @@ const stopLogging = (emitters: any) => {
 };
 
 expect.extend({ toMatchFile });
-
 describe('xpub integration sync', () => {
   const walletDatasets = [
     {
@@ -105,7 +104,7 @@ describe('xpub integration sync', () => {
       addresses: 16,
       balance: 360615,
       network: coininfo.bitcoincash.main.toBitcoinJS(),
-      derivationMode: 'BCH',
+      derivationMode: 'Legacy',
       coin: 'bch',
       explorerVersion: 'v3',
     },

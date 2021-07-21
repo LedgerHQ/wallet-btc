@@ -5,7 +5,7 @@ import EventEmitter from './utils/eventemitter';
 import { IExplorer } from './explorer/types';
 import { ICrypto } from './crypto/types';
 // eslint-disable-next-line import/no-cycle
-import { IPickingStrategy } from './pickingstrategies/types';
+import PickingStrategy from './pickingstrategies/types';
 
 // names inside this class and discovery logic respect BIP32 standard
 class Xpub extends EventEmitter {
@@ -214,7 +214,7 @@ class Xpub extends EventEmitter {
     amount: BigNumber,
     feePerByte: number,
     changeAddress: string,
-    utxoPickingStrategy: IPickingStrategy
+    utxoPickingStrategy: PickingStrategy
   ) {
     await this.whenSynced('all');
 

@@ -2,9 +2,9 @@ import BigNumber from 'bignumber.js';
 import { flatten, sortBy } from 'lodash';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
-import { IPickingStrategy } from './types';
+import PickingStrategy from './types';
 
-class Merge implements IPickingStrategy {
+class Merge extends PickingStrategy {
   // eslint-disable-next-line class-methods-use-this
   async selectUnspentUtxosToUse(xpub: Xpub, amount: BigNumber, feePerByte: number, nbOutputsWithoutChange: number) {
     // get the utxos to use as input

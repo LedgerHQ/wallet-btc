@@ -16,7 +16,7 @@ import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
 import { IStorage, TX } from './storage/types';
 import * as utils from './utils';
-import { IPickingStrategy } from './pickingstrategies/types';
+import PickingStrategy from './pickingstrategies/types';
 
 export interface Account {
   params: {
@@ -221,7 +221,7 @@ class WalletLedger {
     dest: string,
     amount: BigNumber,
     feePerByte: number,
-    utxoPickingStrategy: IPickingStrategy
+    utxoPickingStrategy: PickingStrategy
   ) {
     const changeAddress = await fromAccount.xpub.getNewAddress(1, 1);
     const txinfos = await fromAccount.xpub.buildTx(
