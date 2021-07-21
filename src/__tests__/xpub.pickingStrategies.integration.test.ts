@@ -106,13 +106,13 @@ describe('testing xpub legacy transactions', () => {
     const { address } = await dataset.xpub.getNewAddress(0, 0);
     try {
       await axios.post('http://localhost:28443/chain/clear/all');
-      await sleep(30000);
+      await sleep(60000);
       await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
       await axios.post(`http://localhost:28443/chain/faucet/${address}/3.0`);
       await axios.post(`http://localhost:28443/chain/faucet/${address}/1.0`);
       await axios.post(`http://localhost:28443/chain/faucet/${address}/2.0`);
       await axios.post(`http://localhost:28443/chain/faucet/${address}/6.0`);
-      await sleep(30000);
+      await sleep(60000);
       await dataset.xpub.sync();
     } catch (e) {
       // eslint-disable-next-line no-console
