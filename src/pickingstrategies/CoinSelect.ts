@@ -166,7 +166,7 @@ class CoinSelect extends PickingStrategy {
       }
       const fee = utils.estimateTxSize(
         unspentUtxoSelected.length,
-        nbOutputsWithoutChange + 1,
+        nbOutputsWithoutChange,
         this.crypto,
         this.derivationMode
       );
@@ -174,6 +174,7 @@ class CoinSelect extends PickingStrategy {
         totalValue: total,
         unspentUtxos: unspentUtxoSelected,
         fee,
+        needChangeoutput: false,
       };
     }
     const pickingStrategy = new Merge(this.crypto, this.derivationMode);

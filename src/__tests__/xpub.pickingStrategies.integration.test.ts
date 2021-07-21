@@ -48,9 +48,8 @@ describe('testing xpub legacy transactions', () => {
     xpub,
   };
 
-  beforeAll(async () => {
+  it('merge output strategy should be correct', async () => {
     const { address } = await dataset.xpub.getNewAddress(0, 0);
-
     try {
       await axios.post('http://localhost:28443/chain/clear/all');
       await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
@@ -59,19 +58,14 @@ describe('testing xpub legacy transactions', () => {
       // eslint-disable-next-line no-console
       console.log('praline setup error', e);
     }
-
     // time for explorer to sync
     await sleep(30000);
-
     try {
       await dataset.xpub.sync();
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log('xpub sync error', e);
     }
-  }, 70000);
-
-  it('merge output strategy should be correct', async () => {
     const utxoPickingStrategy = new Merge(dataset.xpub.crypto, dataset.xpub.derivationMode);
     let res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(10000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(1); // only 1 utxo is enough
@@ -82,6 +76,23 @@ describe('testing xpub legacy transactions', () => {
   }, 70000);
 
   it('deep first output strategy should be correct', async () => {
+    const { address } = await dataset.xpub.getNewAddress(0, 0);
+    try {
+      await axios.post('http://localhost:28443/chain/clear/all');
+      await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
+      await axios.post(`http://localhost:28443/chain/faucet/${address}/3.0`);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('praline setup error', e);
+    }
+    // time for explorer to sync
+    await sleep(30000);
+    try {
+      await dataset.xpub.sync();
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('xpub sync error', e);
+    }
     const utxoPickingStrategy = new DeepFirst(dataset.xpub.crypto, dataset.xpub.derivationMode);
     let res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(10000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(1); // only 1 utxo is enough
@@ -95,6 +106,7 @@ describe('testing xpub legacy transactions', () => {
     const { address } = await dataset.xpub.getNewAddress(0, 0);
     try {
       await axios.post('http://localhost:28443/chain/clear/all');
+      await sleep(30000);
       await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
       await axios.post(`http://localhost:28443/chain/faucet/${address}/3.0`);
       await axios.post(`http://localhost:28443/chain/faucet/${address}/1.0`);

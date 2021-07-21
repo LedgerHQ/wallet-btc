@@ -14,7 +14,6 @@ class Merge extends PickingStrategy {
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
     );
     unspentUtxos = sortBy(unspentUtxos, 'value');
-
     // https://metamug.com/article/security/bitcoin-transaction-fee-satoshi-per-byte.html
     // easy way, we consider inputs are not compressed
     // and that we have extras
@@ -39,6 +38,7 @@ class Merge extends PickingStrategy {
       totalValue: total,
       unspentUtxos: unspentUtxoSelected,
       fee,
+      needChangeoutput: true,
     };
   }
 }

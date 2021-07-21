@@ -38,6 +38,7 @@ class DeepFirst extends PickingStrategy {
       totalValue: total,
       unspentUtxos: unspentUtxoSelected,
       fee,
+      needChangeoutput: true,
     };
   }
 }

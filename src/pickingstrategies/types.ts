@@ -23,6 +23,7 @@ abstract class PickingStrategy {
     unspentUtxos: Output[];
     totalValue: BigNumber;
     fee: number;
+    needChangeoutput: boolean;
   }>;
 }
 

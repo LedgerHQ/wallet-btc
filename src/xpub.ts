@@ -246,6 +246,7 @@ class Xpub extends EventEmitter {
       totalValue: total,
       unspentUtxos: unspentUtxoSelected,
       fee,
+      needChangeoutput,
     } = await utxoPickingStrategy.selectUnspentUtxosToUse(this, amount, feePerByte, outputs.length);
 
     const txHexs = await Promise.all(
@@ -262,11 +263,12 @@ class Xpub extends EventEmitter {
       txs[index].index,
     ]);
 
-    outputs.push({
-      script: this.crypto.toOutputScript(changeAddress),
-      value: total.minus(amount).minus(fee),
-    });
-
+    if (needChangeoutput) {
+      outputs.push({
+        script: this.crypto.toOutputScript(changeAddress),
+        value: total.minus(amount).minus(fee),
+      });
+    }
     return {
       inputs,
       associatedDerivations,
