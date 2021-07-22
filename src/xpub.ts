@@ -6,6 +6,7 @@ import { IExplorer } from './explorer/types';
 import { ICrypto } from './crypto/types';
 // eslint-disable-next-line import/no-cycle
 import PickingStrategy from './pickingstrategies/types';
+import * as utils from './utils';
 
 // names inside this class and discovery logic respect BIP32 standard
 class Xpub extends EventEmitter {
@@ -263,7 +264,15 @@ class Xpub extends EventEmitter {
       txs[index].index,
     ]);
 
-    if (needChangeoutput) {
+    const txSize = utils.estimateTxSize(
+      unspentUtxoSelected.length,
+      outputs.length + 1,
+      this.crypto,
+      this.derivationMode
+    );
+    const dustAmount = utils.computeDustAmount(this.crypto, txSize);
+    // Abandon the change output if change output amount is less than dust amount
+    if (needChangeoutput && total.minus(amount).minus(fee) > dustAmount) {
       outputs.push({
         script: this.crypto.toOutputScript(changeAddress),
         value: total.minus(amount).minus(fee),
