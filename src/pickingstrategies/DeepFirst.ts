@@ -3,6 +3,7 @@ import { flatten, sortBy } from 'lodash';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
 import PickingStrategy from './types';
+import * as utils from '../utils';
 
 class DeepFirst extends PickingStrategy {
   // eslint-disable-next-line class-methods-use-this
@@ -17,8 +18,8 @@ class DeepFirst extends PickingStrategy {
     // https://metamug.com/article/security/bitcoin-transaction-fee-satoshi-per-byte.html
     // easy way, we consider inputs are not compressed
     // and that we have extras
-    const bytes = 10 + (nbOutputsWithoutChange + 1) * 34;
-    let fee = bytes * feePerByte;
+    const txSizeNoInput = utils.estimateTxSize(0, nbOutputsWithoutChange + 1, this.crypto, this.derivationMode);
+    let fee = txSizeNoInput * feePerByte;
 
     let total = new BigNumber(0);
     const unspentUtxoSelected: Output[] = [];
