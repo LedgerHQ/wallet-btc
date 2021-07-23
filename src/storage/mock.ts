@@ -40,7 +40,7 @@ class Mock implements IStorage {
 
     txs.forEach((tx) => {
       const indexAddress = tx.address;
-      const index = `${indexAddress}-${tx.id}`;
+      const index = `${indexAddress}-${tx.hash}`;
 
       // we reject already seen tx and tx pendings
       if (this.primaryIndex[index] || !tx.block) {
