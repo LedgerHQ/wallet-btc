@@ -1,5 +1,4 @@
 export interface TX {
-  id: string;
   hash: string;
   account: number;
   index: number;
@@ -40,7 +39,7 @@ export interface IStorage {
   appendTxs(txs: TX[]): Promise<number>;
   getAddressUnspentUtxos(address: Address): Promise<Output[]>;
   getLastTx(txFilter: { account?: number; index?: number }): Promise<TX | undefined>;
-  getTx(address: string, id: string): Promise<TX | undefined>;
+  getTx(address: string, hash: string): Promise<TX | undefined>;
   getUniquesAddresses(addressesFilter: { account?: number; index?: number }): Promise<Address[]>;
   removeTxs(txsFilter: { account: number; index: number }): Promise<void>;
   export(): Promise<TX[]>;

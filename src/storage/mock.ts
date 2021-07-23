@@ -24,8 +24,8 @@ class Mock implements IStorage {
     return tx;
   }
 
-  async getTx(address: string, id: string) {
-    const index = `${address}-${id}`;
+  async getTx(address: string, hash: string) {
+    const index = `${address}-${hash}`;
     return this.primaryIndex[index];
   }
 
@@ -103,7 +103,7 @@ class Mock implements IStorage {
 
       // clean
       const indexAddress = tx.address;
-      const index = `${indexAddress}-${tx.id}`;
+      const index = `${indexAddress}-${tx.hash}`;
 
       delete this.primaryIndex[index];
       delete this.unspentUtxos[indexAddress];
