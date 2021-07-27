@@ -15,11 +15,11 @@ import { IExplorer } from './types';
 const { LOG } = process.env;
 
 const requestInterceptor = (request: AxiosRequestConfig): AxiosRequestConfig => {
-  const { url, method = '', data } = request;
-  log('network', `${method} ${url}`, { data });
+  const { baseURL, url, method = '', data } = request;
+  log('network', `${method} ${baseURL}${url}`, { data });
   if (LOG && LOG === 'http') {
     // eslint-disable-next-line no-console
-    console.log(`${method} ${url}`, { data });
+    console.log(`${method} ${baseURL}${url}`, { data });
   }
   return request;
 };
@@ -29,11 +29,15 @@ const responseInterceptor = (
     config: AxiosRequestConfig;
   } & AxiosResponse
 ) => {
-  const { url, method = '' } = response?.config;
-  log('network-success', `${response.status} ${method} ${url}`, response.data ? { data: response.data } : undefined);
+  const { baseURL, url, method = '' } = response?.config;
+  log(
+    'network-success',
+    `${response.status} ${method} ${baseURL}${url}`,
+    response.data ? { data: response.data } : undefined
+  );
   if (LOG && LOG === 'http') {
     // eslint-disable-next-line no-console
-    console.log(`${response.status} ${method} ${url}`, response.data ? { data: response.data } : undefined);
+    console.log(`${response.status} ${method} ${baseURL}${url}`, response.data ? { data: response.data } : undefined);
   }
   return response;
 };
