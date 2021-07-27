@@ -35,7 +35,19 @@ class Mock implements IStorage {
     return this.unspentUtxos[indexAddress];
   }
 
-  async appendTxs(txs: TX[]) {
+  async getUniquesAddresses(addressesFilter: { account?: number; index?: number }) {
+    // TODO: to speed up, create more useful indexes in appendTxs
+    return uniqBy(
+      filter(this.txs, addressesFilter).map((tx: TX) => ({
+        address: tx.address,
+        account: tx.account,
+        index: tx.index,
+      })),
+      'address'
+    );
+  }
+
+  appendTxs(txs: TX[]) {
     const lastLength = this.txs.length;
 
     txs.forEach((tx) => {
@@ -80,19 +92,7 @@ class Mock implements IStorage {
     return this.txs.length - lastLength;
   }
 
-  async getUniquesAddresses(addressesFilter: { account?: number; index?: number }) {
-    // TODO: to speed up, create more useful indexes in appendTxs
-    return uniqBy(
-      filter(this.txs, addressesFilter).map((tx: TX) => ({
-        address: tx.address,
-        account: tx.account,
-        index: tx.index,
-      })),
-      'address'
-    );
-  }
-
-  async removeTxs(txsFilter: { account: number; index: number }) {
+  removeTxs(txsFilter: { account: number; index: number }) {
     const newTxs: TX[] = [];
 
     this.txs.forEach((tx: TX) => {
@@ -113,12 +113,12 @@ class Mock implements IStorage {
     this.txs = newTxs;
   }
 
-  async export() {
+  export() {
     return this.txs;
   }
 
-  async load(txs: TX[]) {
-    await this.appendTxs(txs);
+  load(txs: TX[]) {
+    this.appendTxs(txs);
   }
 }
 

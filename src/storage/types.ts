@@ -39,12 +39,12 @@ export interface Address {
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface IStorage {
-  appendTxs(txs: TX[]): Promise<number>;
   getAddressUnspentUtxos(address: Address): Promise<Output[]>;
   getLastTx(txFilter: { account?: number; index?: number; address?: string }): Promise<TX | undefined>;
   getTx(address: string, hash: string): Promise<TX | undefined>;
   getUniquesAddresses(addressesFilter: { account?: number; index?: number }): Promise<Address[]>;
-  removeTxs(txsFilter: { account: number; index: number }): Promise<void>;
-  export(): Promise<TX[]>;
-  load(tx: TX[]): Promise<void>;
+  appendTxs(txs: TX[]): number;
+  removeTxs(txsFilter: { account: number; index: number }): void;
+  export(): TX[];
+  load(tx: TX[]): void;
 }

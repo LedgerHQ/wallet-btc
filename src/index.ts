@@ -157,40 +157,6 @@ class WalletLedger {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async exportToSerializedAccount(account: Account): Promise<SerializedAccount> {
-    const txs = await account.xpub.storage.export();
-
-    return {
-      ...account,
-      xpub: {
-        xpub: account.xpub.xpub,
-        txs,
-      },
-    };
-  }
-
-  async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
-    const network = this.networks[account.params.network];
-    const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
-    const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
-
-    const xpub = new Xpub({
-      storage,
-      explorer,
-      crypto: new Bitcoin({ network }),
-      xpub: account.xpub.xpub,
-      derivationMode: account.params.derivationMode,
-    });
-
-    await xpub.storage.load(account.xpub.txs);
-
-    return {
-      ...account,
-      xpub,
-    };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
   async syncAccount(account: Account) {
     return account.xpub.sync();
   }
@@ -304,6 +270,40 @@ class WalletLedger {
   async broadcastTx(fromAccount: Account, tx: string) {
     const res = await fromAccount.xpub.broadcastTx(tx);
     return res.data.result;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  exportToSerializedAccount(account: Account): SerializedAccount {
+    const txs = account.xpub.storage.export();
+
+    return {
+      ...account,
+      xpub: {
+        xpub: account.xpub.xpub,
+        txs,
+      },
+    };
+  }
+
+  importFromSerializedAccount(account: SerializedAccount): Account {
+    const network = this.networks[account.params.network];
+    const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
+    const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
+
+    const xpub = new Xpub({
+      storage,
+      explorer,
+      crypto: new Bitcoin({ network }),
+      xpub: account.xpub.xpub,
+      derivationMode: account.params.derivationMode,
+    });
+
+    xpub.storage.load(account.xpub.txs);
+
+    return {
+      ...account,
+      xpub,
+    };
   }
 }
 
