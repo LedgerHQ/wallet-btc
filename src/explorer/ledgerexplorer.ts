@@ -74,6 +74,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     const block: Block = {
       height: res[0].height,
       hash: res[0].hash,
+      time: res[0].time,
     };
 
     return block;
