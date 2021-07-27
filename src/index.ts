@@ -58,7 +58,7 @@ export interface SerializedAccount {
 class WalletLedger {
   btc: Btc;
 
-  explorerInstances: { [key: string]: IExplorer };
+  explorerInstances: { [key: string]: IExplorer } = {};
 
   networks: { [key: string]: bitcoin.Network } = {
     mainnet: coininfo.bitcoin.main.toBitcoinJS(),
