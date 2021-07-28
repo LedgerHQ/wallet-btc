@@ -52,6 +52,7 @@ describe('testing xpub legacy transactions', () => {
     const { address } = await dataset.xpub.getNewAddress(0, 0);
     try {
       await axios.post('http://localhost:28443/chain/clear/all');
+      await sleep(10000);
       await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
       await axios.post(`http://localhost:28443/chain/faucet/${address}/3.0`);
     } catch (e) {
@@ -59,7 +60,7 @@ describe('testing xpub legacy transactions', () => {
       console.log('praline setup error', e);
     }
     // time for explorer to sync
-    await sleep(30000);
+    await sleep(40000);
     try {
       await dataset.xpub.sync();
     } catch (e) {
@@ -73,12 +74,13 @@ describe('testing xpub legacy transactions', () => {
     res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(500000000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(2); // need 2 utxo
     expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(300000000 + 5000000000);
-  }, 70000);
+  }, 100000);
 
   it('deep first output strategy should be correct', async () => {
     const { address } = await dataset.xpub.getNewAddress(0, 0);
     try {
       await axios.post('http://localhost:28443/chain/clear/all');
+      await sleep(10000);
       await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
       await axios.post(`http://localhost:28443/chain/faucet/${address}/3.0`);
     } catch (e) {
@@ -86,7 +88,7 @@ describe('testing xpub legacy transactions', () => {
       console.log('praline setup error', e);
     }
     // time for explorer to sync
-    await sleep(30000);
+    await sleep(40000);
     try {
       await dataset.xpub.sync();
     } catch (e) {
@@ -100,7 +102,7 @@ describe('testing xpub legacy transactions', () => {
     res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(5200000000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(2); // need 2 utxo
     expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(300000000 + 5000000000);
-  }, 70000);
+  }, 100000);
 
   it('coin select strategy should be correct', async () => {
     const { address } = await dataset.xpub.getNewAddress(0, 0);
@@ -135,5 +137,5 @@ describe('testing xpub legacy transactions', () => {
     res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(800000000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(2);
     expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(200000000 + 600000000);
-  }, 140000);
+  }, 180000);
 });
