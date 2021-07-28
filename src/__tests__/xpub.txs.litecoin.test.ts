@@ -52,7 +52,6 @@ describe('testing xpub legacy transactions', () => {
 
   beforeAll(async () => {
     const { address } = await xpubs[0].xpub.getNewAddress(0, 0);
-    console.log(address);
     try {
       await axios.post('http://localhost:28443/chain/clear/all');
       await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
@@ -74,9 +73,13 @@ describe('testing xpub legacy transactions', () => {
   }, 70000);
 
   it('should be setup correctly', async () => {
+    const { address } = await xpubs[0].xpub.getNewAddress(0, 0);
+    const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
     const balance1 = await xpubs[0].xpub.getXpubBalance();
-
     expect(balance1.toNumber()).toEqual(5700000000);
+    let expectedFee: number;
+
+
   });
 
 /*
