@@ -1,13 +1,46 @@
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios, { AxiosInstance } from 'axios';
 import axiosRetry from 'axios-retry';
 import * as https from 'https';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import JSONBigNumber from '@ledgerhq/json-bignumber';
+import { log } from '@ledgerhq/logs';
 import BigNumber from 'bignumber.js';
 import { Address, Block, TX } from '../storage/types';
 import EventEmitter from '../utils/eventemitter';
 import { IExplorer } from './types';
+
+const { LOG } = process.env;
+
+const requestInterceptor = (request: AxiosRequestConfig): AxiosRequestConfig => {
+  const { baseURL, url, method = '', data } = request;
+  log('network', `${method} ${baseURL}${url}`, { data });
+  if (LOG && LOG === 'http') {
+    // eslint-disable-next-line no-console
+    console.log(`${method} ${baseURL}${url}`, { data });
+  }
+  return request;
+};
+
+const responseInterceptor = (
+  response: {
+    config: AxiosRequestConfig;
+  } & AxiosResponse
+) => {
+  const { baseURL, url, method = '' } = response?.config;
+  log(
+    'network-success',
+    `${response.status} ${method} ${baseURL}${url}`,
+    response.data ? { data: response.data } : undefined
+  );
+  if (LOG && LOG === 'http') {
+    // eslint-disable-next-line no-console
+    console.log(`${response.status} ${method} ${baseURL}${url}`, response.data ? { data: response.data } : undefined);
+  }
+  return response;
+};
 
 class LedgerExplorer extends EventEmitter implements IExplorer {
   client: AxiosInstance;
@@ -38,6 +71,10 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     if (disableBatchSize) {
       this.disableBatchSize = disableBatchSize;
     }
+
+    // Logging
+    this.client.interceptors.request.use(requestInterceptor);
+    this.client.interceptors.response.use(responseInterceptor);
   }
 
   async broadcast(tx: string) {
