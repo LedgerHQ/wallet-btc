@@ -27,6 +27,7 @@ export interface Output {
 export interface Block {
   height: number;
   hash: string;
+  time: string;
 }
 
 export interface Address {
@@ -39,7 +40,7 @@ export interface Address {
 export interface IStorage {
   appendTxs(txs: TX[]): Promise<number>;
   getAddressUnspentUtxos(address: Address): Promise<Output[]>;
-  getLastTx(txFilter: { account?: number; index?: number }): Promise<TX | undefined>;
+  getLastTx(txFilter: { account?: number; index?: number; address?: string }): Promise<TX | undefined>;
   getTx(address: string, hash: string): Promise<TX | undefined>;
   getUniquesAddresses(addressesFilter: { account?: number; index?: number }): Promise<Address[]>;
   removeTxs(txsFilter: { account: number; index: number }): Promise<void>;
