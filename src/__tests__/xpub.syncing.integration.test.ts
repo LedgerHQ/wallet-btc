@@ -22,6 +22,11 @@ import Komodo from '../crypto/komodo';
 import Pivx from '../crypto/pivx';
 import Stakenet from '../crypto/stakenet';
 import Stealth from '../crypto/stealth';
+import BitcoinGold from '../crypto/bitcoingold';
+import Doge from '../crypto/doge';
+import Qtum from '../crypto/qtum';
+import Vertcoin from '../crypto/vtc';
+import ViaCoin from '../crypto/via';
 
 const startLogging = (emitters: any) => {
   emitters.forEach((emitter: any) =>
@@ -38,7 +43,6 @@ const stopLogging = (emitters: any) => {
 };
 
 expect.extend({ toMatchFile });
-
 describe('xpub integration sync', () => {
   const walletDatasets = [
     {
@@ -100,7 +104,7 @@ describe('xpub integration sync', () => {
       addresses: 16,
       balance: 360615,
       network: coininfo.bitcoincash.main.toBitcoinJS(),
-      derivationMode: 'BCH',
+      derivationMode: 'Legacy',
       coin: 'bch',
       explorerVersion: 'v3',
     },
@@ -253,7 +257,7 @@ describe('xpub integration sync', () => {
           crypto = new Bitcoin({ network: dataset.network });
           break;
         case 'btg': // bitcoin gold
-          crypto = new Bitcoin({ network: dataset.network });
+          crypto = new BitcoinGold({ network: dataset.network });
           break;
         case 'dgb': // digibyte
           crypto = new Digibyte({ network: dataset.network });
@@ -262,7 +266,7 @@ describe('xpub integration sync', () => {
           crypto = new Dash({ network: dataset.network });
           break;
         case 'doge': // dogecoin
-          crypto = new Bitcoin({ network: dataset.network });
+          crypto = new Doge({ network: dataset.network });
           break;
         case 'kmd': // komodo
           crypto = new Komodo({ network: dataset.network });
@@ -280,13 +284,13 @@ describe('xpub integration sync', () => {
           crypto = new Peercoin({ network: dataset.network });
           break;
         case 'qtum':
-          crypto = new Bitcoin({ network: dataset.network });
+          crypto = new Qtum({ network: dataset.network });
           break;
         case 'vtc': // vertcoin
-          crypto = new Bitcoin({ network: dataset.network });
+          crypto = new Vertcoin({ network: dataset.network });
           break;
         case 'via': // viacoin
-          crypto = new Bitcoin({ network: dataset.network });
+          crypto = new ViaCoin({ network: dataset.network });
           break;
         case 'zec': // zcash
           crypto = new Zec({ network: dataset.network });

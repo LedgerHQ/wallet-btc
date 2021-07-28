@@ -2,10 +2,10 @@ import BigNumber from 'bignumber.js';
 import { flatten, sortBy } from 'lodash';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
-import { IPickingStrategy } from './types';
+import PickingStrategy from './types';
+import * as utils from '../utils';
 
-// an Live explorer V3 class
-class Merge implements IPickingStrategy {
+class Merge extends PickingStrategy {
   // eslint-disable-next-line class-methods-use-this
   async selectUnspentUtxosToUse(xpub: Xpub, amount: BigNumber, feePerByte: number, nbOutputsWithoutChange: number) {
     // get the utxos to use as input
@@ -15,12 +15,11 @@ class Merge implements IPickingStrategy {
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
     );
     unspentUtxos = sortBy(unspentUtxos, 'value');
-
     // https://metamug.com/article/security/bitcoin-transaction-fee-satoshi-per-byte.html
     // easy way, we consider inputs are not compressed
     // and that we have extras
-    const bytes = 10 + (nbOutputsWithoutChange + 1) * 34;
-    let fee = bytes * feePerByte;
+    const txSizeNoInput = utils.estimateTxSize(0, nbOutputsWithoutChange + 1, this.crypto, this.derivationMode);
+    let fee = txSizeNoInput * feePerByte;
 
     let total = new BigNumber(0);
     const unspentUtxoSelected: Output[] = [];
@@ -40,6 +39,7 @@ class Merge implements IPickingStrategy {
       totalValue: total,
       unspentUtxos: unspentUtxoSelected,
       fee,
+      needChangeoutput: true,
     };
   }
 }

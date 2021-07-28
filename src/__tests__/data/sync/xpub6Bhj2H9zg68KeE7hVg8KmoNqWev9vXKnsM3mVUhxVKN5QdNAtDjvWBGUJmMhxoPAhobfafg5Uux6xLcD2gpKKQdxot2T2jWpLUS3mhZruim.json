@@ -25,14 +25,16 @@
         "value": "100000000",
         "address": "XvDTQEeuP6w5Qdaw6EydNv6HgQVGsLRg5d",
         "script_hex": "76a914d6348f5a7d27ee764be714e7069ae75c66ff923a88ac",
-        "output_hash": "778a3d91870fb2601a1e0b62768af759900beb0554288c26e1dda736f87265dc"
+        "output_hash": "778a3d91870fb2601a1e0b62768af759900beb0554288c26e1dda736f87265dc",
+        "block_height": 1745061
       },
       {
         "output_index": 1,
         "value": "399999496",
         "address": "7cYh4Rhmzksg4kfcmWbhc6nYKtRW9sD6or",
         "script_hex": "a9146f368276f821ec8695373a38bc757ded2e083aff87",
-        "output_hash": "778a3d91870fb2601a1e0b62768af759900beb0554288c26e1dda736f87265dc"
+        "output_hash": "778a3d91870fb2601a1e0b62768af759900beb0554288c26e1dda736f87265dc",
+        "block_height": 1745061
       }
     ],
     "block": {

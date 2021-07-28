@@ -199,6 +199,8 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
       tx.outputs.forEach((output) => {
         // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
         output.output_hash = tx.hash;
+        // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+        output.block_height = tx.block ? tx.block.height : null;
       });
     });
 

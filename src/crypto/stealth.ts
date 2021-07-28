@@ -8,6 +8,9 @@ class Stealth extends Bitcoin {
     this.network.bip32.public = 0x8f624b66;
     this.network.pubKeyHash = 0x3e;
     this.network.scriptHash = 0x55;
+    this.network.dustThreshold = 10000;
+    this.network.dustPolicy = 'FIXED';
+    this.network.usesTimestampedTransaction = true;
   }
 }
 

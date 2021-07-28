@@ -38,14 +38,16 @@
         "value": "754825",
         "address": "QSSHpfHL4Y94eVVeNNqeP3YKxTtEeuLcmh",
         "script_hex": "76a9143ffb619ab7aeb821c544724092ef635c80e28e5c88ac",
-        "output_hash": "2de11c0faa46585ce73afac40515034ed3c8ddfd96dd0f1c74b80c8d41659060"
+        "output_hash": "2de11c0faa46585ce73afac40515034ed3c8ddfd96dd0f1c74b80c8d41659060",
+        "block_height": 1032363
       },
       {
         "output_index": 1,
         "value": "718917",
         "address": "MQSz6x7HvMibNcR8ckr8obCrf7A5g3aDEd",
         "script_hex": "a914b586de3b6c8eaad0c8e9d412c38ebce489c26ed187",
-        "output_hash": "2de11c0faa46585ce73afac40515034ed3c8ddfd96dd0f1c74b80c8d41659060"
+        "output_hash": "2de11c0faa46585ce73afac40515034ed3c8ddfd96dd0f1c74b80c8d41659060",
+        "block_height": 1032363
       }
     ],
     "block": {

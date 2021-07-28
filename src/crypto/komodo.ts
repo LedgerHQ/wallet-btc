@@ -7,6 +7,9 @@ class Komodo extends Bitcoin {
     this.network.bip32.public = 0xf9eee48d;
     this.network.pubKeyHash = 0x3c;
     this.network.scriptHash = 0x55;
+    this.network.dustThreshold = 10000;
+    this.network.dustPolicy = 'FIXED';
+    this.network.usesTimestampedTransaction = false;
   }
 }
 

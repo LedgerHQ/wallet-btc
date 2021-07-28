@@ -5,7 +5,8 @@ import EventEmitter from './utils/eventemitter';
 import { IExplorer } from './explorer/types';
 import { ICrypto } from './crypto/types';
 // eslint-disable-next-line import/no-cycle
-import { IPickingStrategy } from './pickingstrategies/types';
+import PickingStrategy from './pickingstrategies/types';
+import * as utils from './utils';
 
 // names inside this class and discovery logic respect BIP32 standard
 class Xpub extends EventEmitter {
@@ -214,7 +215,7 @@ class Xpub extends EventEmitter {
     amount: BigNumber;
     feePerByte: number;
     changeAddress: string;
-    utxoPickingStrategy: IPickingStrategy;
+    utxoPickingStrategy: PickingStrategy;
     sequence?: number;
   }) {
     await this.whenSynced('all');
@@ -247,6 +248,7 @@ class Xpub extends EventEmitter {
       totalValue: total,
       unspentUtxos: unspentUtxoSelected,
       fee,
+      needChangeoutput,
     } = await params.utxoPickingStrategy.selectUnspentUtxosToUse(
       this,
       params.amount,
@@ -273,11 +275,20 @@ class Xpub extends EventEmitter {
       txs[index].index,
     ]);
 
-    outputs.push({
-      script: this.crypto.toOutputScript(params.changeAddress),
-      value: total.minus(params.amount).minus(fee),
-    });
-
+    const txSize = utils.estimateTxSize(
+      unspentUtxoSelected.length,
+      outputs.length + 1,
+      this.crypto,
+      this.derivationMode
+    );
+    const dustAmount = utils.computeDustAmount(this.crypto, txSize);
+    // Abandon the change output if change output amount is less than dust amount
+    if (needChangeoutput && total.minus(params.amount).minus(fee) > dustAmount) {
+      outputs.push({
+        script: this.crypto.toOutputScript(params.changeAddress),
+        value: total.minus(params.amount).minus(fee),
+      });
+    }
     return {
       inputs,
       associatedDerivations,

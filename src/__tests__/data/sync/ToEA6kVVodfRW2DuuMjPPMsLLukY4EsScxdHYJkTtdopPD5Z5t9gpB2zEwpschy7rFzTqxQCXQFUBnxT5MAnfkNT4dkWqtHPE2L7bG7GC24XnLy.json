@@ -23,14 +23,16 @@
         "value": "400000000",
         "address": "DGbtmZaPy9ND8aJNBAmvqPiGE3BdJA6WaS",
         "script_hex": "76a9147dbac9f9ffe7bc4a251361d1dc2f831f267149c988ac",
-        "output_hash": "983a4839c7562a17d64568fceba6972388e425d92cb5789a07a3f21a64a0daa9"
+        "output_hash": "983a4839c7562a17d64568fceba6972388e425d92cb5789a07a3f21a64a0daa9",
+        "block_height": 2924157
       },
       {
         "output_index": 1,
         "value": "7488663027",
         "address": "DG9CnHbHnRCK2hMykApaa1m4jmAgKeSiB8",
         "script_hex": "76a91478ae9815177d6b7cfc200f69b87ef1fc55a01c4c88ac",
-        "output_hash": "983a4839c7562a17d64568fceba6972388e425d92cb5789a07a3f21a64a0daa9"
+        "output_hash": "983a4839c7562a17d64568fceba6972388e425d92cb5789a07a3f21a64a0daa9",
+        "block_height": 2924157
       }
     ],
     "fees": 22826,

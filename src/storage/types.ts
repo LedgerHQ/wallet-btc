@@ -22,6 +22,7 @@ export interface Output {
   output_hash: string;
   output_index: number;
   script_hex: string;
+  block_height: number | null;
 }
 
 export interface Block {
