@@ -13,6 +13,7 @@ export interface Input {
   address: string;
   output_hash: string;
   output_index: number;
+  sequence: number;
 }
 
 export interface Output {

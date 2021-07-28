@@ -224,21 +224,23 @@ class WalletLedger {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async buildAccountTx(
-    fromAccount: Account,
-    dest: string,
-    amount: BigNumber,
-    feePerByte: number,
-    utxoPickingStrategy: IPickingStrategy
-  ) {
-    const changeAddress = await fromAccount.xpub.getNewAddress(1, 1);
-    const txinfos = await fromAccount.xpub.buildTx(
-      dest,
-      amount,
-      feePerByte,
-      changeAddress.address,
-      utxoPickingStrategy
-    );
+  async buildAccountTx(params: {
+    fromAccount: Account;
+    dest: string;
+    amount: BigNumber;
+    feePerByte: number;
+    utxoPickingStrategy: IPickingStrategy;
+    sequence?: number;
+  }) {
+    const changeAddress = await params.fromAccount.xpub.getNewAddress(1, 1);
+    const txinfos = await params.fromAccount.xpub.buildTx({
+      destAddress: params.dest,
+      amount: params.amount,
+      feePerByte: params.feePerByte,
+      changeAddress: changeAddress.address,
+      utxoPickingStrategy: params.utxoPickingStrategy,
+      sequence: params.sequence,
+    });
     return txinfos;
   }
 
@@ -247,7 +249,7 @@ class WalletLedger {
     btc: Btc,
     fromAccount: Account,
     txinfos: {
-      inputs: [string, number][];
+      inputs: [string, number, null, number | null][];
       associatedDerivations: [number, number][];
       outputs: {
         script: Buffer;
