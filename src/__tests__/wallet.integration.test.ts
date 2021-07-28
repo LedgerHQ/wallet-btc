@@ -4,10 +4,11 @@ import Merge from '../pickingstrategies/Merge';
 import MockBtc from './mocks/Btc';
 
 describe('testing wallet', () => {
-  const wallet = new WalletLedger(new MockBtc());
+  const wallet = new WalletLedger();
   let account: Account;
   it('should generate an account', async () => {
     account = await wallet.generateAccount({
+      btc: new MockBtc(),
       path: "44'/0'",
       index: '0',
       network: 'mainnet',
@@ -47,7 +48,7 @@ describe('testing wallet', () => {
       feePerByte: 5,
       utxoPickingStrategy,
     });
-    const tx = await wallet.signAccounTx(account, txinfos);
+    const tx = await wallet.signAccounTx(new MockBtc(), account, txinfos);
     expect(tx).toEqual('02d5e970283203ed91da5e5e9bb125f2a490e189');
   });
 
@@ -62,7 +63,7 @@ describe('testing wallet', () => {
       feePerByte: 5,
       utxoPickingStrategy,
     });
-    const tx = await wallet.signAccounTx(account, txinfos);
+    const tx = await wallet.signAccounTx(new MockBtc(), account, txinfos);
     expect(tx).toEqual('2ff622550c58695764bd942a8054649c167b28c6');
   });
 });
