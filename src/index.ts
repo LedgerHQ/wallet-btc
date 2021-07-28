@@ -56,6 +56,8 @@ export interface SerializedAccount {
 }
 
 class WalletLedger {
+  explorerInstances: { [key: string]: IExplorer } = {};
+
   networks: { [key: string]: bitcoin.Network } = {
     mainnet: coininfo.bitcoin.main.toBitcoinJS(),
     testnet: coininfo.bitcoin.test.toBitcoinJS(),
@@ -79,6 +81,12 @@ class WalletLedger {
   accountStorages: { [key: string]: (...args: any[]) => IStorage } = {
     mock: () => new Mock(),
   };
+
+  getExplorer(explorer: 'ledgerv3' | 'ledgerv2', explorerURI: string) {
+    const id = `explorer-${explorer}-uri-${explorerURI}`;
+    this.explorerInstances[id] = this.explorerInstances[id] || this.explorers[explorer](explorerURI);
+    return this.explorerInstances[id];
+  }
 
   async generateAccount(params: {
     xpub?: string;
@@ -134,7 +142,7 @@ class WalletLedger {
     }
 
     const storage = this.accountStorages[params.storage](...params.storageParams);
-    const explorer = this.explorers[params.explorer](params.explorerURI);
+    const explorer = this.getExplorer(params.explorer, params.explorerURI);
 
     return {
       params,
@@ -164,7 +172,7 @@ class WalletLedger {
   async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
     const network = this.networks[account.params.network];
     const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
-    const explorer = this.explorers[account.params.explorer](account.params.explorerURI);
+    const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
 
     const xpub = new Xpub({
       storage,
