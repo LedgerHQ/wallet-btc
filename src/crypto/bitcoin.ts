@@ -66,7 +66,7 @@ class Bitcoin implements ICrypto {
       case this.DerivationMode.NATIVE:
         return this.getNativeSegWitAddress(xpub, account, index);
       default:
-        throw new Error('Invalide derivation Mode');
+        throw new Error(`Invalid derivation Mode: ${derivationMode}`);
     }
   }
 

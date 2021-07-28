@@ -210,13 +210,14 @@ class Xpub extends EventEmitter {
     return address;
   }
 
-  async buildTx(
-    destAddress: string,
-    amount: BigNumber,
-    feePerByte: number,
-    changeAddress: string,
-    utxoPickingStrategy: PickingStrategy
-  ) {
+  async buildTx(params: {
+    destAddress: string;
+    amount: BigNumber;
+    feePerByte: number;
+    changeAddress: string;
+    utxoPickingStrategy: PickingStrategy;
+    sequence?: number;
+  }) {
     await this.whenSynced('all');
 
     const outputs = [];
@@ -226,8 +227,8 @@ class Xpub extends EventEmitter {
     // we use to serialize output only take js number in params
     // that are actually even more restricted
     const desiredOutputLeftToFit = {
-      script: this.crypto.toOutputScript(destAddress),
-      value: amount,
+      script: this.crypto.toOutputScript(params.destAddress),
+      value: params.amount,
     };
 
     while (desiredOutputLeftToFit.value.gt(this.OUTPUT_VALUE_MAX)) {
@@ -248,7 +249,12 @@ class Xpub extends EventEmitter {
       unspentUtxos: unspentUtxoSelected,
       fee,
       needChangeoutput,
-    } = await utxoPickingStrategy.selectUnspentUtxosToUse(this, amount, feePerByte, outputs.length);
+    } = await params.utxoPickingStrategy.selectUnspentUtxosToUse(
+      this,
+      params.amount,
+      params.feePerByte,
+      outputs.length
+    );
 
     const txHexs = await Promise.all(
       unspentUtxoSelected.map((unspentUtxo) => this.explorer.getTxHex(unspentUtxo.output_hash))
@@ -258,7 +264,12 @@ class Xpub extends EventEmitter {
     );
 
     // formatting approx the ledger way; ledger for the win
-    const inputs: [string, number][] = unspentUtxoSelected.map((utxo, index) => [txHexs[index], utxo.output_index]);
+    const inputs: [string, number, null, number | null][] = unspentUtxoSelected.map((utxo, index) => [
+      txHexs[index],
+      utxo.output_index,
+      null,
+      Number.isInteger(params.sequence) ? params.sequence : null,
+    ]);
     const associatedDerivations: [number, number][] = unspentUtxoSelected.map((utxo, index) => [
       txs[index].account,
       txs[index].index,
@@ -272,10 +283,10 @@ class Xpub extends EventEmitter {
     );
     const dustAmount = utils.computeDustAmount(this.crypto, txSize);
     // Abandon the change output if change output amount is less than dust amount
-    if (needChangeoutput && total.minus(amount).minus(fee) > dustAmount) {
+    if (needChangeoutput && total.minus(params.amount).minus(fee) > dustAmount) {
       outputs.push({
-        script: this.crypto.toOutputScript(changeAddress),
-        value: total.minus(amount).minus(fee),
+        script: this.crypto.toOutputScript(params.changeAddress),
+        value: total.minus(params.amount).minus(fee),
       });
     }
     return {
