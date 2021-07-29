@@ -1,5 +1,5 @@
-import path from 'path';
-import fs from 'fs';
+// import path from 'path';
+// import fs from 'fs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
@@ -11,7 +11,7 @@ import Xpub from '../xpub';
 
 describe('synced xpub utilites functions', () => {
   const explorer = new LedgerExplorer({
-    explorerURI: 'whatever',
+    explorerURI: 'https://explorers.api.vault.ledger.com/blockchain/v3/btc',
     explorerVersion: 'v3',
   });
   const crypto = new Crypto({
@@ -21,7 +21,7 @@ describe('synced xpub utilites functions', () => {
   describe('xpub xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz Legacy', () => {
     const xpubraw =
       'xpub6CUGRUonZSQ4TWtTMmzXdrXDtypWKiKrhko4egpiMZbpiaQL2jkwSB1icqYh2cfDfVxdx4df189oLKnC5fSwqPfgyP3hooxujYzAu3fDVmz';
-    const truthDump = path.join(__dirname, 'data', 'sync', `${xpubraw}.json`);
+    // const truthDump = path.join(__dirname, 'data', 'sync', `${xpubraw}.json`);
     const storage = new Storage();
     const xpub = new Xpub({
       storage,
@@ -31,8 +31,8 @@ describe('synced xpub utilites functions', () => {
       derivationMode: 'Legacy',
     });
 
-    beforeAll(() => {
-      storage.load(JSON.parse(fs.readFileSync(truthDump).toString()));
+    beforeAll(async () => {
+      await xpub.sync();
     });
 
     it('should compute accounts/addresses/balances correctly', async () => {
