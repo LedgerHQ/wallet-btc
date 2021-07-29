@@ -62,8 +62,8 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     this.client = axios.create({
       baseURL: explorerURI,
-      // uses max 20 keep alive request in parallel
-      httpsAgent: new https.Agent({ keepAlive: true, maxSockets: 20 }),
+      // uses max 40 keep alive request in parallel
+      httpsAgent: new https.Agent({ keepAlive: true, maxSockets: 40 }),
     });
     // 3 retries per request
     axiosRetry(this.client, { retries: 3 });
