@@ -4,8 +4,8 @@ require('bitcore-lib');
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
-import path from 'path';
-import { orderBy } from 'lodash';
+// import path from 'path';
+// import { orderBy } from 'lodash';
 import { toMatchFile } from 'jest-file-snapshot';
 import Storage from '../storage/mock';
 import LedgerExplorer from '../explorer/ledgerexplorer';
