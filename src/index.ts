@@ -14,7 +14,7 @@ import LedgerExplorer from './explorer/ledgerexplorer';
 import Bitcoin from './crypto/bitcoin';
 import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
-import { IStorage, TX } from './storage/types';
+import { IStorage } from './storage/types';
 import * as utils from './utils';
 import PickingStrategy from './pickingstrategies/types';
 
@@ -51,7 +51,7 @@ export interface SerializedAccount {
 
   xpub: {
     xpub: string;
-    txs: TX[];
+    data: unknown;
   };
 }
 
@@ -158,13 +158,13 @@ class WalletLedger {
 
   // eslint-disable-next-line class-methods-use-this
   async exportToSerializedAccount(account: Account): Promise<SerializedAccount> {
-    const txs = await account.xpub.storage.export();
+    const data = await account.xpub.storage.export();
 
     return {
       ...account,
       xpub: {
         xpub: account.xpub.xpub,
-        txs,
+        data,
       },
     };
   }
@@ -182,7 +182,7 @@ class WalletLedger {
       derivationMode: account.params.derivationMode,
     });
 
-    await xpub.storage.load(account.xpub.txs);
+    await xpub.storage.load(account.xpub.data);
 
     return {
       ...account,
