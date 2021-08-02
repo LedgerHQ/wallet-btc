@@ -37,12 +37,12 @@ describe('synced xpub utilites functions', () => {
 
     it('should compute accounts/addresses/balances correctly', async () => {
       const addresses = await xpub.getXpubAddresses();
-      expect(addresses.length).toEqual(15);
+      expect(addresses.length).toEqual(17);
 
-      expect((await xpub.getAccountAddresses(0)).length).toEqual(15);
+      expect((await xpub.getAccountAddresses(0)).length).toEqual(17);
 
-      expect((await xpub.getXpubBalance()).toNumber()).toEqual(12688908);
-      expect((await xpub.getAccountBalance(0)).toNumber()).toEqual(12688908);
+      expect((await xpub.getXpubBalance()).toNumber()).toEqual(12757380);
+      expect((await xpub.getAccountBalance(0)).toNumber()).toEqual(12757380);
       const addressesBalances = await Promise.all(addresses.map((address) => xpub.getAddressBalance(address)));
       expect(
         zipObject(
@@ -51,6 +51,8 @@ describe('synced xpub utilites functions', () => {
         )
       ).toEqual({
         '12iNxzdF6KFZ14UyRTYCRuptxkKSSVHzqF': 0,
+        "12jLBneUouaGs4xuEjcFQ3QdXGPmghVXCh": 34236,
+        "12niombHy7yecbCbaa6hyVnEVSeM7tB32Q": 34236,
         '15NvG6YpVh2aUc3DroVttEcWa1Z99qhACP': 1000,
         '15xANZb5vJv5RGL263NFuh8UGgHT7noXeZ': 100000,
         '1687EJf5YEmeEtcscnuJPiV5b8HkM1o98q': 40160,
