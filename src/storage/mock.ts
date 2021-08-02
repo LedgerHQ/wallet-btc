@@ -114,11 +114,17 @@ class Mock implements IStorage {
   }
 
   async export() {
-    return this.txs;
+    return {
+      txs: this.txs,
+      primaryIndex: this.primaryIndex,
+      unspentUtxos: this.unspentUtxos,
+    };
   }
 
-  async load(txs: TX[]) {
-    await this.appendTxs(txs);
+  async load(data: { txs: TX[]; primaryIndex: { [key: string]: TX }; unspentUtxos: { [key: string]: Output[] } }) {
+    this.txs = data.txs;
+    this.primaryIndex = data.primaryIndex;
+    this.unspentUtxos = data.unspentUtxos;
   }
 }
 

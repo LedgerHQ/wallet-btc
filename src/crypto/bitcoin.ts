@@ -20,6 +20,9 @@ class Bitcoin implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
     this.network = network;
+    this.network.dustThreshold = 3000;
+    this.network.dustPolicy = 'PER_KBYTE';
+    this.network.usesTimestampedTransaction = false;
   }
 
   // derive legacy address at account and index positions

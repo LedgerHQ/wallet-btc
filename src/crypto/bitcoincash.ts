@@ -11,12 +11,15 @@ class BitcoinCash implements ICrypto {
   network: any;
 
   DerivationMode: DerivationMode = {
-    BCH: 'BCH',
+    LEGACY: 'Legacy',
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
     this.network = network;
+    this.network.dustThreshold = 5430;
+    this.network.dustPolicy = 'FIXED';
+    this.network.usesTimestampedTransaction = false;
   }
 
   // Based on https://github.com/go-faast/bitcoin-cash-payments/blob/54397eb97c7a9bf08b32e10bef23d5f27aa5ab01/index.js#L63-L73
@@ -44,7 +47,7 @@ class BitcoinCash implements ICrypto {
   // could match a native Bitcoin address type for instance)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDerivationMode(address: string) {
-    return this.DerivationMode.BCH;
+    return this.DerivationMode.LEGACY;
   }
 
   toOutputScript(address: string) {

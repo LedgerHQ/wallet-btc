@@ -22,6 +22,7 @@ export interface Output {
   output_hash: string;
   output_index: number;
   script_hex: string;
+  block_height: number | null;
 }
 
 export interface Block {
@@ -44,6 +45,6 @@ export interface IStorage {
   getTx(address: string, hash: string): Promise<TX | undefined>;
   getUniquesAddresses(addressesFilter: { account?: number; index?: number }): Promise<Address[]>;
   removeTxs(txsFilter: { account: number; index: number }): Promise<void>;
-  export(): Promise<TX[]>;
-  load(tx: TX[]): Promise<void>;
+  export(): Promise<unknown>;
+  load(data: unknown): Promise<void>;
 }
