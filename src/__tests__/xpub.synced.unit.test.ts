@@ -51,8 +51,8 @@ describe('synced xpub utilites functions', () => {
         )
       ).toEqual({
         '12iNxzdF6KFZ14UyRTYCRuptxkKSSVHzqF': 0,
-        "12jLBneUouaGs4xuEjcFQ3QdXGPmghVXCh": 34236,
-        "12niombHy7yecbCbaa6hyVnEVSeM7tB32Q": 34236,
+        '12jLBneUouaGs4xuEjcFQ3QdXGPmghVXCh': 34236,
+        '12niombHy7yecbCbaa6hyVnEVSeM7tB32Q': 34236,
         '15NvG6YpVh2aUc3DroVttEcWa1Z99qhACP': 1000,
         '15xANZb5vJv5RGL263NFuh8UGgHT7noXeZ': 100000,
         '1687EJf5YEmeEtcscnuJPiV5b8HkM1o98q': 40160,
