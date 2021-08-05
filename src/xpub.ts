@@ -220,7 +220,11 @@ class Xpub extends EventEmitter {
   }) {
     await this.whenSynced('all');
 
-    const outputs = [];
+    const outputs: {
+      script: Buffer;
+      value: BigNumber;
+      isChange?: true;
+    }[] = [];
 
     // outputs splitting
     // btc only support value fitting in uint64 and the lib
@@ -287,6 +291,7 @@ class Xpub extends EventEmitter {
       outputs.push({
         script: this.crypto.toOutputScript(params.changeAddress),
         value: total.minus(params.amount).minus(fee),
+        isChange: true,
       });
     }
     return {

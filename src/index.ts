@@ -249,7 +249,10 @@ class WalletLedger {
       utxoPickingStrategy: params.utxoPickingStrategy,
       sequence: params.sequence,
     });
-    return txinfos;
+    return {
+      txinfos,
+      changeAddress,
+    };
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -262,6 +265,7 @@ class WalletLedger {
       outputs: {
         script: Buffer;
         value: BigNumber;
+        isChange?: true;
       }[];
     }
   ) {
