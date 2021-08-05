@@ -5,8 +5,9 @@ import EventEmitter from './utils/eventemitter';
 import { IExplorer } from './explorer/types';
 import { ICrypto } from './crypto/types';
 // eslint-disable-next-line import/no-cycle
-import PickingStrategy from './pickingstrategies/types';
+import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
+import { TransactionInfo, InputInfo, OutputInfo } from './types';
 
 // names inside this class and discovery logic respect BIP32 standard
 class Xpub extends EventEmitter {
@@ -217,14 +218,10 @@ class Xpub extends EventEmitter {
     changeAddress: string;
     utxoPickingStrategy: PickingStrategy;
     sequence?: number;
-  }) {
+  }): Promise<TransactionInfo> {
     await this.whenSynced('all');
 
-    const outputs: {
-      script: Buffer;
-      value: BigNumber;
-      isChange?: true;
-    }[] = [];
+    const outputs: OutputInfo[] = [];
 
     // outputs splitting
     // btc only support value fitting in uint64 and the lib
@@ -233,12 +230,15 @@ class Xpub extends EventEmitter {
     const desiredOutputLeftToFit = {
       script: this.crypto.toOutputScript(params.destAddress),
       value: params.amount,
+      address: params.destAddress,
+      isChange: false,
     };
-
     while (desiredOutputLeftToFit.value.gt(this.OUTPUT_VALUE_MAX)) {
       outputs.push({
         script: desiredOutputLeftToFit.script,
         value: new BigNumber(this.OUTPUT_VALUE_MAX),
+        address: params.destAddress,
+        isChange: false,
       });
       desiredOutputLeftToFit.value = desiredOutputLeftToFit.value.minus(this.OUTPUT_VALUE_MAX);
     }
@@ -267,13 +267,19 @@ class Xpub extends EventEmitter {
       unspentUtxoSelected.map((unspentUtxo) => this.storage.getTx(unspentUtxo.address, unspentUtxo.output_hash))
     );
 
-    // formatting approx the ledger way; ledger for the win
-    const inputs: [string, number, null, number | null][] = unspentUtxoSelected.map((utxo, index) => [
-      txHexs[index],
-      utxo.output_index,
-      null,
-      Number.isInteger(params.sequence) ? params.sequence : null,
-    ]);
+    const inputs: InputInfo[] = unspentUtxoSelected.map((utxo, index) => {
+      return {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        txHex: txHexs[index],
+        value: utxo.value,
+        address: utxo.address,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        output_hash: utxo.output_hash,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        output_index: utxo.output_index,
+        sequence: Number.isInteger(params.sequence) ? params.sequence : null,
+      };
+    });
     const associatedDerivations: [number, number][] = unspentUtxoSelected.map((utxo, index) => [
       txs[index].account,
       txs[index].index,
@@ -291,6 +297,7 @@ class Xpub extends EventEmitter {
       outputs.push({
         script: this.crypto.toOutputScript(params.changeAddress),
         value: total.minus(params.amount).minus(fee),
+        address: params.changeAddress,
         isChange: true,
       });
     }
@@ -298,6 +305,7 @@ class Xpub extends EventEmitter {
       inputs,
       associatedDerivations,
       outputs,
+      fee,
     };
   }
 

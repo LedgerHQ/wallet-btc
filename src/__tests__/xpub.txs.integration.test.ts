@@ -10,7 +10,8 @@ import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
-import Merge from '../pickingstrategies/Merge';
+import { InputInfo, OutputInfo } from '../types';
+import { Merge } from '../pickingstrategies/Merge';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -95,17 +96,17 @@ describe('testing xpub legacy transactions', () => {
       utxoPickingStrategy,
     });
 
-    inputs.forEach(([txHex, index]) => {
-      const nonWitnessUtxo = Buffer.from(txHex, 'hex');
-      const tx = bitcoin.Transaction.fromHex(txHex);
+    inputs.forEach((i: InputInfo) => {
+      const nonWitnessUtxo = Buffer.from(i.txHex, 'hex');
+      const tx = bitcoin.Transaction.fromHex(i.txHex);
 
       psbt.addInput({
         hash: tx.getId(),
-        index,
+        index: i.output_index,
         nonWitnessUtxo,
       });
     });
-    outputs.forEach((output) => {
+    outputs.forEach((output: OutputInfo) => {
       psbt.addOutput({
         script: output.script,
         value: output.value.toNumber(),
@@ -165,13 +166,13 @@ describe('testing xpub legacy transactions', () => {
       utxoPickingStrategy,
     });
 
-    inputs.forEach(([txHex, index]) => {
-      const nonWitnessUtxo = Buffer.from(txHex, 'hex');
-      const tx = bitcoin.Transaction.fromHex(txHex);
+    inputs.forEach((i) => {
+      const nonWitnessUtxo = Buffer.from(i.txHex, 'hex');
+      const tx = bitcoin.Transaction.fromHex(i.txHex);
 
       psbt.addInput({
         hash: tx.getId(),
-        index,
+        index: i.output_index,
         nonWitnessUtxo,
       });
     });

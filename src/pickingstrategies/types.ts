@@ -4,7 +4,8 @@ import { Output } from '../storage/types';
 // eslint-disable-next-line import/no-cycle
 import Xpub from '../xpub';
 
-abstract class PickingStrategy {
+// eslint-disable-next-line import/prefer-default-export
+export abstract class PickingStrategy {
   crypto: ICrypto;
 
   derivationMode: string;
@@ -26,5 +27,3 @@ abstract class PickingStrategy {
     needChangeoutput: boolean;
   }>;
 }
-
-export default PickingStrategy;

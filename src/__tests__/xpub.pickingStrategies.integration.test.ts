@@ -9,9 +9,9 @@ import BigNumber from 'bignumber.js';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import Storage from '../storage/mock';
-import Merge from '../pickingstrategies/Merge';
-import DeepFirst from '../pickingstrategies/DeepFirst';
-import CoinSelect from '../pickingstrategies/CoinSelect';
+import { Merge } from '../pickingstrategies/Merge';
+import { DeepFirst } from '../pickingstrategies/DeepFirst';
+import { CoinSelect } from '../pickingstrategies/CoinSelect';
 
 describe('testing xpub legacy transactions', () => {
   const network = coininfo.bitcoin.test.toBitcoinJS();

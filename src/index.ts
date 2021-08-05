@@ -1,22 +1,26 @@
-import * as bitcoin from 'bitcoinjs-lib';
-import Btc from '@ledgerhq/hw-app-btc';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import { BufferWriter } from 'bitcoinjs-lib/src/bufferutils';
-import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
 import { flatten } from 'lodash';
 import BigNumber from 'bignumber.js';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import { BufferWriter } from 'bitcoinjs-lib/src/bufferutils';
+import * as bitcoin from 'bitcoinjs-lib';
+
+import Btc from '@ledgerhq/hw-app-btc';
+import { log } from '@ledgerhq/logs';
+import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
+
+import { TransactionInfo } from './types';
 import Xpub from './xpub';
-import LedgerExplorer from './explorer/ledgerexplorer';
-import Bitcoin from './crypto/bitcoin';
-import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
+import LedgerExplorer from './explorer/ledgerexplorer';
 import { IStorage } from './storage/types';
+import Mock from './storage/mock';
+import Bitcoin from './crypto/bitcoin';
+import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
-import PickingStrategy from './pickingstrategies/types';
 
 export interface Account {
   params: {
@@ -96,7 +100,6 @@ class WalletLedger {
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
     explorer: 'ledgerv3' | 'ledgerv2';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     explorerURI: string;
     storage: 'mock';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,7 +108,6 @@ class WalletLedger {
     const network = this.networks[params.network];
     let { xpub } = params;
 
-    // TODO Better use of TypeScript to avoid these conditions
     if (!xpub) {
       // Xpub not provided, generate it using the hwapp
 
@@ -239,9 +241,9 @@ class WalletLedger {
     feePerByte: number;
     utxoPickingStrategy: PickingStrategy;
     sequence?: number;
-  }) {
+  }): Promise<TransactionInfo> {
     const changeAddress = await params.fromAccount.xpub.getNewAddress(1, 1);
-    const txinfos = await params.fromAccount.xpub.buildTx({
+    const txInfos = await params.fromAccount.xpub.buildTx({
       destAddress: params.dest,
       amount: params.amount,
       feePerByte: params.feePerByte,
@@ -249,26 +251,11 @@ class WalletLedger {
       utxoPickingStrategy: params.utxoPickingStrategy,
       sequence: params.sequence,
     });
-    return {
-      txinfos,
-      changeAddress,
-    };
+    return txInfos;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async signAccounTx(
-    btc: Btc,
-    fromAccount: Account,
-    txinfos: {
-      inputs: [string, number, null, number | null][];
-      associatedDerivations: [number, number][];
-      outputs: {
-        script: Buffer;
-        value: BigNumber;
-        isChange?: true;
-      }[];
-    }
-  ) {
+  async signAccountTx(btc: Btc, fromAccount: Account, txinfos: TransactionInfo) {
     const length = txinfos.outputs.reduce((sum, output) => {
       return sum + 8 + output.script.length + 1;
     }, 1);
@@ -286,13 +273,33 @@ class WalletLedger {
       ([account, index]) => `${fromAccount.params.path}/${fromAccount.params.index}'/${account}/${index}`
     );
     type Inputs = [Transaction, number, string | null | undefined, number | null | undefined][];
-    const inputs: Inputs = txinfos.inputs.map(([txHex, index]) => [
-      btc.splitTransaction(txHex, true),
-      index,
-      null,
-      null,
-    ]);
+    const inputs: Inputs = txinfos.inputs.map((i) => [btc.splitTransaction(i.txHex, true), i.output_index, null, null]);
 
+    log('hw', `createPaymentTransactionNew`, {
+      associatedKeysets,
+      // changePath,
+      outputScriptHex,
+      // lockTime,
+      // sigHashType,
+      // segwit,
+      // initialTimestamp,
+      // additionals,
+      // expiryHeight: expiryHeight && expiryHeight.toString("hex"),
+    });
+
+    /*
+    FIXME MISSING:
+      changePath,
+      lockTime,
+      sigHashType,
+      segwit,
+      initialTimestamp,
+      additionals,
+      expiryHeight,
+      onDeviceSignatureGranted: () => o.next({ type: "device-signature-granted" }),
+      onDeviceSignatureRequested: () => o.next({ type: "device-signature-requested" }),
+      onDeviceStreaming: ({ progress, index, total }) => o.next({ type: "device-streaming", progress, index, total }),
+    */
     const tx = await btc.createPaymentTransactionNew({
       inputs,
       associatedKeysets,
