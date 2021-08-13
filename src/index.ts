@@ -14,9 +14,9 @@ import LedgerExplorer from './explorer/ledgerexplorer';
 import Bitcoin from './crypto/bitcoin';
 import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
-import { IStorage, TX } from './storage/types';
+import { IStorage } from './storage/types';
 import * as utils from './utils';
-import { IPickingStrategy } from './pickingstrategies/types';
+import PickingStrategy from './pickingstrategies/types';
 
 export interface Account {
   params: {
@@ -51,12 +51,12 @@ export interface SerializedAccount {
 
   xpub: {
     xpub: string;
-    txs: TX[];
+    data: unknown;
   };
 }
 
 class WalletLedger {
-  btc: Btc;
+  explorerInstances: { [key: string]: IExplorer } = {};
 
   networks: { [key: string]: bitcoin.Network } = {
     mainnet: coininfo.bitcoin.main.toBitcoinJS(),
@@ -82,11 +82,15 @@ class WalletLedger {
     mock: () => new Mock(),
   };
 
-  constructor(btc: Btc) {
-    this.btc = btc;
+  getExplorer(explorer: 'ledgerv3' | 'ledgerv2', explorerURI: string) {
+    const id = `explorer-${explorer}-uri-${explorerURI}`;
+    this.explorerInstances[id] = this.explorerInstances[id] || this.explorers[explorer](explorerURI);
+    return this.explorerInstances[id];
   }
 
   async generateAccount(params: {
+    xpub?: string;
+    btc?: Btc;
     path: string;
     index: string;
     network: 'mainnet' | 'testnet';
@@ -98,35 +102,47 @@ class WalletLedger {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     storageParams: any[];
   }): Promise<Account> {
-    const parentDerivation = await this.btc.getWalletPublicKey(`${params.path}`);
-    const accountDerivation = await this.btc.getWalletPublicKey(`${params.path}/${params.index}'`);
-
-    // parent
-    const publicKeyParentCompressed = utils.compressPublicKey(parentDerivation.publicKey);
-    const publicKeyParentCompressedHex = utils.parseHexString(publicKeyParentCompressed);
-    let result = bitcoin.crypto.sha256(Buffer.from(publicKeyParentCompressedHex));
-    result = bitcoin.crypto.ripemd160(result);
-    // eslint-disable-next-line no-bitwise
-    const fingerprint = ((result[0] << 24) | (result[1] << 16) | (result[2] << 8) | result[3]) >>> 0;
-
-    // account
-    const publicKeyAccountCompressed = utils.compressPublicKey(accountDerivation.publicKey);
-    // eslint-disable-next-line no-bitwise
-    const childnum = (0x80000000 | parseInt(params.index, 10)) >>> 0;
-
     const network = this.networks[params.network];
+    let { xpub } = params;
 
-    const xpub = utils.createXPUB(
-      3,
-      fingerprint,
-      childnum,
-      accountDerivation.chainCode,
-      publicKeyAccountCompressed,
-      network.bip32.public
-    );
+    // TODO Better use of TypeScript to avoid these conditions
+    if (!xpub) {
+      // Xpub not provided, generate it using the hwapp
+
+      if (!params.btc) {
+        // hwapp not provided
+        throw new Error('generateAccount need either a hwapp or xpub');
+      }
+
+      const parentDerivation = await params.btc.getWalletPublicKey(`${params.path}`);
+      const accountDerivation = await params.btc.getWalletPublicKey(`${params.path}/${params.index}'`);
+
+      // parent
+      const publicKeyParentCompressed = utils.compressPublicKey(parentDerivation.publicKey);
+      const publicKeyParentCompressedHex = utils.parseHexString(publicKeyParentCompressed);
+      let result = bitcoin.crypto.sha256(Buffer.from(publicKeyParentCompressedHex));
+      result = bitcoin.crypto.ripemd160(result);
+      // eslint-disable-next-line no-bitwise
+      const fingerprint = ((result[0] << 24) | (result[1] << 16) | (result[2] << 8) | result[3]) >>> 0;
+
+      // account
+      const publicKeyAccountCompressed = utils.compressPublicKey(accountDerivation.publicKey);
+      // eslint-disable-next-line no-bitwise
+      const childnum = (0x80000000 | parseInt(params.index, 10)) >>> 0;
+
+      const xpubRaw = utils.createXPUB(
+        3,
+        fingerprint,
+        childnum,
+        accountDerivation.chainCode,
+        publicKeyAccountCompressed,
+        network.bip32.public
+      );
+      xpub = utils.encodeBase58Check(xpubRaw);
+    }
 
     const storage = this.accountStorages[params.storage](...params.storageParams);
-    const explorer = this.explorers[params.explorer](params.explorerURI);
+    const explorer = this.getExplorer(params.explorer, params.explorerURI);
 
     return {
       params,
@@ -134,7 +150,7 @@ class WalletLedger {
         storage,
         explorer,
         crypto: new Bitcoin({ network }),
-        xpub: utils.encodeBase58Check(xpub),
+        xpub,
         derivationMode: params.derivationMode,
       }),
     };
@@ -142,13 +158,13 @@ class WalletLedger {
 
   // eslint-disable-next-line class-methods-use-this
   async exportToSerializedAccount(account: Account): Promise<SerializedAccount> {
-    const txs = await account.xpub.storage.export();
+    const data = await account.xpub.storage.export();
 
     return {
       ...account,
       xpub: {
         xpub: account.xpub.xpub,
-        txs,
+        data,
       },
     };
   }
@@ -156,7 +172,7 @@ class WalletLedger {
   async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
     const network = this.networks[account.params.network];
     const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
-    const explorer = this.explorers[account.params.explorer](account.params.explorerURI);
+    const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
 
     const xpub = new Xpub({
       storage,
@@ -166,7 +182,7 @@ class WalletLedger {
       derivationMode: account.params.derivationMode,
     });
 
-    await xpub.storage.load(account.xpub.txs);
+    await xpub.storage.load(account.xpub.data);
 
     return {
       ...account,
@@ -216,32 +232,40 @@ class WalletLedger {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async buildAccountTx(
-    fromAccount: Account,
-    dest: string,
-    amount: BigNumber,
-    feePerByte: number,
-    utxoPickingStrategy: IPickingStrategy
-  ) {
-    const changeAddress = await fromAccount.xpub.getNewAddress(1, 1);
-    const txinfos = await fromAccount.xpub.buildTx(
-      dest,
-      amount,
-      feePerByte,
-      changeAddress.address,
-      utxoPickingStrategy
-    );
-    return txinfos;
+  async buildAccountTx(params: {
+    fromAccount: Account;
+    dest: string;
+    amount: BigNumber;
+    feePerByte: number;
+    utxoPickingStrategy: PickingStrategy;
+    sequence?: number;
+  }) {
+    const changeAddress = await params.fromAccount.xpub.getNewAddress(1, 1);
+    const txinfos = await params.fromAccount.xpub.buildTx({
+      destAddress: params.dest,
+      amount: params.amount,
+      feePerByte: params.feePerByte,
+      changeAddress: changeAddress.address,
+      utxoPickingStrategy: params.utxoPickingStrategy,
+      sequence: params.sequence,
+    });
+    return {
+      txinfos,
+      changeAddress,
+    };
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async signAccounTx(
+    btc: Btc,
     fromAccount: Account,
     txinfos: {
-      inputs: [string, number][];
+      inputs: [string, number, null, number | null][];
       associatedDerivations: [number, number][];
       outputs: {
         script: Buffer;
         value: BigNumber;
+        isChange?: true;
       }[];
     }
   ) {
@@ -263,13 +287,13 @@ class WalletLedger {
     );
     type Inputs = [Transaction, number, string | null | undefined, number | null | undefined][];
     const inputs: Inputs = txinfos.inputs.map(([txHex, index]) => [
-      this.btc.splitTransaction(txHex, true),
+      btc.splitTransaction(txHex, true),
       index,
       null,
       null,
     ]);
 
-    const tx = await this.btc.createPaymentTransactionNew({
+    const tx = await btc.createPaymentTransactionNew({
       inputs,
       associatedKeysets,
       outputScriptHex,

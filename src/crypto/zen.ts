@@ -33,6 +33,9 @@ class Zen implements ICrypto {
     this.network.wif = 0x80;
     this.network.pubKeyHash = 0x2096;
     this.network.scriptHash = 0x2089;
+    this.network.dustThreshold = 10000;
+    this.network.dustPolicy = 'FIXED';
+    this.network.usesTimestampedTransaction = false;
   }
 
   DerivationMode: DerivationMode = {

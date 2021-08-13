@@ -7,6 +7,9 @@ class Digibyte extends Bitcoin {
     // https://electrum.readthedocs.io/en/latest/xpub_version_bytes.html
     super({ network });
     this.network.bip32 = { public: 0x0488b21e, private: 0x0488ade4 };
+    this.network.dustThreshold = 10000;
+    this.network.dustPolicy = 'FIXED';
+    this.network.usesTimestampedTransaction = false;
   }
 }
 

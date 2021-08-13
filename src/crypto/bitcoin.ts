@@ -20,6 +20,9 @@ class Bitcoin implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
     this.network = network;
+    this.network.dustThreshold = 3000;
+    this.network.dustPolicy = 'PER_KBYTE';
+    this.network.usesTimestampedTransaction = false;
   }
 
   // derive legacy address at account and index positions
@@ -63,7 +66,7 @@ class Bitcoin implements ICrypto {
       case this.DerivationMode.NATIVE:
         return this.getNativeSegWitAddress(xpub, account, index);
       default:
-        throw new Error('Invalide derivation Mode');
+        throw new Error(`Invalid derivation Mode: ${derivationMode}`);
     }
   }
 

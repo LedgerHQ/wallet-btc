@@ -2,6 +2,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import bs58 from 'bs58';
 import { padStart } from 'lodash';
+import { ICrypto } from './crypto/types';
 
 export function parseHexString(str: any) {
   const result = [];
@@ -65,4 +66,60 @@ export function createXPUB(depth: any, fingerprint: any, childnum: any, chaincod
   xpub += chaincode;
   xpub += publicKey;
   return xpub;
+}
+
+export function byteSize(count: number) {
+  if (count < 0xfd) {
+    return 1;
+  }
+  if (count <= 0xffff) {
+    return 2;
+  }
+  if (count <= 0xffffffff) {
+    return 4;
+  }
+  return 8;
+}
+
+// refer to https://github.com/LedgerHQ/lib-ledger-core/blob/fc9d762b83fc2b269d072b662065747a64ab2816/core/src/wallet/bitcoin/api_impl/BitcoinLikeTransactionApi.cpp#L217
+export function estimateTxSize(inputCount: number, outputCount: number, currency: ICrypto, derivationMode: string) {
+  let txSize = 0;
+  let fixedSize = 0;
+  // Fixed size computation
+  fixedSize = 4; // Transaction version
+  if (currency.network.usesTimestampedTransaction) fixedSize += 4; // Timestamp
+  fixedSize += byteSize(inputCount); // Number of inputs
+  fixedSize += byteSize(outputCount); // Number of outputs
+  fixedSize += 4; // Timelock
+
+  const isSegwit = derivationMode === 'Native SegWit' || derivationMode === 'SegWit';
+  if (isSegwit) {
+    // Native Segwit: 32 PrevTxHash + 4 Index + 1 null byte + 4 sequence
+    // P2SH: 32 PrevTxHash + 4 Index + 23 scriptPubKey + 4 sequence
+    const isNativeSegwit = derivationMode === 'Native SegWit';
+    const inputSize = isNativeSegwit ? 41 : 63;
+    const noWitness = fixedSize + inputSize * inputCount + 34 * outputCount;
+    // Include flag and marker size (one byte each)
+    const witnessSize = noWitness + 108 * inputCount + 2;
+    txSize = (noWitness * 3 + witnessSize) / 4;
+  } else {
+    txSize = fixedSize + 148 * inputCount + 34 * outputCount;
+  }
+  return txSize;
+}
+
+// refer to https://github.com/LedgerHQ/lib-ledger-core/blob/fc9d762b83fc2b269d072b662065747a64ab2816/core/src/wallet/bitcoin/api_impl/BitcoinLikeTransactionApi.cpp#L253
+export function computeDustAmount(currency: ICrypto, txSize: number) {
+  let dustAmount = currency.network.dustThreshold;
+  switch (currency.network.dustPolicy) {
+    case 'PER_KBYTE':
+      dustAmount = (dustAmount * txSize) / 1000;
+      break;
+    case 'PER_BYTE':
+      dustAmount *= txSize;
+      break;
+    default:
+      break;
+  }
+  return dustAmount;
 }

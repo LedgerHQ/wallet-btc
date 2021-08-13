@@ -85,15 +85,15 @@ describe('testing xpub legacy transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge();
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode);
 
-    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
-      address,
-      new BigNumber(100000000),
-      100,
-      change,
-      utxoPickingStrategy
-    );
+    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
+      destAddress: address,
+      amount: new BigNumber(100000000),
+      feePerByte: 100,
+      changeAddress: change,
+      utxoPickingStrategy,
+    });
 
     inputs.forEach(([txHex, index]) => {
       const nonWitnessUtxo = Buffer.from(txHex, 'hex');
@@ -154,16 +154,16 @@ describe('testing xpub legacy transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge();
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode);
 
     xpubs[0].xpub.OUTPUT_VALUE_MAX = 70000000;
-    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
-      address,
-      new BigNumber(100000000),
-      100,
-      change,
-      utxoPickingStrategy
-    );
+    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
+      destAddress: address,
+      amount: new BigNumber(100000000),
+      feePerByte: 100,
+      changeAddress: change,
+      utxoPickingStrategy,
+    });
 
     inputs.forEach(([txHex, index]) => {
       const nonWitnessUtxo = Buffer.from(txHex, 'hex');

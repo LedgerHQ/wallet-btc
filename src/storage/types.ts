@@ -13,6 +13,7 @@ export interface Input {
   address: string;
   output_hash: string;
   output_index: number;
+  sequence: number;
 }
 
 export interface Output {
@@ -21,11 +22,13 @@ export interface Output {
   output_hash: string;
   output_index: number;
   script_hex: string;
+  block_height: number | null;
 }
 
 export interface Block {
   height: number;
   hash: string;
+  time: string;
 }
 
 export interface Address {
@@ -38,10 +41,10 @@ export interface Address {
 export interface IStorage {
   appendTxs(txs: TX[]): Promise<number>;
   getAddressUnspentUtxos(address: Address): Promise<Output[]>;
-  getLastTx(txFilter: { account?: number; index?: number }): Promise<TX | undefined>;
+  getLastTx(txFilter: { account?: number; index?: number; address?: string }): Promise<TX | undefined>;
   getTx(address: string, hash: string): Promise<TX | undefined>;
   getUniquesAddresses(addressesFilter: { account?: number; index?: number }): Promise<Address[]>;
   removeTxs(txsFilter: { account: number; index: number }): Promise<void>;
-  export(): Promise<TX[]>;
-  load(tx: TX[]): Promise<void>;
+  export(): Promise<unknown>;
+  load(data: unknown): Promise<void>;
 }

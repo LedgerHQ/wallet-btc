@@ -17,6 +17,7 @@
   "typings": "dist/index.d.ts",
   "license": "MIT",
   "files": [
+    ".yalc",
     "dist/"
   ],
   "devDependencies": {
@@ -51,6 +52,7 @@
   "dependencies": {
     "@ledgerhq/hw-app-btc": "^6.0.2",
     "@ledgerhq/json-bignumber": "^1.0.2",
+    "@ledgerhq/logs": "6.2.0",
     "@types/bchaddrjs": "^0.4.0",
     "@types/bitcore-lib-cash": "^8.23.3",
     "@types/bs58check": "^2.1.0",
