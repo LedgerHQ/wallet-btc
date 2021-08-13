@@ -73,6 +73,7 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
     }
   }, 70000);
 
+  /*
   it('should be setup correctly', async () => {
     const { address } = await xpubs[0].xpub.getNewAddress(0, 0);
     const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
@@ -80,7 +81,7 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
     console.log(address);
     expect(balance1.toNumber()).toEqual(5700000000);
     let expectedFee: number;
-  });
+  });*/
 
 
   it('should be setup correctly', async () => {
