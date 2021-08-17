@@ -11,11 +11,12 @@ import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
 import Merge from '../pickingstrategies/Merge';
+import * as utils from '../utils';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('testing xpub legacy transactions', () => {
-  const network = coininfo.bitcoin.test.toBitcoinJS();
+  const network = coininfo.bitcoin.regtest.toBitcoinJS();
 
   const explorer = new LedgerExplorer({
     explorerURI: 'http://localhost:20000/blockchain/v3',
@@ -51,7 +52,6 @@ describe('testing xpub legacy transactions', () => {
 
   beforeAll(async () => {
     const { address } = await xpubs[0].xpub.getNewAddress(0, 0);
-
     try {
       await axios.post('http://localhost:28443/chain/clear/all');
       await axios.post(`http://localhost:28443/chain/mine/${address}/1`);
@@ -118,8 +118,6 @@ describe('testing xpub legacy transactions', () => {
     });
     psbt.finalizeAllInputs();
     const rawTxHex = psbt.extractTransaction().toHex();
-    //
-
     try {
       await xpubs[0].xpub.broadcastTx(rawTxHex);
     } catch (e) {
@@ -141,8 +139,7 @@ describe('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expectedFee1 = 10 * 100 + inputs.length * 100 * 180 + outputs.length * 34 * 100;
-
+    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
   }, 90000);
@@ -188,7 +185,6 @@ describe('testing xpub legacy transactions', () => {
     });
     psbt.finalizeAllInputs();
     const rawTxHex = psbt.extractTransaction().toHex();
-    //
 
     try {
       await xpubs[0].xpub.broadcastTx(rawTxHex);
@@ -211,8 +207,7 @@ describe('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expectedFee2 = 10 * 100 + inputs.length * 100 * 180 + outputs.length * 34 * 100;
-
+    expectedFee2 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(
       5700000000 - 100000000 - expectedFee1 - 100000000 - expectedFee2
     );

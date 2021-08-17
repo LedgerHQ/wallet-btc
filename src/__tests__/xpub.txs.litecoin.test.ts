@@ -25,7 +25,7 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
     disableBatchSize: true, // https://ledgerhq.atlassian.net/browse/BACK-2191
   });
 
-  const network = coininfo.litecoin.test.toBitcoinJS()
+  const network = coininfo.litecoin.regtest.toBitcoinJS();
   const crypto = new Litecoin({ network });
 
   const xpubs = [1, 2, 3].map((i) => {
@@ -73,17 +73,6 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
     }
   }, 70000);
 
-  /*
-  it('should be setup correctly', async () => {
-    const { address } = await xpubs[0].xpub.getNewAddress(0, 0);
-    const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
-    const balance1 = await xpubs[0].xpub.getXpubBalance();
-    console.log(address);
-    expect(balance1.toNumber()).toEqual(5700000000);
-    let expectedFee: number;
-  });*/
-
-
   it('should be setup correctly', async () => {
     const balance1 = await xpubs[0].xpub.getXpubBalance();
     expect(balance1.toNumber()).toEqual(5700000000);
@@ -93,18 +82,17 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
   it('should send a 1 litecoin tx to xpubs[1].xpub', async () => {
     const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
     const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
-    console.log(address);
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge();
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode);
 
-    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx(
-      address,
-      new BigNumber(100000000),
-      100,
-      change,
-      utxoPickingStrategy
-    );
+    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
+      destAddress: address,
+      amount: new BigNumber(100000000),
+      feePerByte: 100,
+      changeAddress: change,
+      utxoPickingStrategy,
+    });
 
     inputs.forEach(([txHex, index]) => {
       const nonWitnessUtxo = Buffer.from(txHex, 'hex');

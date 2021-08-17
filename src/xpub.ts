@@ -268,10 +268,10 @@ class Xpub extends EventEmitter {
     );
 
     // formatting approx the ledger way; ledger for the win
-    const inputs: [string, number, null, number | null][] = unspentUtxoSelected.map((utxo, index) => [
+    const inputs: [string, number, number, number | null][] = unspentUtxoSelected.map((utxo, index) => [
       txHexs[index],
       utxo.output_index,
-      null,
+      Number(utxo.value),
       Number.isInteger(params.sequence) ? params.sequence : null,
     ]);
     const associatedDerivations: [number, number][] = unspentUtxoSelected.map((utxo, index) => [

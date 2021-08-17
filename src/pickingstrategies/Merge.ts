@@ -14,10 +14,12 @@ class Merge extends PickingStrategy {
     let unspentUtxos = flatten(
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
     );
+    const sizePerInput =
+      utils.estimateTxSize(1, 0, this.crypto, this.derivationMode) -
+      utils.estimateTxSize(0, 0, this.crypto, this.derivationMode);
+
     unspentUtxos = sortBy(unspentUtxos, 'value');
     // https://metamug.com/article/security/bitcoin-transaction-fee-satoshi-per-byte.html
-    // easy way, we consider inputs are not compressed
-    // and that we have extras
     const txSizeNoInput = utils.estimateTxSize(0, nbOutputsWithoutChange + 1, this.crypto, this.derivationMode);
     let fee = txSizeNoInput * feePerByte;
 
@@ -31,7 +33,7 @@ class Merge extends PickingStrategy {
       }
       total = total.plus(unspentUtxos[i].value);
       unspentUtxoSelected.push(unspentUtxos[i]);
-      fee += 180 * feePerByte;
+      fee += sizePerInput * feePerByte;
       i += 1;
     }
 
