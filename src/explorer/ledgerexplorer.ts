@@ -16,10 +16,10 @@ const { LOG } = process.env;
 
 const requestInterceptor = (request: AxiosRequestConfig): AxiosRequestConfig => {
   const { baseURL, url, method = '', data } = request;
-  log('network', `${method} ${baseURL}${url}`, { data });
+  log('network', `${method} ${baseURL}${url}`, data);
   if (LOG && LOG === 'http') {
     // eslint-disable-next-line no-console
-    console.log(`${method} ${baseURL}${url}`, { data });
+    console.log(`${method} ${baseURL}${url}`, data);
   }
   return request;
 };
