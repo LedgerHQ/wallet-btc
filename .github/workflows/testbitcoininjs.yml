@@ -46,7 +46,7 @@ jobs:
         run: docker-compose -f explorers/environments/explorer-praline-btc.yml up -d
         env:
           TICKER: btc
-          TAG: latest
+          EXPLORER_TAG: latest
           LOG_LEVEL: debug
       - name: Run tests
         run: yarn test --silent
