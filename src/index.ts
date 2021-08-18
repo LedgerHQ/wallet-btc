@@ -1,22 +1,26 @@
-import * as bitcoin from 'bitcoinjs-lib';
-import Btc from '@ledgerhq/hw-app-btc';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import { BufferWriter } from 'bitcoinjs-lib/src/bufferutils';
-import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
 import { flatten } from 'lodash';
 import BigNumber from 'bignumber.js';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import { BufferWriter } from 'bitcoinjs-lib/src/bufferutils';
+import * as bitcoin from 'bitcoinjs-lib';
+
+import Btc from '@ledgerhq/hw-app-btc';
+import { log } from '@ledgerhq/logs';
+import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
+
+import { TransactionInfo } from './types';
 import Xpub from './xpub';
-import LedgerExplorer from './explorer/ledgerexplorer';
-import Bitcoin from './crypto/bitcoin';
-import Mock from './storage/mock';
 import { IExplorer } from './explorer/types';
+import LedgerExplorer from './explorer/ledgerexplorer';
 import { IStorage } from './storage/types';
+import Mock from './storage/mock';
+import Bitcoin from './crypto/bitcoin';
+import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
-import PickingStrategy from './pickingstrategies/types';
 
 export interface Account {
   params: {
@@ -96,7 +100,6 @@ class WalletLedger {
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
     explorer: 'ledgerv3' | 'ledgerv2';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     explorerURI: string;
     storage: 'mock';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,7 +108,6 @@ class WalletLedger {
     const network = this.networks[params.network];
     let { xpub } = params;
 
-    // TODO Better use of TypeScript to avoid these conditions
     if (!xpub) {
       // Xpub not provided, generate it using the hwapp
 
@@ -239,9 +241,9 @@ class WalletLedger {
     feePerByte: number;
     utxoPickingStrategy: PickingStrategy;
     sequence?: number;
-  }) {
+  }): Promise<TransactionInfo> {
     const changeAddress = await params.fromAccount.xpub.getNewAddress(1, 1);
-    const txinfos = await params.fromAccount.xpub.buildTx({
+    const txInfo = await params.fromAccount.xpub.buildTx({
       destAddress: params.dest,
       amount: params.amount,
       feePerByte: params.feePerByte,
@@ -249,56 +251,80 @@ class WalletLedger {
       utxoPickingStrategy: params.utxoPickingStrategy,
       sequence: params.sequence,
     });
-    return {
-      txinfos,
-      changeAddress,
-    };
+    return txInfo;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async signAccounTx(
-    btc: Btc,
-    fromAccount: Account,
-    txinfos: {
-      inputs: [string, number, null, number | null][];
-      associatedDerivations: [number, number][];
-      outputs: {
-        script: Buffer;
-        value: BigNumber;
-        isChange?: true;
-      }[];
-    }
-  ) {
-    const length = txinfos.outputs.reduce((sum, output) => {
+  async signAccountTx(params: {
+    btc: Btc;
+    fromAccount: Account;
+    txInfo: TransactionInfo;
+    lockTime?: number;
+    sigHashType?: number;
+    segwit?: boolean;
+    additionals?: Array<string>;
+    expiryHeight?: Buffer;
+    onDeviceSignatureRequested?: () => void;
+    onDeviceSignatureGranted?: () => void;
+    onDeviceStreaming?: (arg0: { progress: number; total: number; index: number }) => void;
+  }) {
+    const {
+      btc,
+      fromAccount,
+      txInfo,
+      lockTime,
+      sigHashType,
+      segwit,
+      additionals,
+      expiryHeight,
+      onDeviceSignatureRequested,
+      onDeviceSignatureGranted,
+      onDeviceStreaming,
+    } = params;
+
+    const length = txInfo.outputs.reduce((sum, output) => {
       return sum + 8 + output.script.length + 1;
     }, 1);
     const buffer = Buffer.allocUnsafe(length);
     const bufferWriter = new BufferWriter(buffer, 0);
-    bufferWriter.writeVarInt(txinfos.outputs.length);
-    txinfos.outputs.forEach((txOut) => {
+    bufferWriter.writeVarInt(txInfo.outputs.length);
+    txInfo.outputs.forEach((txOut) => {
       // xpub splits output into smaller outputs than SAFE_MAX_INT anyway
       bufferWriter.writeUInt64(txOut.value.toNumber());
       bufferWriter.writeVarSlice(txOut.script);
     });
     const outputScriptHex = buffer.toString('hex');
 
-    const associatedKeysets = txinfos.associatedDerivations.map(
+    const associatedKeysets = txInfo.associatedDerivations.map(
       ([account, index]) => `${fromAccount.params.path}/${fromAccount.params.index}'/${account}/${index}`
     );
     type Inputs = [Transaction, number, string | null | undefined, number | null | undefined][];
-    const inputs: Inputs = txinfos.inputs.map(([txHex, index]) => [
-      btc.splitTransaction(txHex, true),
-      index,
-      null,
-      null,
-    ]);
+    const inputs: Inputs = txInfo.inputs.map((i) => [btc.splitTransaction(i.txHex, true), i.output_index, null, null]);
+
+    log('hw', `createPaymentTransactionNew`, {
+      associatedKeysets,
+      outputScriptHex,
+      lockTime,
+      sigHashType,
+      segwit,
+      additionals: additionals || [],
+      expiryHeight: expiryHeight && expiryHeight.toString('hex'),
+    });
 
     const tx = await btc.createPaymentTransactionNew({
       inputs,
       associatedKeysets,
       outputScriptHex,
       // changePath: `${fromAccount.params.path}/${fromAccount.params.index}'/${changeAddress.account}/${changeAddress.index}`,
-      additionals: [],
+      ...(params.lockTime && { lockTime: params.lockTime }),
+      ...(params.sigHashType && { sigHashType: params.sigHashType }),
+      ...(params.segwit && { segwit: params.segwit }),
+      // initialTimestamp,
+      ...(params.expiryHeight && { expiryHeight: params.expiryHeight }),
+      additionals: additionals || [],
+      onDeviceSignatureRequested,
+      onDeviceSignatureGranted,
+      onDeviceStreaming,
     });
 
     return tx;

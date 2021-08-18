@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import WalletLedger, { Account } from '..';
-import Merge from '../pickingstrategies/Merge';
+import { Merge } from '../pickingstrategies/Merge';
 import MockBtc from './mocks/Btc';
 
 describe('testing wallet', () => {
@@ -41,14 +41,18 @@ describe('testing wallet', () => {
   it('should allow to build a transaction', async () => {
     const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
     const utxoPickingStrategy = new Merge(account.xpub.crypto, account.xpub.derivationMode);
-    const { txinfos } = await wallet.buildAccountTx({
+    const txInfo = await wallet.buildAccountTx({
       fromAccount: account,
       dest: receiveAddress.address,
       amount: new BigNumber(100000),
       feePerByte: 5,
       utxoPickingStrategy,
     });
-    const tx = await wallet.signAccounTx(new MockBtc(), account, txinfos);
+    const tx = await wallet.signAccountTx({
+      btc: new MockBtc(),
+      fromAccount: account,
+      txInfo,
+    });
     expect(tx).toEqual('02d5e970283203ed91da5e5e9bb125f2a490e189');
   });
 
@@ -56,14 +60,18 @@ describe('testing wallet', () => {
     const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
     account.xpub.OUTPUT_VALUE_MAX = 60000;
     const utxoPickingStrategy = new Merge(account.xpub.crypto, account.xpub.derivationMode);
-    const { txinfos } = await wallet.buildAccountTx({
+    const txInfo = await wallet.buildAccountTx({
       fromAccount: account,
       dest: receiveAddress.address,
       amount: new BigNumber(100000),
       feePerByte: 5,
       utxoPickingStrategy,
     });
-    const tx = await wallet.signAccounTx(new MockBtc(), account, txinfos);
+    const tx = await wallet.signAccountTx({
+      btc: new MockBtc(),
+      fromAccount: account,
+      txInfo,
+    });
     expect(tx).toEqual('2ff622550c58695764bd942a8054649c167b28c6');
   });
 });

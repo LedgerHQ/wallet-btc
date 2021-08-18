@@ -10,7 +10,7 @@ import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
-import Merge from '../pickingstrategies/Merge';
+import {Merge} from '../pickingstrategies/Merge';
 import * as utils from '../utils';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -94,8 +94,8 @@ describe('testing xpub legacy transactions', () => {
       utxoPickingStrategy,
     });
 
-    inputs.forEach(([txHex, index, value], i) => {
-      const tx = bitcoin.Transaction.fromHex(txHex);
+    inputs.forEach((input, i) => {
+      const tx = bitcoin.Transaction.fromHex(input.txHex);
       const keyPair = xpubs[0].signer(associatedDerivations[i][0], associatedDerivations[i][1]);
       const p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey, network });
       const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh, network });
@@ -104,13 +104,13 @@ describe('testing xpub legacy transactions', () => {
 
       psbt.addInput({
         hash: tx.getId(),
-        index,
+        index: input.output_index,
         witnessUtxo: {
           script: Buffer.from(
             `a914${bitcoin.crypto.hash160(Buffer.from(`0014${publickeyHash}`, 'hex')).toString('hex')}87`,
             'hex'
           ),
-          value,
+          value: Number(input.value),
         },
         redeemScript: Buffer.from(redeemScript, 'hex'),
       });

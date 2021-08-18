@@ -2,11 +2,12 @@ import BigNumber from 'bignumber.js';
 import { flatten, sortBy } from 'lodash';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
-import PickingStrategy from './types';
+import { PickingStrategy } from './types';
 import * as utils from '../utils';
-import Merge from './Merge';
+import { Merge } from './Merge';
 
-class CoinSelect extends PickingStrategy {
+// eslint-disable-next-line import/prefer-default-export
+export class CoinSelect extends PickingStrategy {
   // eslint-disable-next-line class-methods-use-this
   async selectUnspentUtxosToUse(xpub: Xpub, amount: BigNumber, feePerByte: number, nbOutputsWithoutChange: number) {
     // get the utxos to use as input
@@ -173,7 +174,7 @@ class CoinSelect extends PickingStrategy {
       return {
         totalValue: total,
         unspentUtxos: unspentUtxoSelected,
-        fee,
+        fee: Math.ceil(fee),
         needChangeoutput: false,
       };
     }
@@ -181,5 +182,3 @@ class CoinSelect extends PickingStrategy {
     return pickingStrategy.selectUnspentUtxosToUse(xpub, amount, feePerByte, nbOutputsWithoutChange);
   }
 }
-
-export default CoinSelect;

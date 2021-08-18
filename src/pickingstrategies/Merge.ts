@@ -2,10 +2,11 @@ import BigNumber from 'bignumber.js';
 import { flatten, sortBy } from 'lodash';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
-import PickingStrategy from './types';
+import { PickingStrategy } from './types';
 import * as utils from '../utils';
 
-class Merge extends PickingStrategy {
+// eslint-disable-next-line import/prefer-default-export
+export class Merge extends PickingStrategy {
   // eslint-disable-next-line class-methods-use-this
   async selectUnspentUtxosToUse(xpub: Xpub, amount: BigNumber, feePerByte: number, nbOutputsWithoutChange: number) {
     // get the utxos to use as input
@@ -40,10 +41,8 @@ class Merge extends PickingStrategy {
     return {
       totalValue: total,
       unspentUtxos: unspentUtxoSelected,
-      fee,
+      fee: Math.ceil(fee),
       needChangeoutput: true,
     };
   }
 }
-
-export default Merge;
