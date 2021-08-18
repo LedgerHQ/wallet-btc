@@ -53,7 +53,7 @@ describe('testing wallet', () => {
       fromAccount: account,
       txInfo,
     });
-    expect(tx).toEqual('02d5e970283203ed91da5e5e9bb125f2a490e189');
+    expect(tx).toEqual('1f278baad1824d5d0a1acc06fa3812fc08ba78a0');
   });
 
   it('should allow to build a transaction splitting outputs', async () => {
@@ -72,6 +72,6 @@ describe('testing wallet', () => {
       fromAccount: account,
       txInfo,
     });
-    expect(tx).toEqual('2ff622550c58695764bd942a8054649c167b28c6');
+    expect(tx).toEqual('3ff8f90f08e1f0a3628ca1af1619d4a1a41a2107');
   });
 });

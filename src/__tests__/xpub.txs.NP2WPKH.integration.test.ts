@@ -10,7 +10,7 @@ import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
-import {Merge} from '../pickingstrategies/Merge';
+import { Merge } from '../pickingstrategies/Merge';
 import * as utils from '../utils';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

@@ -10,7 +10,7 @@ import Xpub from '../xpub';
 import Litecoin from '../crypto/litecoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
-import Merge from '../pickingstrategies/Merge';
+import { Merge } from '../pickingstrategies/Merge';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -94,13 +94,13 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
       utxoPickingStrategy,
     });
 
-    inputs.forEach(([txHex, index]) => {
-      const nonWitnessUtxo = Buffer.from(txHex, 'hex');
-      const tx = bitcoin.Transaction.fromHex(txHex);
+    inputs.forEach((input) => {
+      const nonWitnessUtxo = Buffer.from(input.txHex, 'hex');
+      const tx = bitcoin.Transaction.fromHex(input.txHex);
 
       psbt.addInput({
         hash: tx.getId(),
-        index,
+        index: input.output_index,
         nonWitnessUtxo,
       });
     });
