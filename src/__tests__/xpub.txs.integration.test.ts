@@ -143,7 +143,7 @@ describe('testing xpub legacy transactions', () => {
     expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
-  }, 90000);
+  }, 120000);
 
   let expectedFee2: number;
   it('should send a 1 btc tx to xpubs[1].xpub and handle output splitting', async () => {
@@ -166,7 +166,10 @@ describe('testing xpub legacy transactions', () => {
     inputs.forEach((i) => {
       const nonWitnessUtxo = Buffer.from(i.txHex, 'hex');
       const tx = bitcoin.Transaction.fromHex(i.txHex);
-
+      console.log('tx info');
+      console.log(i.txHex);
+      console.log(tx.getId());
+      console.log(i.output_index);
       psbt.addInput({
         hash: tx.getId(),
         index: i.output_index,
@@ -213,5 +216,5 @@ describe('testing xpub legacy transactions', () => {
       5700000000 - 100000000 - expectedFee1 - 100000000 - expectedFee2
     );
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(200000000);
-  }, 90000);
+  }, 120000);
 });
