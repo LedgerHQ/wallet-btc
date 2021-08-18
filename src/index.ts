@@ -243,7 +243,7 @@ class WalletLedger {
     sequence?: number;
   }): Promise<TransactionInfo> {
     const changeAddress = await params.fromAccount.xpub.getNewAddress(1, 1);
-    const txInfos = await params.fromAccount.xpub.buildTx({
+    const txInfo = await params.fromAccount.xpub.buildTx({
       destAddress: params.dest,
       amount: params.amount,
       feePerByte: params.feePerByte,
@@ -251,61 +251,80 @@ class WalletLedger {
       utxoPickingStrategy: params.utxoPickingStrategy,
       sequence: params.sequence,
     });
-    return txInfos;
+    return txInfo;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async signAccountTx(btc: Btc, fromAccount: Account, txinfos: TransactionInfo) {
-    const length = txinfos.outputs.reduce((sum, output) => {
+  async signAccountTx(params: {
+    btc: Btc;
+    fromAccount: Account;
+    txInfo: TransactionInfo;
+    lockTime?: number;
+    sigHashType?: number;
+    segwit?: boolean;
+    additionals?: Array<string>;
+    expiryHeight?: Buffer;
+    onDeviceSignatureRequested?: () => void;
+    onDeviceSignatureGranted?: () => void;
+    onDeviceStreaming?: (arg0: { progress: number; total: number; index: number }) => void;
+  }) {
+    const {
+      btc,
+      fromAccount,
+      txInfo,
+      lockTime,
+      sigHashType,
+      segwit,
+      additionals,
+      expiryHeight,
+      onDeviceSignatureRequested,
+      onDeviceSignatureGranted,
+      onDeviceStreaming,
+    } = params;
+
+    const length = txInfo.outputs.reduce((sum, output) => {
       return sum + 8 + output.script.length + 1;
     }, 1);
     const buffer = Buffer.allocUnsafe(length);
     const bufferWriter = new BufferWriter(buffer, 0);
-    bufferWriter.writeVarInt(txinfos.outputs.length);
-    txinfos.outputs.forEach((txOut) => {
+    bufferWriter.writeVarInt(txInfo.outputs.length);
+    txInfo.outputs.forEach((txOut) => {
       // xpub splits output into smaller outputs than SAFE_MAX_INT anyway
       bufferWriter.writeUInt64(txOut.value.toNumber());
       bufferWriter.writeVarSlice(txOut.script);
     });
     const outputScriptHex = buffer.toString('hex');
 
-    const associatedKeysets = txinfos.associatedDerivations.map(
+    const associatedKeysets = txInfo.associatedDerivations.map(
       ([account, index]) => `${fromAccount.params.path}/${fromAccount.params.index}'/${account}/${index}`
     );
     type Inputs = [Transaction, number, string | null | undefined, number | null | undefined][];
-    const inputs: Inputs = txinfos.inputs.map((i) => [btc.splitTransaction(i.txHex, true), i.output_index, null, null]);
+    const inputs: Inputs = txInfo.inputs.map((i) => [btc.splitTransaction(i.txHex, true), i.output_index, null, null]);
 
     log('hw', `createPaymentTransactionNew`, {
       associatedKeysets,
-      // changePath,
       outputScriptHex,
-      // lockTime,
-      // sigHashType,
-      // segwit,
-      // initialTimestamp,
-      // additionals,
-      // expiryHeight: expiryHeight && expiryHeight.toString("hex"),
-    });
-
-    /*
-    FIXME MISSING:
-      changePath,
       lockTime,
       sigHashType,
       segwit,
-      initialTimestamp,
-      additionals,
-      expiryHeight,
-      onDeviceSignatureGranted: () => o.next({ type: "device-signature-granted" }),
-      onDeviceSignatureRequested: () => o.next({ type: "device-signature-requested" }),
-      onDeviceStreaming: ({ progress, index, total }) => o.next({ type: "device-streaming", progress, index, total }),
-    */
+      additionals: additionals || [],
+      expiryHeight: expiryHeight && expiryHeight.toString('hex'),
+    });
+
     const tx = await btc.createPaymentTransactionNew({
       inputs,
       associatedKeysets,
       outputScriptHex,
       // changePath: `${fromAccount.params.path}/${fromAccount.params.index}'/${changeAddress.account}/${changeAddress.index}`,
-      additionals: [],
+      ...(params.lockTime && { lockTime: params.lockTime }),
+      ...(params.sigHashType && { sigHashType: params.sigHashType }),
+      ...(params.segwit && { segwit: params.segwit }),
+      // initialTimestamp,
+      ...(params.expiryHeight && { expiryHeight: params.expiryHeight }),
+      additionals: additionals || [],
+      onDeviceSignatureRequested,
+      onDeviceSignatureGranted,
+      onDeviceStreaming,
     });
 
     return tx;
