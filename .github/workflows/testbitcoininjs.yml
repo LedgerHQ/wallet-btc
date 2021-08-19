@@ -47,6 +47,7 @@ jobs:
         env:
           TICKER: btc
           EXPLORER_TAG: latest
+          PRALINE_TAG: latest
           LOG_LEVEL: debug
       - name: Run tests
         run: yarn test --silent
