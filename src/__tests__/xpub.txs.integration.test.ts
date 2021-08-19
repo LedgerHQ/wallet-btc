@@ -166,10 +166,6 @@ describe('testing xpub legacy transactions', () => {
     inputs.forEach((i) => {
       const nonWitnessUtxo = Buffer.from(i.txHex, 'hex');
       const tx = bitcoin.Transaction.fromHex(i.txHex);
-      console.log('tx info');
-      console.log(i.txHex);
-      console.log(tx.getId());
-      console.log(i.output_index);
       psbt.addInput({
         hash: tx.getId(),
         index: i.output_index,

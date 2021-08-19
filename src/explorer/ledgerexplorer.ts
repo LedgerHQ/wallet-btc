@@ -136,7 +136,13 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   }
 
   async getAddressTxsSinceLastTxBlock(batchSize: number, address: Address, lastTx: TX | undefined) {
-    const params: { no_token?: string; noToken?: string; batch_size?: number; block_hash?: string; blockHash?: string } =
+    const params: {
+      no_token?: string;
+      noToken?: string;
+      batch_size?: number;
+      block_hash?: string;
+      blockHash?: string;
+    } =
       this.explorerVersion === 'v2'
         ? {
             noToken: 'true',
@@ -150,12 +156,9 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
       params.batch_size = batchSize;
     }
     if (lastTx) {
-      if (this.explorerVersion === 'v2')
-      {
+      if (this.explorerVersion === 'v2') {
         params.blockHash = lastTx.block.hash;
-      }
-      else
-      {
+      } else {
         // eslint-disable-next-line @typescript-eslint/camelcase
         params.block_hash = lastTx.block.hash;
       }
