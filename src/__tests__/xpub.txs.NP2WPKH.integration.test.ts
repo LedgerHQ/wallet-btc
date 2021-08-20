@@ -15,7 +15,7 @@ import * as utils from '../utils';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-describe('testing xpub legacy transactions', () => {
+describe.skip('testing xpub segwit transactions', () => {
   const network = coininfo.bitcoin.regtest.toBitcoinJS();
 
   const explorer = new LedgerExplorer({
