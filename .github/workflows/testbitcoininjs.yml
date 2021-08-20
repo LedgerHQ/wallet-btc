@@ -34,6 +34,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: LedgerHQ/blockchain-explorer
+          ref: '8686fd5bf997cc1f5b31c41e82a9def545a07fd9'
           path: explorers
           token: ${{ secrets.CI_BOT_TOKEN }}
       - name: Login to GitHub Container Registry
@@ -46,8 +47,7 @@ jobs:
         run: docker-compose -f explorers/environments/explorer-praline-btc.yml up -d
         env:
           TICKER: btc
-          EXPLORER_TAG: latest
-          PRALINE_TAG: latest
+          TAG: latest
           LOG_LEVEL: debug
       - name: Run tests
         run: yarn test --silent
