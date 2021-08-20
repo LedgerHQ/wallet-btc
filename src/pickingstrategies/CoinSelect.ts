@@ -174,7 +174,7 @@ export class CoinSelect extends PickingStrategy {
       return {
         totalValue: total,
         unspentUtxos: unspentUtxoSelected,
-        fee: Math.round(fee),
+        fee: Math.ceil(fee),
         needChangeoutput: false,
       };
     }

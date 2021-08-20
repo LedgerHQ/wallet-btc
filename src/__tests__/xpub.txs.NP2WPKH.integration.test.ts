@@ -10,13 +10,12 @@ import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
-import * as utils from '../utils';
-import { InputInfo, OutputInfo } from '../types';
 import { Merge } from '../pickingstrategies/Merge';
+import * as utils from '../utils';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-describe('testing xpub legacy transactions', () => {
+describe.skip('testing xpub segwit transactions', () => {
   const network = coininfo.bitcoin.regtest.toBitcoinJS();
 
   const explorer = new LedgerExplorer({
@@ -39,7 +38,7 @@ describe('testing xpub legacy transactions', () => {
       explorer,
       crypto,
       xpub: node.neutered().toBase58(),
-      derivationMode: 'Legacy',
+      derivationMode: 'SegWit',
     });
 
     return {
@@ -75,7 +74,6 @@ describe('testing xpub legacy transactions', () => {
 
   it('should be setup correctly', async () => {
     const balance1 = await xpubs[0].xpub.getXpubBalance();
-
     expect(balance1.toNumber()).toEqual(5700000000);
   });
 
@@ -86,7 +84,7 @@ describe('testing xpub legacy transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode);
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, 'SegWit');
 
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
       destAddress: address,
@@ -96,17 +94,28 @@ describe('testing xpub legacy transactions', () => {
       utxoPickingStrategy,
     });
 
-    inputs.forEach((i: InputInfo) => {
-      const nonWitnessUtxo = Buffer.from(i.txHex, 'hex');
-      const tx = bitcoin.Transaction.fromHex(i.txHex);
+    inputs.forEach((input, i) => {
+      const tx = bitcoin.Transaction.fromHex(input.txHex);
+      const keyPair = xpubs[0].signer(associatedDerivations[i][0], associatedDerivations[i][1]);
+      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey, network });
+      const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh, network });
+      const redeemScript = p2sh.redeem.output.toString('hex');
+      const publickeyHash = bitcoin.crypto.ripemd160(bitcoin.crypto.sha256(keyPair.publicKey)).toString('hex');
 
       psbt.addInput({
         hash: tx.getId(),
-        index: i.output_index,
-        nonWitnessUtxo,
+        index: input.output_index,
+        witnessUtxo: {
+          script: Buffer.from(
+            `a914${bitcoin.crypto.hash160(Buffer.from(`0014${publickeyHash}`, 'hex')).toString('hex')}87`,
+            'hex'
+          ),
+          value: Number(input.value),
+        },
+        redeemScript: Buffer.from(redeemScript, 'hex'),
       });
     });
-    outputs.forEach((output: OutputInfo) => {
+    outputs.forEach((output) => {
       psbt.addOutput({
         script: output.script,
         value: output.value.toNumber(),
@@ -119,13 +128,14 @@ describe('testing xpub legacy transactions', () => {
     });
     psbt.finalizeAllInputs();
     const rawTxHex = psbt.extractTransaction().toHex();
+
     try {
       await xpubs[0].xpub.broadcastTx(rawTxHex);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log('broadcast error', e);
     }
-
+    await sleep(10000);
     try {
       const { address: mineAddress } = await xpubs[2].xpub.getNewAddress(0, 0);
       await axios.post(`http://localhost:28443/chain/mine/${mineAddress}/1`);
@@ -135,82 +145,13 @@ describe('testing xpub legacy transactions', () => {
     }
 
     // time for explorer to sync
-    await sleep(30000);
+    await sleep(40000);
 
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
+    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'SegWit') * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
-  }, 120000);
-
-  let expectedFee2: number;
-  it('should send a 1 btc tx to xpubs[1].xpub and handle output splitting', async () => {
-    const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
-    const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
-
-    const psbt = new bitcoin.Psbt({ network });
-
-    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode);
-
-    xpubs[0].xpub.OUTPUT_VALUE_MAX = 70000000;
-    const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
-      destAddress: address,
-      amount: new BigNumber(100000000),
-      feePerByte: 100,
-      changeAddress: change,
-      utxoPickingStrategy,
-    });
-
-    inputs.forEach((i) => {
-      const nonWitnessUtxo = Buffer.from(i.txHex, 'hex');
-      const tx = bitcoin.Transaction.fromHex(i.txHex);
-      psbt.addInput({
-        hash: tx.getId(),
-        index: i.output_index,
-        nonWitnessUtxo,
-      });
-    });
-    outputs.forEach((output) => {
-      psbt.addOutput({
-        script: output.script,
-        value: output.value.toNumber(),
-      });
-    });
-    expect(outputs.length).toEqual(3);
-    inputs.forEach((_, i) => {
-      psbt.signInput(i, xpubs[0].signer(associatedDerivations[i][0], associatedDerivations[i][1]));
-      psbt.validateSignaturesOfInput(i);
-    });
-    psbt.finalizeAllInputs();
-    const rawTxHex = psbt.extractTransaction().toHex();
-
-    try {
-      await xpubs[0].xpub.broadcastTx(rawTxHex);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log('broadcast error', e);
-    }
-
-    try {
-      const { address: mineAddress } = await xpubs[2].xpub.getNewAddress(0, 0);
-      await axios.post(`http://localhost:28443/chain/mine/${mineAddress}/1`);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log('praline error');
-    }
-
-    // time for explorer to sync
-    await sleep(30000);
-
-    await xpubs[0].xpub.sync();
-    await xpubs[1].xpub.sync();
-
-    expectedFee2 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
-    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(
-      5700000000 - 100000000 - expectedFee1 - 100000000 - expectedFee2
-    );
-    expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(200000000);
-  }, 120000);
+  }, 180000);
 });

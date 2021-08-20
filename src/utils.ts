@@ -105,7 +105,7 @@ export function estimateTxSize(inputCount: number, outputCount: number, currency
   } else {
     txSize = fixedSize + 148 * inputCount + 34 * outputCount;
   }
-  return Math.round(txSize); // We don't allow floating value
+  return Math.ceil(txSize); // We don't allow floating value
 }
 
 // refer to https://github.com/LedgerHQ/lib-ledger-core/blob/fc9d762b83fc2b269d072b662065747a64ab2816/core/src/wallet/bitcoin/api_impl/BitcoinLikeTransactionApi.cpp#L253
