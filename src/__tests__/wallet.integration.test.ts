@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
-import WalletLedger, { Account } from '..';
+import WalletLedger from '../wallet';
+import { Account } from '../account';
 import { Merge } from '../pickingstrategies/Merge';
 import MockBtc from './mocks/Btc';
 
@@ -10,7 +11,7 @@ describe('testing wallet', () => {
     account = await wallet.generateAccount({
       btc: new MockBtc(),
       path: "44'/0'",
-      index: '0',
+      index: 0,
       network: 'mainnet',
       derivationMode: 'Legacy',
       explorer: 'ledgerv3',
