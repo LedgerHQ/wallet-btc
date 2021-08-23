@@ -95,6 +95,28 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     return res[0].hex;
   }
 
+  async getCurrentBlock() {
+    const url = `/blocks/current`;
+
+    this.emit('fetching-block', { url });
+
+    const res = (await this.client.get(url)).data;
+
+    this.emit('fetched-block', { url, block: res });
+
+    if (!res) {
+      return null;
+    }
+
+    const block: Block = {
+      height: res.height,
+      hash: res.hash,
+      time: res.time,
+    };
+
+    return block;
+  }
+
   async getBlockByHeight(height: number) {
     const url = `/blocks/${height}`;
 
