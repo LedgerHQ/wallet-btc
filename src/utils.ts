@@ -123,3 +123,18 @@ export function computeDustAmount(currency: ICrypto, txSize: number) {
   }
   return dustAmount;
 }
+
+export function isValidAddress(address: string) {
+  try {
+    bitcoin.address.fromBase58Check(address);
+  } catch {
+    // Not a valid Base58 address
+    try {
+      bitcoin.address.fromBech32(address);
+    } catch {
+      // Not a valid Bech32 address either
+      return false;
+    }
+  }
+  return true;
+}
