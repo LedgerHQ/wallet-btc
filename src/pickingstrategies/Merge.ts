@@ -13,9 +13,13 @@ export class Merge extends PickingStrategy {
     // get the utxos to use as input
     // from all addresses of the account
     const addresses = await xpub.getXpubAddresses();
+
     let unspentUtxos = flatten(
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
+    ).filter(
+      (o) => !this.excludedUTXOs.filter((x) => x.hash === o.output_hash && x.outputIndex === o.output_index).length
     );
+
     const sizePerInput =
       utils.estimateTxSize(1, 0, this.crypto, this.derivationMode) -
       utils.estimateTxSize(0, 0, this.crypto, this.derivationMode);

@@ -113,7 +113,7 @@ describe('testing xpub legacy transactions', () => {
       },
     ]);
     // this account has one utxo 500000000 and one utxo 300000000
-    const utxoPickingStrategy = new Merge(dataset.xpub.crypto, dataset.xpub.derivationMode);
+    const utxoPickingStrategy = new Merge(dataset.xpub.crypto, dataset.xpub.derivationMode, []);
     let res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(10000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(1); // only 1 utxo is enough
     expect(Number(res.unspentUtxos[0].value)).toEqual(300000000); // use cheaper utxo first
@@ -124,7 +124,7 @@ describe('testing xpub legacy transactions', () => {
 
   it('deep first output strategy should be correct', async () => {
     // this account has one utxo 500000000 and one utxo 300000000
-    const utxoPickingStrategy = new DeepFirst(dataset.xpub.crypto, dataset.xpub.derivationMode);
+    const utxoPickingStrategy = new DeepFirst(dataset.xpub.crypto, dataset.xpub.derivationMode, []);
     let res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(10000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(1); // only 1 utxo is enough
     expect(Number(res.unspentUtxos[0].value)).toEqual(5000000000); // use old utxo first
@@ -252,7 +252,7 @@ describe('testing xpub legacy transactions', () => {
       },
     ]);
     // we have 5 utxo now. 100000000, 200000000, 300000000, 600000000 and 5000000000
-    const utxoPickingStrategy = new CoinSelect(dataset.xpub.crypto, dataset.xpub.derivationMode);
+    const utxoPickingStrategy = new CoinSelect(dataset.xpub.crypto, dataset.xpub.derivationMode, []);
     let res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(10000), 0, 1);
     expect(res.unspentUtxos.length).toEqual(1);
     expect(Number(res.unspentUtxos[0].value)).toEqual(100000000);

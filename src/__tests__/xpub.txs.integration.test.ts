@@ -86,7 +86,7 @@ describe('testing xpub legacy transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode);
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode, []);
 
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
       destAddress: address,
@@ -152,7 +152,7 @@ describe('testing xpub legacy transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode);
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode, []);
 
     xpubs[0].xpub.OUTPUT_VALUE_MAX = 70000000;
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({

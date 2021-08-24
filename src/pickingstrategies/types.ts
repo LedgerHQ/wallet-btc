@@ -10,9 +10,23 @@ export abstract class PickingStrategy {
 
   derivationMode: string;
 
-  constructor(crypto: ICrypto, derivationMode: string) {
+  // TODO Write tests for excluded UTXOs
+  excludedUTXOs: Array<{
+    hash: string;
+    outputIndex: number;
+  }>;
+
+  constructor(
+    crypto: ICrypto,
+    derivationMode: string,
+    excludedUTXOs: Array<{
+      hash: string;
+      outputIndex: number;
+    }>
+  ) {
     this.crypto = crypto;
     this.derivationMode = derivationMode;
+    this.excludedUTXOs = excludedUTXOs;
   }
 
   abstract selectUnspentUtxosToUse(
