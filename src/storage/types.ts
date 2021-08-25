@@ -27,8 +27,7 @@ export interface Output {
   script_hex: string;
   block_height: number | null;
   // TODO Write tests for RBF unconfirmed outputs
-  // (Output is Replaceable-By-Fees if this sequence != 0xffffffff)
-  sequence: number;
+  rbf: boolean;
 }
 
 export interface Block {
