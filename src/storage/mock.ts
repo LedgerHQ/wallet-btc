@@ -25,9 +25,7 @@ class Mock implements IStorage {
         (!has(txFilter, 'account') || t.account === txFilter.account) &&
         (!has(txFilter, 'index') || t.index === txFilter.index) &&
         (!has(txFilter, 'address') || t.address === txFilter.address) &&
-        (!has(txFilter, 'confirmed') ||
-          (txFilter.confirmed && t.block?.hash?.length) ||
-          (!txFilter.confirmed && !t.block?.hash?.length))
+        (!has(txFilter, 'confirmed') || (txFilter.confirmed && t.block) || (!txFilter.confirmed && !t.block))
       );
     });
     return tx;
@@ -53,7 +51,10 @@ class Mock implements IStorage {
 
       // we reject already seen tx
       if (this.primaryIndex[index]) {
-        return;
+        const previouslyPendingNowInABlock = this.primaryIndex[index].block && tx.block;
+        if (!previouslyPendingNowInABlock) {
+          return;
+        }
       }
 
       this.primaryIndex[index] = tx;

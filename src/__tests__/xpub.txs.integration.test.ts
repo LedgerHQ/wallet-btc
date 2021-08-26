@@ -135,8 +135,8 @@ describe('testing xpub legacy transactions', () => {
     // pending is seen here
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
-    const pendings0 = await xpubs[0].xpub.storage.getLastTx({ confirmed: false });
-    const pendings1 = await xpubs[1].xpub.storage.getLastTx({ confirmed: false });
+    let pendings0 = await xpubs[0].xpub.storage.getLastTx({ confirmed: false });
+    let pendings1 = await xpubs[1].xpub.storage.getLastTx({ confirmed: false });
     expect(pendings0).toBeTruthy();
     expect(pendings1).toBeTruthy();
 
@@ -157,6 +157,10 @@ describe('testing xpub legacy transactions', () => {
     expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
+    pendings0 = await xpubs[0].xpub.storage.getLastTx({ confirmed: false });
+    pendings1 = await xpubs[1].xpub.storage.getLastTx({ confirmed: false });
+    expect(pendings0).toBeFalsy();
+    expect(pendings1).toBeFalsy();
   }, 120000);
 
   let expectedFee2: number;
