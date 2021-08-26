@@ -81,7 +81,8 @@ describe('testing xpub legacy transactions', () => {
 
   let expectedFee1: number;
   it('should send a 1 btc tx to xpubs[1].xpub', async () => {
-    const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
+    const destAddress = await xpubs[1].xpub.getNewAddress(0, 0);
+    const { address } = destAddress;
     const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
 
     const psbt = new bitcoin.Psbt({ network });
@@ -133,6 +134,8 @@ describe('testing xpub legacy transactions', () => {
 
     const sendingAddress = await xpubs[0].xpub.getNewAddress(0, 0);
     const pendings = await explorer.getPendings(sendingAddress);
+    const pendingsReceive = await explorer.getPendings(destAddress);
+    expect(pendingsReceive.length).toEqual(1);
     expect(pendings.length).toEqual(1);
 
     await xpubs[0].xpub.sync();

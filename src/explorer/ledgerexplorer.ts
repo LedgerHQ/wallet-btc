@@ -153,8 +153,9 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   }
 
   async getPendings(address: Address, nbMax?: number) {
-    const txs = await this.getAddressTxsSinceLastTxBlock(nbMax || 1000, address, undefined);
-    const pendingsTxs = txs.filter((tx) => !tx.block);
+    const pendingsTxs = await this.getAddressTxsSinceLastTxBlock(nbMax || 1000, address, undefined);
+    // const pendingsTxs = txs.filter((tx) => !tx.block);
+    console.log(pendingsTxs);
     pendingsTxs.forEach((tx) => this.hydrateTx(address, tx));
     return pendingsTxs;
   }
