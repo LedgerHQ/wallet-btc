@@ -80,6 +80,9 @@ class Xpub extends EventEmitter {
       while ((added = await this.fetchHydrateAndStoreNewTxs(address, account, index))) {
         total += added;
       }
+
+      const pendingTxs = await this.explorer.getPendings({ address, account, index });
+      await this.storage.appendTxs(pendingTxs);
     } catch (e) {
       this.emitSyncedFailed(data);
       throw e;
