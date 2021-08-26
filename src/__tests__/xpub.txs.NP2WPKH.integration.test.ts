@@ -84,7 +84,7 @@ describe.skip('testing xpub segwit transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, 'SegWit');
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, 'SegWit', []);
 
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
       destAddress: address,

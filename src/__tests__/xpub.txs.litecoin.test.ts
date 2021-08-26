@@ -14,7 +14,7 @@ import { Merge } from '../pickingstrategies/Merge';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/* 
+/*
 In order to launch this litecoin test locally
 TICKER=ltc TAG=latest LOG_LEVEL=debug docker-compose -f ./environments/explorer-praline-btc.yml up -d
 */
@@ -84,7 +84,7 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
     const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode);
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, xpubs[0].xpub.derivationMode, []);
 
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
       destAddress: address,

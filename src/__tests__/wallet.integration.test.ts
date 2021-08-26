@@ -41,7 +41,7 @@ describe('testing wallet', () => {
 
   it('should allow to build a transaction', async () => {
     const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
-    const utxoPickingStrategy = new Merge(account.xpub.crypto, account.xpub.derivationMode);
+    const utxoPickingStrategy = new Merge(account.xpub.crypto, account.xpub.derivationMode, []);
     const txInfo = await wallet.buildAccountTx({
       fromAccount: account,
       dest: receiveAddress.address,
@@ -60,7 +60,7 @@ describe('testing wallet', () => {
   it('should allow to build a transaction splitting outputs', async () => {
     const receiveAddress = await wallet.getAccountNewReceiveAddress(account);
     account.xpub.OUTPUT_VALUE_MAX = 60000;
-    const utxoPickingStrategy = new Merge(account.xpub.crypto, account.xpub.derivationMode);
+    const utxoPickingStrategy = new Merge(account.xpub.crypto, account.xpub.derivationMode, []);
     const txInfo = await wallet.buildAccountTx({
       fromAccount: account,
       dest: receiveAddress.address,

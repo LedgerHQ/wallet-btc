@@ -14,9 +14,13 @@ export class CoinSelect extends PickingStrategy {
     // get the utxos to use as input
     // from all addresses of the account
     const addresses = await xpub.getXpubAddresses();
+
     const unspentUtxos = flatten(
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
+    ).filter(
+      (o) => !this.excludedUTXOs.filter((x) => x.hash === o.output_hash && x.outputIndex === o.output_index).length
     );
+
     /*
      * This coin selection is inspired from the one used in Bitcoin Core
      * for more details please refer to SelectCoinsBnB
@@ -179,7 +183,7 @@ export class CoinSelect extends PickingStrategy {
         needChangeoutput: false,
       };
     }
-    const pickingStrategy = new Merge(this.crypto, this.derivationMode);
+    const pickingStrategy = new Merge(this.crypto, this.derivationMode, this.excludedUTXOs);
     return pickingStrategy.selectUnspentUtxosToUse(xpub, amount, feePerByte, nbOutputsWithoutChange);
   }
 }
