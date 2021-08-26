@@ -1,4 +1,4 @@
-import { findLast, filter, uniqBy, findIndex } from 'lodash';
+import { findLast, filter, uniqBy, findIndex, has } from 'lodash';
 import { Input, IStorage, Output, TX, Address } from './types';
 
 // a mock storage class that just use js objects
@@ -22,9 +22,9 @@ class Mock implements IStorage {
     // @ts-ignore
     const tx: TX | undefined = findLast(this.txs, (t) => {
       return (
-        t.account === txFilter.account &&
-        t.index === txFilter.index &&
-        t.address === txFilter.address &&
+        (!has(txFilter, 'account') || t.account === txFilter.account) &&
+        (!has(txFilter, 'index') || t.index === txFilter.index) &&
+        (!has(txFilter, 'address') || t.address === txFilter.address) &&
         (!txFilter.confirmed || t.block?.hash?.length)
       );
     });

@@ -210,8 +210,13 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
       })
     ).data;
 
+    const hydratedTxs: TX[] = [];
+
     // faster than mapping
     res.txs.forEach((tx) => {
+      if (!tx.block) {
+        return;
+      }
       // no need to keep those as they change
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
@@ -234,11 +239,13 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
         // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
         output.block_height = tx.block ? tx.block.height : null;
       });
+
+      hydratedTxs.push(tx);
     });
 
-    this.emit('fetched-address-transaction', { url, params, txs: res.txs });
+    this.emit('fetched-address-transaction', { url, params, txs: hydratedTxs });
 
-    return res.txs;
+    return hydratedTxs;
   }
 }
 
