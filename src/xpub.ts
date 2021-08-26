@@ -364,6 +364,7 @@ class Xpub extends EventEmitter {
     const lastTx = await this.storage.getLastTx({
       account,
       index,
+      confirmed: true,
     });
 
     const txs = await this.explorer.getAddressTxsSinceLastTxBlock(
@@ -379,6 +380,7 @@ class Xpub extends EventEmitter {
     const lastTx = await this.storage.getLastTx({
       account,
       index,
+      confirmed: true,
     });
 
     if (!lastTx) {

@@ -17,10 +17,17 @@ class Mock implements IStorage {
   // returning unordered tx within the same block)
   spentUtxos: { [key: string]: Input[] } = {};
 
-  async getLastTx(txFilter: { account?: number; index?: number; address?: string }) {
+  async getLastTx(txFilter: { account?: number; index?: number; address?: string; confirmed?: false }) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    const tx: TX | undefined = findLast(this.txs, txFilter);
+    const tx: TX | undefined = findLast(this.txs, (t) => {
+      return (
+        t.account === txFilter.account &&
+        t.index === txFilter.index &&
+        t.address === txFilter.address &&
+        (!txFilter.confirmed || t.block?.hash?.length)
+      );
+    });
     return tx;
   }
 
@@ -42,8 +49,8 @@ class Mock implements IStorage {
       const indexAddress = tx.address;
       const index = `${indexAddress}-${tx.hash}`;
 
-      // we reject already seen tx and tx pendings
-      if (this.primaryIndex[index] || !tx.block) {
+      // we reject already seen tx
+      if (this.primaryIndex[index]) {
         return;
       }
 
