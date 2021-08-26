@@ -126,6 +126,8 @@ describe('testing xpub legacy transactions', () => {
       console.log('broadcast error', e);
     }
 
+    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
+
     // time for explorer to sync
     await sleep(2000);
 
@@ -154,7 +156,6 @@ describe('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
     pendings0 = await xpubs[0].xpub.storage.getLastTx({ confirmed: false });
