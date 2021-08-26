@@ -1,4 +1,4 @@
-import { findLast, filter, uniqBy, findIndex, has } from 'lodash';
+import { findLast, filter, uniqBy, findIndex, has, merge } from 'lodash';
 import { Input, IStorage, Output, TX, Address } from './types';
 
 // a mock storage class that just use js objects
@@ -52,9 +52,10 @@ class Mock implements IStorage {
       // we reject already seen tx
       if (this.primaryIndex[index]) {
         const previouslyPendingNowInABlock = !this.primaryIndex[index].block && tx.block;
-        if (!previouslyPendingNowInABlock) {
-          return;
+        if (previouslyPendingNowInABlock) {
+          merge(this.primaryIndex[index], tx);
         }
+        return;
       }
 
       this.primaryIndex[index] = tx;
