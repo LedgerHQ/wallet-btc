@@ -51,7 +51,7 @@ class Mock implements IStorage {
 
       // we reject already seen tx
       if (this.primaryIndex[index]) {
-        const previouslyPendingNowInABlock = this.primaryIndex[index].block && tx.block;
+        const previouslyPendingNowInABlock = !this.primaryIndex[index].block && tx.block;
         if (!previouslyPendingNowInABlock) {
           return;
         }
