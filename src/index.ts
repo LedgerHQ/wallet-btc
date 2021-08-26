@@ -5,6 +5,7 @@ import { TX, Input, Output } from './storage/types';
 import { CoinSelect } from './pickingstrategies/CoinSelect';
 import { DeepFirst } from './pickingstrategies/DeepFirst';
 import { Merge } from './pickingstrategies/Merge';
+import { isValidAddress } from './utils';
 
 export {
   WalletLedger,
@@ -19,4 +20,5 @@ export {
   CoinSelect,
   DeepFirst,
   Merge,
+  isValidAddress,
 };
