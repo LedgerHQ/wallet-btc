@@ -126,6 +126,20 @@ describe('testing xpub legacy transactions', () => {
       console.log('broadcast error', e);
     }
 
+    // time for explorer to sync
+    await sleep(2000);
+
+    await xpubs[0].xpub.sync();
+    await xpubs[1].xpub.sync();
+
+    // pending is seen here
+    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
+    expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
+    const pendings0 = await xpubs[0].xpub.storage.getLastTx({ confirmed: false });
+    const pendings1 = await xpubs[1].xpub.storage.getLastTx({ confirmed: false });
+    expect(pendings0).toBeTruthy();
+    expect(pendings1).toBeTruthy();
+
     try {
       const { address: mineAddress } = await xpubs[2].xpub.getNewAddress(0, 0);
       await axios.post(`http://localhost:28443/chain/mine/${mineAddress}/1`);
