@@ -154,7 +154,66 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
   async getPendings(address: Address, nbMax?: number) {
     const txs = await this.getAddressTxsSinceLastTxBlock(nbMax || 1000, address, undefined);
-    return txs.filter((tx) => !tx.block);
+    const pendingsTxs = txs.filter((tx) => !tx.block);
+    pendingsTxs.forEach((tx) => this.hydrateTx(address, tx));
+    return pendingsTxs;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async fetchTxs(address: Address, params: any) {
+    const url = `/addresses/${address.address}/transactions`;
+
+    this.emit('fetching-address-transaction', { url, params });
+
+    // TODO add a test for failure (at the sync level)
+    const res: { txs: TX[] } = (
+      await this.client.get(url, {
+        params,
+        // some altcoin may have outputs with values > MAX_SAFE_INTEGER
+        transformResponse: (string) =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          JSONBigNumber.parse(string, (key: string, value: any) => {
+            if (BigNumber.isBigNumber(value)) {
+              if (key === 'value') {
+                return value.toString();
+              }
+
+              return value.toNumber();
+            }
+            return value;
+          }),
+      })
+    ).data;
+
+    this.emit('fetched-address-transaction', { url, params, res });
+
+    return res;
+  }
+
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-explicit-any
+  hydrateTx(address: Address, tx: TX) {
+    // no need to keep those as they change
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    // eslint-disable-next-line no-param-reassign
+    delete tx.confirmations;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    // eslint-disable-next-line no-param-reassign
+    delete tx.received_at;
+    // eslint-disable-next-line no-param-reassign
+    tx.account = address.account;
+    // eslint-disable-next-line no-param-reassign
+    tx.index = address.index;
+    // eslint-disable-next-line no-param-reassign
+    tx.address = address.address;
+
+    tx.outputs.forEach((output) => {
+      // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+      output.output_hash = tx.hash;
+      // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+      output.block_height = tx.block ? tx.block.height : null;
+    });
   }
 
   async getAddressTxsSinceLastTxBlock(batchSize: number, address: Address, lastTx: TX | undefined) {
@@ -186,29 +245,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
       }
     }
 
-    const url = `/addresses/${address.address}/transactions`;
-
-    this.emit('fetching-address-transaction', { url, params });
-
-    // TODO add a test for failure (at the sync level)
-    const res: { txs: TX[] } = (
-      await this.client.get(url, {
-        params,
-        // some altcoin may have outputs with values > MAX_SAFE_INTEGER
-        transformResponse: (string) =>
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          JSONBigNumber.parse(string, (key: string, value: any) => {
-            if (BigNumber.isBigNumber(value)) {
-              if (key === 'value') {
-                return value.toString();
-              }
-
-              return value.toNumber();
-            }
-            return value;
-          }),
-      })
-    ).data;
+    const res = await this.fetchTxs(address, params);
 
     const hydratedTxs: TX[] = [];
 
@@ -217,33 +254,11 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
       if (!tx.block) {
         return;
       }
-      // no need to keep those as they change
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      // eslint-disable-next-line no-param-reassign
-      delete tx.confirmations;
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      // eslint-disable-next-line no-param-reassign
-      delete tx.received_at;
-      // eslint-disable-next-line no-param-reassign
-      tx.account = address.account;
-      // eslint-disable-next-line no-param-reassign
-      tx.index = address.index;
-      // eslint-disable-next-line no-param-reassign
-      tx.address = address.address;
 
-      tx.outputs.forEach((output) => {
-        // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
-        output.output_hash = tx.hash;
-        // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
-        output.block_height = tx.block ? tx.block.height : null;
-      });
+      this.hydrateTx(address, tx);
 
       hydratedTxs.push(tx);
     });
-
-    this.emit('fetched-address-transaction', { url, params, txs: hydratedTxs });
 
     return hydratedTxs;
   }
