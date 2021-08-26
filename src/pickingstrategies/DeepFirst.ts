@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { flatten, sortBy } from 'lodash';
+import { NotEnoughBalance } from '@ledgerhq/errors';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
 import { PickingStrategy } from './types';
@@ -29,7 +30,7 @@ export class DeepFirst extends PickingStrategy {
     let i = 0;
     while (total.lt(amount.plus(fee))) {
       if (!unspentUtxos[i]) {
-        throw new Error('amount bigger than the total balance');
+        throw new (NotEnoughBalance as any)();
       }
       total = total.plus(unspentUtxos[i].value);
       unspentUtxoSelected.push(unspentUtxos[i]);

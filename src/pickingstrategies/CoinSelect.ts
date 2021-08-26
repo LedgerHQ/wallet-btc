@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { flatten, sortBy } from 'lodash';
+import { NotEnoughBalance } from '@ledgerhq/errors';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
 import { PickingStrategy } from './types';
@@ -79,7 +80,7 @@ export class CoinSelect extends PickingStrategy {
 
     // Insufficient funds
     if (currentAvailableValue < actualTarget) {
-      throw new Error('amount bigger than the total balance');
+      throw new (NotEnoughBalance as any)();
     }
     // Sort utxos by effectiveValue
     effectiveUtxos = sortBy(effectiveUtxos, 'effectiveValue');
