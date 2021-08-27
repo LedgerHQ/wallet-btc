@@ -50,5 +50,5 @@ jobs:
           EXPLORER_TAG: latest
           LOG_LEVEL: debug
       - name: Run tests
-        run: yarn test
+        run: yarn test --silent
         timeout-minutes: 60

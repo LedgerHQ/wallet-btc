@@ -125,7 +125,6 @@ describe('testing xpub legacy transactions', () => {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log('broadcast error', e);
-      console.log(e.response.data);
     }
 
     expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
