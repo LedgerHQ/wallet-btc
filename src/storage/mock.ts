@@ -7,7 +7,7 @@ class Mock implements IStorage {
   txs: TX[] = [];
 
   // indexes
-  primaryIndex: { [key: string]: TX } = {};
+  primaryIndex: { [key: string]: number } = {};
 
   // accounting
   unspentUtxos: { [key: string]: Output[] } = {};
@@ -33,7 +33,7 @@ class Mock implements IStorage {
 
   async getTx(address: string, hash: string) {
     const index = `${address}-${hash}`;
-    return this.primaryIndex[index];
+    return this.txs[this.primaryIndex[index]];
   }
 
   // TODO: only expose unspentUtxos
@@ -50,18 +50,17 @@ class Mock implements IStorage {
       const index = `${indexAddress}-${tx.hash}`;
 
       // we reject already seen tx
-      if (this.primaryIndex[index]) {
-        const previouslyPendingNowInABlock = !this.primaryIndex[index].block && tx.block;
+      if (this.txs[this.primaryIndex[index]]) {
+        const previouslyPendingNowInABlock = !this.txs[this.primaryIndex[index]].block && tx.block;
         if (previouslyPendingNowInABlock) {
-          merge(this.primaryIndex[index], tx);
+          merge(this.txs[this.primaryIndex[index]], tx);
         }
         return;
       }
 
-      this.primaryIndex[index] = tx;
+      this.primaryIndex[index] = this.txs.push(tx) - 1;
       this.unspentUtxos[indexAddress] = this.unspentUtxos[indexAddress] || [];
       this.spentUtxos[indexAddress] = this.spentUtxos[indexAddress] || [];
-      this.txs.push(tx);
 
       tx.outputs.forEach((output) => {
         if (output.address === tx.address) {
@@ -132,7 +131,7 @@ class Mock implements IStorage {
     };
   }
 
-  async load(data: { txs: TX[]; primaryIndex: { [key: string]: TX }; unspentUtxos: { [key: string]: Output[] } }) {
+  async load(data: { txs: TX[]; primaryIndex: { [key: string]: number }; unspentUtxos: { [key: string]: Output[] } }) {
     this.txs = data.txs;
     this.primaryIndex = data.primaryIndex;
     this.unspentUtxos = data.unspentUtxos;
