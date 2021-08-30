@@ -186,6 +186,18 @@ class WalletLedger {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  async estimateAccountMaxSpendable(account: Account, feePerByte: number) {
+    const addresses = await account.xpub.getXpubAddresses();
+    const utxos = flatten(
+      await Promise.all(addresses.map((address) => account.xpub.storage.getAddressUnspentUtxos(address)))
+    );
+    const balance = await account.xpub.getXpubBalance();
+    // fees if we use all utxo
+    const fees = feePerByte * utils.estimateTxSize(utxos.length, 1, account.xpub.crypto, account.xpub.derivationMode);
+    return balance.minus(fees);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   async getAccountBalance(account: Account) {
     const balance = await account.xpub.getXpubBalance();
     return balance;
