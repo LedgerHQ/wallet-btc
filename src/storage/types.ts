@@ -2,6 +2,7 @@ export interface TX {
   hash: string;
   account: number;
   index: number;
+  received_at: string;
   block: Block;
   address: string;
   inputs: Input[];
