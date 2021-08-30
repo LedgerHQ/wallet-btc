@@ -216,10 +216,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     // @ts-ignore
     // eslint-disable-next-line no-param-reassign
     delete tx.confirmations;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    // eslint-disable-next-line no-param-reassign
-    delete tx.received_at;
+
     // eslint-disable-next-line no-param-reassign
     tx.account = address.account;
     // eslint-disable-next-line no-param-reassign

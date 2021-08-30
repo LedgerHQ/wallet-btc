@@ -72,6 +72,7 @@ describe('testing xpub legacy transactions', () => {
         account: 0,
         index: 0,
         address: 'mwXTtHo8Yy3aNKUUZLkBDrTcKT9qG9TqLb',
+        received_at: '2021-07-28T13:34:17Z',
       },
       {
         hash: '0b9f98d07eb418fa20573112d3cba6b871d429a06c724a7888ff0886be5213d1',
@@ -110,6 +111,7 @@ describe('testing xpub legacy transactions', () => {
         account: 0,
         index: 0,
         address: 'mwXTtHo8Yy3aNKUUZLkBDrTcKT9qG9TqLb',
+        received_at: '2021-07-28T13:34:38Z',
       },
     ]);
     // this account has one utxo 500000000 and one utxo 300000000
@@ -173,6 +175,7 @@ describe('testing xpub legacy transactions', () => {
         account: 0,
         index: 0,
         address: 'mwXTtHo8Yy3aNKUUZLkBDrTcKT9qG9TqLb',
+        received_at: '2021-07-28T14:46:51Z',
       },
       {
         hash: '2f90f3312ffd4dce490cb2f7429c586a43ef68c99fc2f8e549127b72af7b4209',
@@ -211,6 +214,7 @@ describe('testing xpub legacy transactions', () => {
         account: 0,
         index: 0,
         address: 'mwXTtHo8Yy3aNKUUZLkBDrTcKT9qG9TqLb',
+        received_at: '2021-07-28T14:46:51Z',
       },
       {
         hash: '2fee0c4b55e08583aa5bc565d7e428f7cdcbd2b73262f62208a6a72a74e2c945',
@@ -249,6 +253,7 @@ describe('testing xpub legacy transactions', () => {
         account: 0,
         index: 0,
         address: 'mwXTtHo8Yy3aNKUUZLkBDrTcKT9qG9TqLb',
+        received_at: '2021-07-28T14:46:51Z',
       },
     ]);
     // we have 5 utxo now. 100000000, 200000000, 300000000, 600000000 and 5000000000
