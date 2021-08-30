@@ -54,6 +54,10 @@ class Mock implements IStorage {
         const previouslyPendingNowInABlock = !this.txs[this.primaryIndex[index]].block && tx.block;
         if (previouslyPendingNowInABlock) {
           merge(this.txs[this.primaryIndex[index]], tx);
+          this.txs[this.primaryIndex[index]].outputs.forEach((output) => {
+            // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+            output.block_height = tx.block.height;
+          });
         }
         return;
       }
