@@ -33,7 +33,7 @@ describe('synced xpub utilites functions', () => {
 
     beforeAll(async () => {
       await xpub.sync();
-    });
+    }, 30000);
 
     it('should compute accounts/addresses/balances correctly', async () => {
       const addresses = await xpub.getXpubAddresses();
