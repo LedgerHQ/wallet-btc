@@ -1,4 +1,4 @@
-import { findLast, filter, uniqBy, findIndex, has, merge } from 'lodash';
+import { findLast, filter, uniqBy, findIndex, has } from 'lodash';
 import { Input, IStorage, Output, TX, Address } from './types';
 
 // a mock storage class that just use js objects
@@ -51,14 +51,6 @@ class Mock implements IStorage {
 
       // we reject already seen tx
       if (this.txs[this.primaryIndex[index]]) {
-        const previouslyPendingNowInABlock = !this.txs[this.primaryIndex[index]].block && tx.block;
-        if (previouslyPendingNowInABlock) {
-          merge(this.txs[this.primaryIndex[index]], tx);
-          this.txs[this.primaryIndex[index]].outputs.forEach((output) => {
-            // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
-            output.block_height = tx.block.height;
-          });
-        }
         return;
       }
 
@@ -125,6 +117,35 @@ class Mock implements IStorage {
     });
 
     this.txs = newTxs;
+  }
+
+  // We are a bit ugly because we can't rely undo unspentUTXO
+  // So we clean the address and rebuild without the pendings
+  async removePendingTxs(txsFilter: { account: number; index: number }) {
+    const newTxs: TX[] = [];
+    const txsToReAdd: TX[] = [];
+
+    this.txs.forEach((tx: TX) => {
+      if (tx.account !== txsFilter.account || tx.index !== txsFilter.index) {
+        newTxs.push(tx);
+        return;
+      }
+
+      if (tx.block) {
+        txsToReAdd.push(tx);
+      }
+
+      // clean
+      const indexAddress = tx.address;
+      const index = `${indexAddress}-${tx.hash}`;
+
+      delete this.primaryIndex[index];
+      delete this.unspentUtxos[indexAddress];
+      delete this.spentUtxos[indexAddress];
+    });
+
+    this.txs = newTxs;
+    await this.appendTxs(txsToReAdd);
   }
 
   async export() {
