@@ -1,4 +1,4 @@
-import { findLast, filter, uniqBy, findIndex, has, merge } from 'lodash';
+import { findLast, filter, uniqBy, findIndex, has } from 'lodash';
 import { Input, IStorage, Output, TX, Address } from './types';
 
 // a mock storage class that just use js objects

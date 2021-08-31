@@ -74,9 +74,11 @@ class Xpub extends EventEmitter {
     let total = 0;
 
     try {
+      // TODO perf: bad : looping in the tx array
       await this.checkAddressReorg(account, index);
 
       // in case pendings have changed we clean them out
+      // TODO perf : bad : looping in the tx array
       const hasPendings = !!(await this.storage.getLastTx({ confirmed: false, account, index }));
       if (hasPendings) {
         await this.storage.removePendingTxs({ account, index });
