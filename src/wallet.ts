@@ -194,7 +194,8 @@ class WalletLedger {
     const balance = await account.xpub.getXpubBalance();
     // fees if we use all utxo
     const fees = feePerByte * utils.estimateTxSize(utxos.length, 1, account.xpub.crypto, account.xpub.derivationMode);
-    return balance.minus(fees);
+    const maxSpendable = balance.minus(fees);
+    return maxSpendable.lt(0) ? new BigNumber(0) : maxSpendable;
   }
 
   // eslint-disable-next-line class-methods-use-this
