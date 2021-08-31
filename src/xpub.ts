@@ -76,6 +76,12 @@ class Xpub extends EventEmitter {
     try {
       await this.checkAddressReorg(account, index);
 
+      // in case pendings have changed we clean them out
+      const hasPendings = !!(await this.storage.getLastTx({ confirmed: false, account, index }));
+      if (hasPendings) {
+        await this.storage.removePendingTxs({ account, index });
+      }
+
       // eslint-disable-next-line no-cond-assign,no-await-in-loop
       while ((added = await this.fetchHydrateAndStoreNewTxs(address, account, index))) {
         total += added;
