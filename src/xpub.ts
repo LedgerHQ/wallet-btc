@@ -305,7 +305,7 @@ class Xpub extends EventEmitter {
       inputs,
       associatedDerivations,
       outputs,
-      fee,
+      fee: total.minus(params.amount).toNumber(),
     };
   }
 

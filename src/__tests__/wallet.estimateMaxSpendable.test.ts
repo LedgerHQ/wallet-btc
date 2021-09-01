@@ -32,7 +32,7 @@ describe('testing estimateMaxSpendable', () => {
     let feesPerByte = 100;
     maxSpendable = await wallet.estimateAccountMaxSpendable(account, feesPerByte);
     expect(maxSpendable.toNumber()).toEqual(
-      balance - feesPerByte * utils.estimateTxSize(2, 1, account.xpub.crypto, account.xpub.derivationMode)
+      balance - feesPerByte * Math.ceil(utils.estimateTxSize(2, 1, account.xpub.crypto, account.xpub.derivationMode))
     );
     feesPerByte = 10000;
     maxSpendable = await wallet.estimateAccountMaxSpendable(account, feesPerByte);
