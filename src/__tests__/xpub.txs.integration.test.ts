@@ -81,7 +81,8 @@ describe('testing xpub legacy transactions', () => {
 
   let expectedFee1: number;
   it('should send a 1 btc tx to xpubs[1].xpub', async () => {
-    const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
+    const destAddress = await xpubs[1].xpub.getNewAddress(0, 0);
+    const { address } = destAddress;
     const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
 
     const psbt = new bitcoin.Psbt({ network });
@@ -126,6 +127,28 @@ describe('testing xpub legacy transactions', () => {
       console.log('broadcast error', e);
     }
 
+    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
+
+    // time for explorer to sync
+    await sleep(30000);
+
+    const sendingAddress = await xpubs[0].xpub.getNewAddress(0, 0);
+    const pendings = await explorer.getPendings(sendingAddress);
+    const pendingsReceive = await explorer.getPendings(destAddress);
+    expect(pendingsReceive.length).toEqual(1);
+    expect(pendings.length).toEqual(1);
+
+    await xpubs[0].xpub.sync();
+    await xpubs[1].xpub.sync();
+
+    // pending is seen here
+    expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
+    expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
+    let pendings0 = await xpubs[0].xpub.storage.getLastTx({ confirmed: false });
+    let pendings1 = await xpubs[1].xpub.storage.getLastTx({ confirmed: false });
+    expect(pendings0).toBeTruthy();
+    expect(pendings1).toBeTruthy();
+
     try {
       const { address: mineAddress } = await xpubs[2].xpub.getNewAddress(0, 0);
       await axios.post(`http://localhost:28443/chain/mine/${mineAddress}/1`);
@@ -140,10 +163,13 @@ describe('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
-  }, 120000);
+    pendings0 = await xpubs[0].xpub.storage.getLastTx({ confirmed: false });
+    pendings1 = await xpubs[1].xpub.storage.getLastTx({ confirmed: false });
+    expect(pendings0).toBeFalsy();
+    expect(pendings1).toBeFalsy();
+  }, 150000);
 
   let expectedFee2: number;
   it('should send a 1 btc tx to xpubs[1].xpub and handle output splitting', async () => {

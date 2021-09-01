@@ -153,8 +153,86 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   }
 
   async getPendings(address: Address, nbMax?: number) {
-    const txs = await this.getAddressTxsSinceLastTxBlock(nbMax || 1000, address, undefined);
-    return txs.filter((tx) => !tx.block);
+    const params: {
+      no_token?: string;
+      noToken?: string;
+      batch_size?: number;
+      block_hash?: string;
+      blockHash?: string;
+    } =
+      this.explorerVersion === 'v2'
+        ? {
+            noToken: 'true',
+          }
+        : {
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            no_token: 'true',
+          };
+    if (!this.disableBatchSize) {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      params.batch_size = nbMax || 1000;
+    }
+    const res = await this.fetchTxs(address, params);
+    const pendingsTxs = res.txs.filter((tx) => !tx.block);
+    pendingsTxs.forEach((tx) => this.hydrateTx(address, tx));
+    return pendingsTxs;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async fetchTxs(address: Address, params: any) {
+    const url = `/addresses/${address.address}/transactions`;
+
+    this.emit('fetching-address-transaction', { url, params });
+
+    // TODO add a test for failure (at the sync level)
+    const res: { txs: TX[] } = (
+      await this.client.get(url, {
+        params,
+        // some altcoin may have outputs with values > MAX_SAFE_INTEGER
+        transformResponse: (string) =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          JSONBigNumber.parse(string, (key: string, value: any) => {
+            if (BigNumber.isBigNumber(value)) {
+              if (key === 'value') {
+                return value.toString();
+              }
+
+              return value.toNumber();
+            }
+            return value;
+          }),
+      })
+    ).data;
+
+    this.emit('fetched-address-transaction', { url, params, res });
+
+    return res;
+  }
+
+  // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-explicit-any
+  hydrateTx(address: Address, tx: TX) {
+    // no need to keep those as they change
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    // eslint-disable-next-line no-param-reassign
+    delete tx.confirmations;
+
+    // eslint-disable-next-line no-param-reassign
+    tx.account = address.account;
+    // eslint-disable-next-line no-param-reassign
+    tx.index = address.index;
+    // eslint-disable-next-line no-param-reassign
+    tx.address = address.address;
+
+    tx.outputs.forEach((output) => {
+      // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+      output.output_hash = tx.hash;
+      // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+      output.block_height = tx.block ? tx.block.height : null;
+      // Definition of replaceable, per the standard: https://github.com/bitcoin/bips/blob/61ccc84930051e5b4a99926510d0db4a8475a4e6/bip-0125.mediawiki#summary
+      // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+      output.rbf = tx.inputs[0]?.sequence && tx.inputs[0].sequence < 0xffffffff;
+    });
   }
 
   async getAddressTxsSinceLastTxBlock(batchSize: number, address: Address, lastTx: TX | undefined) {
@@ -186,59 +264,22 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
       }
     }
 
-    const url = `/addresses/${address.address}/transactions`;
+    const res = await this.fetchTxs(address, params);
 
-    this.emit('fetching-address-transaction', { url, params });
-
-    // TODO add a test for failure (at the sync level)
-    const res: { txs: TX[] } = (
-      await this.client.get(url, {
-        params,
-        // some altcoin may have outputs with values > MAX_SAFE_INTEGER
-        transformResponse: (string) =>
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          JSONBigNumber.parse(string, (key: string, value: any) => {
-            if (BigNumber.isBigNumber(value)) {
-              if (key === 'value') {
-                return value.toString();
-              }
-
-              return value.toNumber();
-            }
-            return value;
-          }),
-      })
-    ).data;
+    const hydratedTxs: TX[] = [];
 
     // faster than mapping
     res.txs.forEach((tx) => {
-      // no need to keep those as they change
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      // eslint-disable-next-line no-param-reassign
-      delete tx.confirmations;
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      // eslint-disable-next-line no-param-reassign
-      delete tx.received_at;
-      // eslint-disable-next-line no-param-reassign
-      tx.account = address.account;
-      // eslint-disable-next-line no-param-reassign
-      tx.index = address.index;
-      // eslint-disable-next-line no-param-reassign
-      tx.address = address.address;
+      if (!tx.block) {
+        return;
+      }
 
-      tx.outputs.forEach((output) => {
-        // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
-        output.output_hash = tx.hash;
-        // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
-        output.block_height = tx.block ? tx.block.height : null;
-      });
+      this.hydrateTx(address, tx);
+
+      hydratedTxs.push(tx);
     });
 
-    this.emit('fetched-address-transaction', { url, params, txs: res.txs });
-
-    return res.txs;
+    return hydratedTxs;
   }
 }
 

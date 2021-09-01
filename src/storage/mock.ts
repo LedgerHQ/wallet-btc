@@ -1,4 +1,4 @@
-import { findLast, filter, uniqBy, findIndex } from 'lodash';
+import { findLast, filter, uniqBy, findIndex, has } from 'lodash';
 import { Input, IStorage, Output, TX, Address } from './types';
 
 // a mock storage class that just use js objects
@@ -7,7 +7,7 @@ class Mock implements IStorage {
   txs: TX[] = [];
 
   // indexes
-  primaryIndex: { [key: string]: TX } = {};
+  primaryIndex: { [key: string]: number } = {};
 
   // accounting
   unspentUtxos: { [key: string]: Output[] } = {};
@@ -17,16 +17,23 @@ class Mock implements IStorage {
   // returning unordered tx within the same block)
   spentUtxos: { [key: string]: Input[] } = {};
 
-  async getLastTx(txFilter: { account?: number; index?: number; address?: string }) {
+  async getLastTx(txFilter: { account?: number; index?: number; address?: string; confirmed?: boolean }) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    const tx: TX | undefined = findLast(this.txs, txFilter);
+    const tx: TX | undefined = findLast(this.txs, (t) => {
+      return (
+        (!has(txFilter, 'account') || t.account === txFilter.account) &&
+        (!has(txFilter, 'index') || t.index === txFilter.index) &&
+        (!has(txFilter, 'address') || t.address === txFilter.address) &&
+        (!has(txFilter, 'confirmed') || (txFilter.confirmed && t.block) || (!txFilter.confirmed && !t.block))
+      );
+    });
     return tx;
   }
 
   async getTx(address: string, hash: string) {
     const index = `${address}-${hash}`;
-    return this.primaryIndex[index];
+    return this.txs[this.primaryIndex[index]];
   }
 
   // TODO: only expose unspentUtxos
@@ -42,15 +49,14 @@ class Mock implements IStorage {
       const indexAddress = tx.address;
       const index = `${indexAddress}-${tx.hash}`;
 
-      // we reject already seen tx and tx pendings
-      if (this.primaryIndex[index] || !tx.block) {
+      // we reject already seen tx
+      if (this.txs[this.primaryIndex[index]]) {
         return;
       }
 
-      this.primaryIndex[index] = tx;
+      this.primaryIndex[index] = this.txs.push(tx) - 1;
       this.unspentUtxos[indexAddress] = this.unspentUtxos[indexAddress] || [];
       this.spentUtxos[indexAddress] = this.spentUtxos[indexAddress] || [];
-      this.txs.push(tx);
 
       tx.outputs.forEach((output) => {
         if (output.address === tx.address) {
@@ -113,6 +119,35 @@ class Mock implements IStorage {
     this.txs = newTxs;
   }
 
+  // We are a bit ugly because we can't rely undo unspentUTXO
+  // So we clean the address and rebuild without the pendings
+  async removePendingTxs(txsFilter: { account: number; index: number }) {
+    const newTxs: TX[] = [];
+    const txsToReAdd: TX[] = [];
+
+    this.txs.forEach((tx: TX) => {
+      if (tx.account !== txsFilter.account || tx.index !== txsFilter.index) {
+        newTxs.push(tx);
+        return;
+      }
+
+      if (tx.block) {
+        txsToReAdd.push(tx);
+      }
+
+      // clean
+      const indexAddress = tx.address;
+      const index = `${indexAddress}-${tx.hash}`;
+
+      delete this.primaryIndex[index];
+      delete this.unspentUtxos[indexAddress];
+      delete this.spentUtxos[indexAddress];
+    });
+
+    this.txs = newTxs;
+    await this.appendTxs(txsToReAdd);
+  }
+
   async export() {
     return {
       txs: this.txs,
@@ -121,7 +156,7 @@ class Mock implements IStorage {
     };
   }
 
-  async load(data: { txs: TX[]; primaryIndex: { [key: string]: TX }; unspentUtxos: { [key: string]: Output[] } }) {
+  async load(data: { txs: TX[]; primaryIndex: { [key: string]: number }; unspentUtxos: { [key: string]: Output[] } }) {
     this.txs = data.txs;
     this.primaryIndex = data.primaryIndex;
     this.unspentUtxos = data.unspentUtxos;
