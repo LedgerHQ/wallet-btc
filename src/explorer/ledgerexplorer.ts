@@ -43,7 +43,7 @@ const responseInterceptor = (
 };
 
 class LedgerExplorer extends EventEmitter implements IExplorer {
-  client: Pool<AxiosInstance>;
+  client: Pool<{ client: AxiosInstance }>;
 
   disableBatchSize = false;
 
@@ -78,7 +78,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     // max 20 requests
     this.client = genericPool.createPool(
       {
-        create: () => Promise.resolve(client),
+        create: () => Promise.resolve({ client }),
         destroy: () => Promise.resolve(),
       },
       { max: 20 }
@@ -97,7 +97,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   async broadcast(tx: string) {
     const url = '/transactions/send';
     const client = await this.client.acquire();
-    const res = client.post(url, { tx });
+    const res = client.client.post(url, { tx });
     await this.client.release(client);
     return res;
   }
@@ -109,7 +109,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     // TODO add a test for failure (at the sync level)
     const client = await this.client.acquire();
-    const res = (await client.get(url)).data;
+    const res = (await client.client.get(url)).data;
     await this.client.release(client);
 
     this.emit('fetched-transaction-tx', { url, tx: res[0] });
@@ -123,7 +123,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     this.emit('fetching-block', { url });
 
     const client = await this.client.acquire();
-    const res = (await client.get(url)).data;
+    const res = (await client.client.get(url)).data;
     await this.client.release(client);
 
     this.emit('fetched-block', { url, block: res });
@@ -147,7 +147,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     this.emit('fetching-block', { url, height });
 
     const client = await this.client.acquire();
-    const res = (await client.get(url)).data;
+    const res = (await client.client.get(url)).data;
     await this.client.release(client);
 
     this.emit('fetched-block', { url, block: res[0] });
@@ -172,7 +172,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     // TODO add a test for failure (at the sync level)
     const client = await this.client.acquire();
-    const fees = (await client.get(url)).data;
+    const fees = (await client.client.get(url)).data;
     await this.client.release(client);
 
     this.emit('fetching-fees', { url, fees });
@@ -215,7 +215,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     // TODO add a test for failure (at the sync level)
     const client = await this.client.acquire();
     const res: { txs: TX[] } = (
-      await client.get(url, {
+      await client.client.get(url, {
         params,
         // some altcoin may have outputs with values > MAX_SAFE_INTEGER
         transformResponse: (string) =>
