@@ -4,29 +4,11 @@ require('bitcore-lib');
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
-// import path from 'path';
-// import { orderBy } from 'lodash';
 import { toMatchFile } from 'jest-file-snapshot';
 import Storage from '../storage/mock';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Xpub from '../xpub';
-import Bitcoin from '../crypto/bitcoin';
-import BitcoinCash from '../crypto/bitcoincash';
-import Litecoin from '../crypto/litecoin';
-import Digibyte from '../crypto/digibyte';
-import Zec from '../crypto/zec';
-import Zen from '../crypto/zen';
-import Dash from '../crypto/dash';
-import Peercoin from '../crypto/peercoin';
-import Komodo from '../crypto/komodo';
-import Pivx from '../crypto/pivx';
-import Stakenet from '../crypto/stakenet';
-import Stealth from '../crypto/stealth';
-import BitcoinGold from '../crypto/bitcoingold';
-import Doge from '../crypto/doge';
-import Qtum from '../crypto/qtum';
-import Vertcoin from '../crypto/vtc';
-import ViaCoin from '../crypto/via';
+import * as currency from '../crypto';
 
 const startLogging = (emitters: any) => {
   emitters.forEach((emitter: any) =>
@@ -245,58 +227,58 @@ describe('xpub integration sync', () => {
       let crypto;
       switch (dataset.coin) {
         case 'btc':
-          crypto = new Bitcoin({ network: dataset.network });
+          crypto = new currency.Bitcoin({ network: dataset.network });
           break;
         case 'bch':
-          crypto = new BitcoinCash({ network: dataset.network });
+          crypto = new currency.BitcoinCash({ network: dataset.network });
           break;
         case 'ltc':
-          crypto = new Litecoin({ network: dataset.network });
+          crypto = new currency.Litecoin({ network: dataset.network });
           break;
         case 'btc_testnet':
-          crypto = new Bitcoin({ network: dataset.network });
+          crypto = new currency.Bitcoin({ network: dataset.network });
           break;
         case 'btg': // bitcoin gold
-          crypto = new BitcoinGold({ network: dataset.network });
+          crypto = new currency.BitcoinGold({ network: dataset.network });
           break;
         case 'dgb': // digibyte
-          crypto = new Digibyte({ network: dataset.network });
+          crypto = new currency.Digibyte({ network: dataset.network });
           break;
         case 'dash':
-          crypto = new Dash({ network: dataset.network });
+          crypto = new currency.Dash({ network: dataset.network });
           break;
         case 'doge': // dogecoin
-          crypto = new Doge({ network: dataset.network });
+          crypto = new currency.Doge({ network: dataset.network });
           break;
         case 'kmd': // komodo
-          crypto = new Komodo({ network: dataset.network });
+          crypto = new currency.Komodo({ network: dataset.network });
           break;
         case 'pivx':
-          crypto = new Pivx({ network: dataset.network });
+          crypto = new currency.Pivx({ network: dataset.network });
           break;
         case 'xsn': // stakenet
-          crypto = new Stakenet({ network: dataset.network });
+          crypto = new currency.Stakenet({ network: dataset.network });
           break;
         case 'xst': // stealthcoin
-          crypto = new Stealth({ network: dataset.network });
+          crypto = new currency.Stealth({ network: dataset.network });
           break;
         case 'ppc': // peercoin
-          crypto = new Peercoin({ network: dataset.network });
+          crypto = new currency.Peercoin({ network: dataset.network });
           break;
         case 'qtum':
-          crypto = new Qtum({ network: dataset.network });
+          crypto = new currency.Qtum({ network: dataset.network });
           break;
         case 'vtc': // vertcoin
-          crypto = new Vertcoin({ network: dataset.network });
+          crypto = new currency.Vertcoin({ network: dataset.network });
           break;
         case 'via': // viacoin
-          crypto = new ViaCoin({ network: dataset.network });
+          crypto = new currency.ViaCoin({ network: dataset.network });
           break;
         case 'zec': // zcash
-          crypto = new Zec({ network: dataset.network });
+          crypto = new currency.Zec({ network: dataset.network });
           break;
         case 'zen': // zencash
-          crypto = new Zen({ network: dataset.network });
+          crypto = new currency.Zen({ network: dataset.network });
           break;
         default:
           throw new Error('Should not be reachable');

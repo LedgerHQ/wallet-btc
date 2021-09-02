@@ -13,3 +13,23 @@ export interface ICrypto {
 
   toOutputScript(address: string): Buffer;
 }
+
+export type Currency =
+  | 'bitcoin'
+  | 'bitcoin_cash'
+  | 'litecoin'
+  | 'dash'
+  | 'qtum'
+  | 'zcash'
+  | 'bitcoin_gold'
+  | 'dogecoin'
+  | 'digibyte'
+  | 'komodo'
+  | 'pivx'
+  | 'zencash'
+  | 'vertcoin'
+  | 'peercoin'
+  | 'viacoin'
+  | 'stakenet'
+  | 'stealthcoin'
+  | 'bitcoin_testnet';

@@ -19,7 +19,7 @@ import { IExplorer } from './explorer/types';
 import LedgerExplorer from './explorer/ledgerexplorer';
 import { IStorage } from './storage/types';
 import Mock from './storage/mock';
-import Bitcoin from './crypto/bitcoin';
+import * as currency from './crypto';
 import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
 
@@ -115,7 +115,7 @@ class WalletLedger {
       xpub: new Xpub({
         storage,
         explorer,
-        crypto: new Bitcoin({ network }),
+        crypto: new currency.Bitcoin({ network }),
         xpub,
         derivationMode: params.derivationMode,
       }),
@@ -136,6 +136,8 @@ class WalletLedger {
   }
 
   async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
+    console.log('importFromSerializedAccount');
+    console.log(account);
     const network = this.networks[account.params.network];
     const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
     const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
@@ -143,7 +145,7 @@ class WalletLedger {
     const xpub = new Xpub({
       storage,
       explorer,
-      crypto: new Bitcoin({ network }),
+      crypto: new currency.Bitcoin({ network }),
       xpub: account.xpub.xpub,
       derivationMode: account.params.derivationMode,
     });
