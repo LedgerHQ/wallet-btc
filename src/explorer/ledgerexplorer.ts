@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios, { AxiosInstance } from 'axios';
 import axiosRetry from 'axios-retry';
-import * as https from 'https';
+import genericPool, { Pool } from 'generic-pool';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -43,7 +43,7 @@ const responseInterceptor = (
 };
 
 class LedgerExplorer extends EventEmitter implements IExplorer {
-  client: AxiosInstance;
+  client: Pool<AxiosInstance>;
 
   disableBatchSize = false;
 
@@ -60,26 +60,44 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   }) {
     super();
 
-    this.client = axios.create({
+    const clientParams: AxiosRequestConfig = {
       baseURL: explorerURI,
+    };
+
+    // not react native
+    if (!(typeof navigator !== 'undefined' && navigator.product === 'ReactNative')) {
+      // eslint-disable-next-line global-require,@typescript-eslint/no-var-requires
+      const https = require('https');
       // uses max 20 keep alive request in parallel
-      httpsAgent: new https.Agent({ keepAlive: true, maxSockets: 20 }),
-    });
+      clientParams.httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 20 });
+    }
+
+    const client = axios.create(clientParams);
     // 3 retries per request
-    axiosRetry(this.client, { retries: 3 });
+    axiosRetry(client, { retries: 3 });
+    // max 20 requests
+    this.client = genericPool.createPool(
+      {
+        create: () => Promise.resolve(client),
+        destroy: () => Promise.resolve(),
+      },
+      { max: 20 }
+    );
+
     this.explorerVersion = explorerVersion;
     if (disableBatchSize) {
       this.disableBatchSize = disableBatchSize;
     }
 
     // Logging
-    this.client.interceptors.request.use(requestInterceptor);
-    this.client.interceptors.response.use(responseInterceptor);
+    client.interceptors.request.use(requestInterceptor);
+    client.interceptors.response.use(responseInterceptor);
   }
 
   async broadcast(tx: string) {
     const url = '/transactions/send';
-    return this.client.post(url, { tx });
+    const client = await this.client.acquire();
+    return client.post(url, { tx });
   }
 
   async getTxHex(txId: string) {
@@ -88,7 +106,8 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     this.emit('fetching-transaction-tx', { url, txId });
 
     // TODO add a test for failure (at the sync level)
-    const res = (await this.client.get(url)).data;
+    const client = await this.client.acquire();
+    const res = (await client.get(url)).data;
 
     this.emit('fetched-transaction-tx', { url, tx: res[0] });
 
@@ -100,7 +119,8 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     this.emit('fetching-block', { url });
 
-    const res = (await this.client.get(url)).data;
+    const client = await this.client.acquire();
+    const res = (await client.get(url)).data;
 
     this.emit('fetched-block', { url, block: res });
 
@@ -122,7 +142,8 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     this.emit('fetching-block', { url, height });
 
-    const res = (await this.client.get(url)).data;
+    const client = await this.client.acquire();
+    const res = (await client.get(url)).data;
 
     this.emit('fetched-block', { url, block: res[0] });
 
@@ -145,7 +166,8 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     this.emit('fetching-fees', { url });
 
     // TODO add a test for failure (at the sync level)
-    const fees = (await this.client.get(url)).data;
+    const client = await this.client.acquire();
+    const fees = (await client.get(url)).data;
 
     this.emit('fetching-fees', { url, fees });
 
@@ -185,8 +207,9 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     this.emit('fetching-address-transaction', { url, params });
 
     // TODO add a test for failure (at the sync level)
+    const client = await this.client.acquire();
     const res: { txs: TX[] } = (
-      await this.client.get(url, {
+      await client.get(url, {
         params,
         // some altcoin may have outputs with values > MAX_SAFE_INTEGER
         transformResponse: (string) =>
