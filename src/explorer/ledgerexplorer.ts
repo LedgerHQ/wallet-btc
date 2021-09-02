@@ -97,7 +97,9 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   async broadcast(tx: string) {
     const url = '/transactions/send';
     const client = await this.client.acquire();
-    return client.post(url, { tx });
+    const res = client.post(url, { tx });
+    await this.client.release(client);
+    return res;
   }
 
   async getTxHex(txId: string) {
@@ -108,6 +110,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     // TODO add a test for failure (at the sync level)
     const client = await this.client.acquire();
     const res = (await client.get(url)).data;
+    await this.client.release(client);
 
     this.emit('fetched-transaction-tx', { url, tx: res[0] });
 
@@ -121,6 +124,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     const client = await this.client.acquire();
     const res = (await client.get(url)).data;
+    await this.client.release(client);
 
     this.emit('fetched-block', { url, block: res });
 
@@ -144,6 +148,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     const client = await this.client.acquire();
     const res = (await client.get(url)).data;
+    await this.client.release(client);
 
     this.emit('fetched-block', { url, block: res[0] });
 
@@ -168,6 +173,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     // TODO add a test for failure (at the sync level)
     const client = await this.client.acquire();
     const fees = (await client.get(url)).data;
+    await this.client.release(client);
 
     this.emit('fetching-fees', { url, fees });
 
@@ -226,6 +232,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
           }),
       })
     ).data;
+    await this.client.release(client);
 
     this.emit('fetched-address-transaction', { url, params, res });
 
