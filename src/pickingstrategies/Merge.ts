@@ -23,9 +23,13 @@ export class Merge extends PickingStrategy {
       utils.estimateTxSize(1, 0, this.crypto, this.derivationMode) -
       utils.estimateTxSize(0, 0, this.crypto, this.derivationMode);
 
+    const sizePerOutput =
+      utils.estimateTxSize(0, 1, this.crypto, this.derivationMode) -
+      utils.estimateTxSize(0, 0, this.crypto, this.derivationMode);
+
     unspentUtxos = sortBy(unspentUtxos, 'value');
     // https://metamug.com/article/security/bitcoin-transaction-fee-satoshi-per-byte.html
-    const txSizeNoInput = utils.estimateTxSize(0, nbOutputsWithoutChange + 1, this.crypto, this.derivationMode);
+    const txSizeNoInput = utils.estimateTxSize(0, nbOutputsWithoutChange, this.crypto, this.derivationMode);
     let fee = txSizeNoInput * feePerByte;
 
     let total = new BigNumber(0);
@@ -41,7 +45,16 @@ export class Merge extends PickingStrategy {
       fee += sizePerInput * feePerByte;
       i += 1;
     }
-
+    if (total.minus(amount.plus(fee)).lt(sizePerOutput * feePerByte)) {
+      // not enough fund to make a change output
+      return {
+        totalValue: total,
+        unspentUtxos: unspentUtxoSelected,
+        fee: Math.ceil(fee),
+        needChangeoutput: false,
+      };
+    }
+    fee += sizePerOutput * feePerByte; // fee to make a change output
     return {
       totalValue: total,
       unspentUtxos: unspentUtxoSelected,
