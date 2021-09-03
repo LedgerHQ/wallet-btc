@@ -2,6 +2,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import bs58 from 'bs58';
 import { padStart } from 'lodash';
+import { bech32, bech32m } from 'bech32';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -130,15 +131,95 @@ export function computeDustAmount(currency: ICrypto, txSize: number) {
   return dustAmount;
 }
 
-export function isValidAddress(address: string) {
+/**
+ * Temporarily copied from bitcoinjs-lib master branch (as of 2021-09-02,
+ * commit 7b753caad6a5bf13d40ffb6ae28c2b00f7f5f585) so that we can make use of the
+ * updated bech32 lib version 2.0.0 that supports bech32m. bitcoinjs-lib version 5.2.0
+ * as currently used by wallet-btc uses an older version of bech32 that lacks bech32m support.
+ *
+ * When a new version of bitcoinjs-lib that supports bech32m is released this function can
+ * be removed and calls should be directed to bitcoinjs-lib instead. Our direct dependency
+ * on bech32 lib should also be removed.
+ */
+/* eslint-disable */
+export function fromBech32(address: string): { version: number, prefix: string, data: Buffer} {
+  let result;
+  let version;
   try {
-    bitcoin.address.fromBase58Check(address);
+    result = bech32.decode(address);
+  } catch (e) {}
+
+  if (result) {
+    version = result.words[0];
+    if (version !== 0) throw new TypeError(address + ' uses wrong encoding');
+  } else {
+    result = bech32m.decode(address);
+    version = result.words[0];
+    if (version === 0) throw new TypeError(address + ' uses wrong encoding');
+  }
+
+  const data = bech32.fromWords(result.words.slice(1));
+
+  return {
+    version,
+    prefix: result.prefix,
+    data: Buffer.from(data),
+  };
+}
+/* eslint-enable */
+
+export function lookupNetwork(networkName: string): bitcoin.Network {
+  if (networkName === 'mainnet') {
+    return bitcoin.networks.bitcoin;
+  }
+  if (networkName === 'testnet') {
+    return bitcoin.networks.testnet;
+  }
+  if (networkName === 'regtest') {
+    return bitcoin.networks.regtest;
+  }
+  throw new TypeError(`Unknown network name ${networkName}`);
+}
+
+export function isValidAddress(address: string, network?: bitcoin.Network) {
+  // We default to mainnet for compatibility reasons. The network parameter is new
+  // and current live-common doesn't pass this argument.
+  const net = network || bitcoin.networks.bitcoin;
+  try {
+    const result = bitcoin.address.fromBase58Check(address);
+    if (net.pubKeyHash === result.version || net.scriptHash === result.version) {
+      return true;
+    }
+    // Can a valid base58check string (but an invalid address) be a valid bech32 address? If so we should throw
+    // here and try bech32 decoding as well. If not, we should return false immediately.
+    // Also it'd probably make sense to first try bech32, then base58check, because bech32 checksums are
+    // stronger.
+    // throw new TypeError(`${address} uses wrong version ${result.version}. Expected ${network.pubKeyHash} or ${network.scriptHash}.`)
+    return false;
   } catch {
-    // Not a valid Base58 address
+    // Not a valid base58check string
+    let result;
     try {
-      bitcoin.address.fromBech32(address);
+      result = fromBech32(address);
     } catch {
       // Not a valid Bech32 address either
+      return false;
+    }
+
+    if (net.bech32 !== result.prefix) {
+      // Address doesn't use the expected human-readable part ${network.bech32}
+      return false;
+    }
+    if (result.version > 16 || result.version < 0) {
+      // Address has invalid version
+      return false;
+    }
+    if (result.data.length < 2 || result.data.length > 40) {
+      // Address has invalid data length
+      return false;
+    }
+    if (result.version === 0 && result.data.length !== 20 && result.data.length !== 32) {
+      // Version 0 address uses an invalid witness program length
       return false;
     }
   }

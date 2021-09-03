@@ -7,6 +7,27 @@ import * as bip32 from 'bip32';
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
 import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
+import { fromBech32, isValidAddress } from '../utils';
+
+// This function expects a valid base58check address or a valid
+// bech32/bech32m address.
+function toOutputScriptTemporary(validAddress: string, network: bjs.Network): Buffer {
+  try {
+    const decodeBase58 = bjs.address.fromBase58Check(validAddress);
+    if (decodeBase58.version === network.pubKeyHash)
+      return bjs.payments.p2pkh({ hash: decodeBase58.hash }).output as Buffer;
+    if (decodeBase58.version === network.scriptHash)
+      return bjs.payments.p2sh({ hash: decodeBase58.hash }).output as Buffer;
+  } catch (e) {
+    // It's not a base58 address, so it's a segwit address
+  }
+  const decodeBech32 = fromBech32(validAddress);
+  return bjs.script.compile([
+    // OP_0 is encoded as 0x00, but OP_1 through OP_16 are encoded as 0x51 though 0x60, see BIP173
+    decodeBech32.version + (decodeBech32.version > 0 ? 0x50 : 0),
+    decodeBech32.data,
+  ]);
+}
 
 class Bitcoin implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -86,7 +107,18 @@ class Bitcoin implements ICrypto {
   }
 
   toOutputScript(address: string) {
-    return toOutputScript(address, this.network);
+    // Make sure the address is valid on this network
+    // otherwise we can't call toOutputScriptTemporary.
+    if (!isValidAddress(address, this.network)) {
+      throw new Error('Invalid address');
+    }
+    // bitcoinjs-lib/src/address doesn't yet have released support for bech32m,
+    // so we'll implement our own version of toOutputScript while waiting.
+    // This implementation is highly inspired (stolen) from bitcoinjs-lib's
+    // master branch.
+    // One major difference is that our function requires an already
+    // valid address, whereas to bitcoinjs-lib version doesn't.
+    return toOutputScriptTemporary(address, this.network);
   }
 }
 
