@@ -7,7 +7,7 @@ import LedgerExplorer from '../explorer/ledgerexplorer';
 
 describe('testing estimateMaxSpendable', () => {
   const explorerInstances: { [key: string]: IExplorer } = {
-    'explorer-ledgerv3-explorer-https://explorers.api.vault.ledger.com/blockchain/v3/btc': new LedgerExplorer({
+    'explorer-ledgerv3-uri-https://explorers.api.vault.ledger.com/blockchain/v3/btc': new LedgerExplorer({
       explorerURI: 'https://explorers.api.vault.ledger.com/blockchain/v3/btc',
       explorerVersion: 'v3',
     }),

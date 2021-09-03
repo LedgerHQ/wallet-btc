@@ -8,7 +8,7 @@ import { IExplorer } from '../explorer/types';
 
 describe('testing wallet', () => {
   const explorerInstances: { [key: string]: IExplorer } = {
-    'explorer-ledgerv3-explorer-https://explorers.api.vault.ledger.com/blockchain/v3/btc': new LedgerExplorer({
+    'explorer-ledgerv3-uri-https://explorers.api.vault.ledger.com/blockchain/v3/btc': new LedgerExplorer({
       explorerURI: 'https://explorers.api.vault.ledger.com/blockchain/v3/btc',
       explorerVersion: 'v3',
     }),
@@ -67,7 +67,7 @@ describe('testing wallet', () => {
       fromAccount: account,
       txInfo,
     });
-    expect(tx).toEqual('1f278baad1824d5d0a1acc06fa3812fc08ba78a0');
+    expect(tx).toEqual('7b1f85b80df3006abdb67b48551ac4c38e7a6a79');
   });
 
   it('should allow to build a transaction splitting outputs', async () => {
@@ -86,6 +86,6 @@ describe('testing wallet', () => {
       fromAccount: account,
       txInfo,
     });
-    expect(tx).toEqual('3ff8f90f08e1f0a3628ca1af1619d4a1a41a2107');
+    expect(tx).toEqual('bb303ef3932166330faeab7a7a61ee89b6f277ed');
   });
 });

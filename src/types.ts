@@ -38,6 +38,20 @@ export type BtcAppTransaction = {
   extraData?: Buffer;
 };
 
+export type BtcAppCreateTransactionArg = {
+  inputs: Array<[BtcAppTransaction, number, string | null | undefined, number | null | undefined]>;
+  associatedKeysets: string[];
+  changePath?: string;
+  outputScriptHex: string;
+  lockTime?: number;
+  sigHashType?: number;
+  segwit?: boolean;
+  initialTimestamp?: number;
+  additionals: Array<string>;
+  expiryHeight?: Buffer;
+  useTrustedInputForSegwit?: boolean;
+};
+
 export type BtcApp = {
   getWalletPublicKey(
     path: string,
@@ -57,17 +71,5 @@ export type BtcApp = {
     hasExtraData?: boolean,
     additionals?: string[]
   ): BtcAppTransaction;
-  createPaymentTransactionNew(arg: {
-    inputs: Array<[BtcAppTransaction, number, string | null | undefined, number | null | undefined]>;
-    associatedKeysets: string[];
-    changePath?: string;
-    outputScriptHex: string;
-    lockTime?: number;
-    sigHashType?: number;
-    segwit?: boolean;
-    initialTimestamp?: number;
-    additionals: Array<string>;
-    expiryHeight?: Buffer;
-    useTrustedInputForSegwit?: boolean;
-  }): Promise<string>;
+  createPaymentTransactionNew(arg: BtcAppCreateTransactionArg): Promise<string>;
 };
