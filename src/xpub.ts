@@ -303,11 +303,13 @@ class Xpub extends EventEmitter {
       this.derivationMode
     );
     const dustAmount = utils.computeDustAmount(this.crypto, txSize);
+    let changeOutputAmount = new BigNumber(0);
     // Abandon the change output if change output amount is less than dust amount
     if (needChangeoutput && total.minus(params.amount).minus(fee) > dustAmount) {
+      changeOutputAmount = total.minus(params.amount).minus(fee);
       outputs.push({
         script: this.crypto.toOutputScript(params.changeAddress),
-        value: total.minus(params.amount).minus(fee),
+        value: changeOutputAmount,
         address: params.changeAddress,
         isChange: true,
       });
@@ -316,7 +318,7 @@ class Xpub extends EventEmitter {
       inputs,
       associatedDerivations,
       outputs,
-      fee: total.minus(params.amount).toNumber(),
+      fee: total.minus(params.amount).minus(changeOutputAmount).toNumber(),
     };
   }
 
