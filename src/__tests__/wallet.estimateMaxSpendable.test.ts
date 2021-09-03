@@ -2,9 +2,22 @@ import WalletLedger from '../wallet';
 import * as utils from '../utils';
 import { Account } from '../account';
 import MockBtc from './mocks/Btc';
+import { IExplorer } from '../explorer/types';
+import LedgerExplorer from '../explorer/ledgerexplorer';
 
 describe('testing estimateMaxSpendable', () => {
-  const wallet = new WalletLedger();
+  const explorerInstances: { [key: string]: IExplorer } = {
+    'explorer-ledgerv3-explorer-https://explorers.api.vault.ledger.com/blockchain/v3/btc': new LedgerExplorer({
+      explorerURI: 'https://explorers.api.vault.ledger.com/blockchain/v3/btc',
+      explorerVersion: 'v3',
+    }),
+  };
+  const wallet = new WalletLedger({
+    getExplorer: (explorer, explorerURI) => {
+      const id = `explorer-${explorer}-uri-${explorerURI}`;
+      return explorerInstances[id];
+    },
+  });
   let account: Account;
   it('should generate an account', async () => {
     account = await wallet.generateAccount({

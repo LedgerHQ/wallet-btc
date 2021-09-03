@@ -49,8 +49,6 @@
   },
   "dependencies": {
     "@ledgerhq/json-bignumber": "^1.0.2",
-    "@ledgerhq/logs": "6.2.0",
-    "@ledgerhq/errors": "6.2.0",
     "@types/bchaddrjs": "^0.4.0",
     "@types/bitcore-lib-cash": "^8.23.3",
     "@types/bs58check": "^2.1.0",
