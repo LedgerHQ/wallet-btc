@@ -12,7 +12,6 @@ import { BtcApp, BtcAppTransaction, TransactionInfo } from './types';
 import { Account, SerializedAccount } from './account';
 import Xpub from './xpub';
 import { IExplorer } from './explorer/types';
-import LedgerExplorer from './explorer/ledgerexplorer';
 import { IStorage } from './storage/types';
 import Mock from './storage/mock';
 import Bitcoin from './crypto/bitcoin';
@@ -20,25 +19,9 @@ import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
 
 class WalletLedger {
-  explorerInstances: { [key: string]: IExplorer } = {};
-
   networks: { [key: string]: bitcoin.Network } = {
     mainnet: coininfo.bitcoin.main.toBitcoinJS(),
     testnet: coininfo.bitcoin.test.toBitcoinJS(),
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  explorers: { [key: string]: (explorerURI: string) => IExplorer } = {
-    ledgerv3: (explorerURI) =>
-      new LedgerExplorer({
-        explorerURI,
-        explorerVersion: 'v3',
-      }),
-    ledgerv2: (explorerURI) =>
-      new LedgerExplorer({
-        explorerURI,
-        explorerVersion: 'v2',
-      }),
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,10 +29,10 @@ class WalletLedger {
     mock: () => new Mock(),
   };
 
-  getExplorer(explorer: 'ledgerv3' | 'ledgerv2', explorerURI: string) {
-    const id = `explorer-${explorer}-uri-${explorerURI}`;
-    this.explorerInstances[id] = this.explorerInstances[id] || this.explorers[explorer](explorerURI);
-    return this.explorerInstances[id];
+  getExplorer: (explorer: string, explorerURI: string) => IExplorer;
+
+  constructor(opts: { getExplorer: (explorer: string, explorerURI: string) => IExplorer }) {
+    this.getExplorer = opts.getExplorer;
   }
 
   async generateAccount(params: {
