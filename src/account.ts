@@ -4,6 +4,7 @@ export interface Account {
   params: {
     path: string;
     index: number;
+    currency?: string;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
     explorer: 'ledgerv3' | 'ledgerv2';
@@ -21,6 +22,7 @@ export interface SerializedAccount {
   params: {
     path: string;
     index: number;
+    currency?: string;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
     explorer: 'ledgerv3' | 'ledgerv2';

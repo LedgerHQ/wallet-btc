@@ -11,6 +11,7 @@ describe('testing estimateMaxSpendable', () => {
       btc: new MockBtc(),
       path: "44'/0'",
       index: 0,
+      currency: 'bitcoin',
       network: 'mainnet',
       derivationMode: 'Legacy',
       explorer: 'ledgerv3',

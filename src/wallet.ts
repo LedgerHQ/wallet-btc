@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import coininfo from 'coininfo';
 import { flatten } from 'lodash';
 import BigNumber from 'bignumber.js';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -19,17 +18,11 @@ import { IExplorer } from './explorer/types';
 import LedgerExplorer from './explorer/ledgerexplorer';
 import { IStorage } from './storage/types';
 import Mock from './storage/mock';
-import * as currency from './crypto';
 import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
 
 class WalletLedger {
   explorerInstances: { [key: string]: IExplorer } = {};
-
-  networks: { [key: string]: bitcoin.Network } = {
-    mainnet: coininfo.bitcoin.main.toBitcoinJS(),
-    testnet: coininfo.bitcoin.test.toBitcoinJS(),
-  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   explorers: { [key: string]: (explorerURI: string) => IExplorer } = {
@@ -61,6 +54,7 @@ class WalletLedger {
     btc?: Btc;
     path: string;
     index: number;
+    currency: string;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
     explorer: 'ledgerv3' | 'ledgerv2';
@@ -69,7 +63,9 @@ class WalletLedger {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     storageParams: any[];
   }): Promise<Account> {
-    const network = this.networks[params.network];
+    const crypto = utils.cryptoFactory(params.currency);
+    const { network } = crypto;
+
     let { xpub } = params;
 
     if (!xpub) {
@@ -109,13 +105,12 @@ class WalletLedger {
 
     const storage = this.accountStorages[params.storage](...params.storageParams);
     const explorer = this.getExplorer(params.explorer, params.explorerURI);
-
     return {
       params,
       xpub: new Xpub({
         storage,
         explorer,
-        crypto: new currency.Bitcoin({ network }),
+        crypto,
         xpub,
         derivationMode: params.derivationMode,
       }),
@@ -136,16 +131,14 @@ class WalletLedger {
   }
 
   async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
-    console.log('importFromSerializedAccount');
-    console.log(account);
-    const network = this.networks[account.params.network];
+    const crypto = utils.cryptoFactory(account.params.currency);
     const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
     const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
 
     const xpub = new Xpub({
       storage,
       explorer,
-      crypto: new currency.Bitcoin({ network }),
+      crypto,
       xpub: account.xpub.xpub,
       derivationMode: account.params.derivationMode,
     });
