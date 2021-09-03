@@ -20,6 +20,9 @@
     ".yalc",
     "dist/"
   ],
+  "react-native": {
+    "https": false
+  },
   "devDependencies": {
     "@ledgerhq/hw-transport": "^6.0.2",
     "@types/bs58": "^4.0.1",
