@@ -8,15 +8,10 @@ import BigNumber from 'bignumber.js';
 import { BufferWriter } from 'bitcoinjs-lib/src/bufferutils';
 import * as bitcoin from 'bitcoinjs-lib';
 
-import Btc from '@ledgerhq/hw-app-btc';
-import { log } from '@ledgerhq/logs';
-import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
-
-import { TransactionInfo } from './types';
+import { BtcApp, BtcAppTransaction, TransactionInfo } from './types';
 import { Account, SerializedAccount } from './account';
 import Xpub from './xpub';
 import { IExplorer } from './explorer/types';
-import LedgerExplorer from './explorer/ledgerexplorer';
 import { IStorage } from './storage/types';
 import Mock from './storage/mock';
 import Bitcoin from './crypto/bitcoin';
@@ -24,25 +19,9 @@ import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
 
 class WalletLedger {
-  explorerInstances: { [key: string]: IExplorer } = {};
-
   networks: { [key: string]: bitcoin.Network } = {
     mainnet: coininfo.bitcoin.main.toBitcoinJS(),
     testnet: coininfo.bitcoin.test.toBitcoinJS(),
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  explorers: { [key: string]: (explorerURI: string) => IExplorer } = {
-    ledgerv3: (explorerURI) =>
-      new LedgerExplorer({
-        explorerURI,
-        explorerVersion: 'v3',
-      }),
-    ledgerv2: (explorerURI) =>
-      new LedgerExplorer({
-        explorerURI,
-        explorerVersion: 'v2',
-      }),
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,15 +29,15 @@ class WalletLedger {
     mock: () => new Mock(),
   };
 
-  getExplorer(explorer: 'ledgerv3' | 'ledgerv2', explorerURI: string) {
-    const id = `explorer-${explorer}-uri-${explorerURI}`;
-    this.explorerInstances[id] = this.explorerInstances[id] || this.explorers[explorer](explorerURI);
-    return this.explorerInstances[id];
+  getExplorer: (explorer: string, explorerURI: string) => IExplorer;
+
+  constructor(opts: { getExplorer: (explorer: string, explorerURI: string) => IExplorer }) {
+    this.getExplorer = opts.getExplorer;
   }
 
   async generateAccount(params: {
     xpub?: string;
-    btc?: Btc;
+    btc?: BtcApp;
     path: string;
     index: number;
     network: 'mainnet' | 'testnet';
@@ -233,7 +212,7 @@ class WalletLedger {
 
   // eslint-disable-next-line class-methods-use-this
   async signAccountTx(params: {
-    btc: Btc;
+    btc: BtcApp;
     fromAccount: Account;
     txInfo: TransactionInfo;
     lockTime?: number;
@@ -241,54 +220,32 @@ class WalletLedger {
     segwit?: boolean;
     additionals?: Array<string>;
     expiryHeight?: Buffer;
-    onDeviceSignatureRequested?: () => void;
-    onDeviceSignatureGranted?: () => void;
-    onDeviceStreaming?: (arg0: { progress: number; total: number; index: number }) => void;
   }) {
-    const {
-      btc,
-      fromAccount,
-      txInfo,
-      lockTime,
-      sigHashType,
-      segwit,
-      additionals,
-      expiryHeight,
-      onDeviceSignatureRequested,
-      onDeviceSignatureGranted,
-      onDeviceStreaming,
-    } = params;
-
-    const length = txInfo.outputs.reduce((sum, output) => {
+    const length = params.txInfo.outputs.reduce((sum, output) => {
       return sum + 8 + output.script.length + 1;
     }, 1);
     const buffer = Buffer.allocUnsafe(length);
     const bufferWriter = new BufferWriter(buffer, 0);
-    bufferWriter.writeVarInt(txInfo.outputs.length);
-    txInfo.outputs.forEach((txOut) => {
+    bufferWriter.writeVarInt(params.txInfo.outputs.length);
+    params.txInfo.outputs.forEach((txOut) => {
       // xpub splits output into smaller outputs than SAFE_MAX_INT anyway
       bufferWriter.writeUInt64(txOut.value.toNumber());
       bufferWriter.writeVarSlice(txOut.script);
     });
     const outputScriptHex = buffer.toString('hex');
 
-    const associatedKeysets = txInfo.associatedDerivations.map(
-      ([account, index]) => `${fromAccount.params.path}/${fromAccount.params.index}'/${account}/${index}`
+    const associatedKeysets = params.txInfo.associatedDerivations.map(
+      ([account, index]) => `${params.fromAccount.params.path}/${params.fromAccount.params.index}'/${account}/${index}`
     );
-    type Inputs = [Transaction, number, string | null | undefined, number | null | undefined][];
-    const inputs: Inputs = txInfo.inputs.map((i) => [btc.splitTransaction(i.txHex, true), i.output_index, null, null]);
+    type Inputs = [BtcAppTransaction, number, string | null | undefined, number | null | undefined][];
+    const inputs: Inputs = params.txInfo.inputs.map((i) => [
+      params.btc.splitTransaction(i.txHex, true),
+      i.output_index,
+      null,
+      null,
+    ]);
 
-    log('hw', `createPaymentTransactionNew`, {
-      associatedKeysets,
-      outputScriptHex,
-      lockTime,
-      sigHashType,
-      segwit,
-      additionals: additionals || [],
-      expiryHeight: expiryHeight && expiryHeight.toString('hex'),
-    });
-
-    const tx = await btc.createPaymentTransactionNew({
+    const tx = await params.btc.createPaymentTransactionNew({
       inputs,
       associatedKeysets,
       outputScriptHex,
@@ -298,10 +255,7 @@ class WalletLedger {
       ...(params.segwit && { segwit: params.segwit }),
       // initialTimestamp,
       ...(params.expiryHeight && { expiryHeight: params.expiryHeight }),
-      additionals: additionals || [],
-      onDeviceSignatureRequested,
-      onDeviceSignatureGranted,
-      onDeviceStreaming,
+      additionals: params.additionals || [],
     });
 
     return tx;

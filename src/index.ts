@@ -5,10 +5,12 @@ import { TX, Input, Output } from './storage/types';
 import { CoinSelect } from './pickingstrategies/CoinSelect';
 import { DeepFirst } from './pickingstrategies/DeepFirst';
 import { Merge } from './pickingstrategies/Merge';
+import LedgerExplorer from './explorer/ledgerexplorer';
 import { isValidAddress } from './utils';
 
 export {
   WalletLedger,
+  LedgerExplorer,
   Account,
   SerializedAccount,
   Input,
