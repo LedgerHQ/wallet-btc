@@ -16,7 +16,13 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
-  "files": [".yalc", "dist/"],
+  "files": [
+    ".yalc",
+    "dist/"
+  ],
+  "react-native": {
+    "https": false
+  },
   "devDependencies": {
     "@ledgerhq/hw-transport": "^6.0.2",
     "@types/bs58": "^4.0.1",
@@ -47,10 +53,10 @@
     "typescript-eslint-parser": "^22.0.0"
   },
   "dependencies": {
-    "@ledgerhq/hw-app-btc": "^6.0.2",
+    "@ledgerhq/errors": "6.2.0",
+    "@ledgerhq/hw-app-btc": "6.3.0",
     "@ledgerhq/json-bignumber": "^1.0.2",
     "@ledgerhq/logs": "6.2.0",
-    "@ledgerhq/errors": "6.2.0",
     "@types/bchaddrjs": "^0.4.0",
     "@types/bitcore-lib-cash": "^8.23.3",
     "@types/bs58check": "^2.1.0",
@@ -68,6 +74,7 @@
     "bs58check": "^2.1.2",
     "buffer": "^6.0.3",
     "coininfo": "^5.1.0",
+    "generic-pool": "^3.8.2",
     "lodash": "^4.17.21"
   }
 }

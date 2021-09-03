@@ -312,11 +312,14 @@ class Xpub extends EventEmitter {
         isChange: true,
       });
     }
+
+    const outputsValue: BigNumber = outputs.reduce((cur, o) => cur.plus(o.value), new BigNumber(0));
+
     return {
       inputs,
       associatedDerivations,
       outputs,
-      fee: total.minus(params.amount).toNumber(),
+      fee: total.minus(outputsValue).toNumber(),
     };
   }
 

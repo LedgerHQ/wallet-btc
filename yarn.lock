@@ -547,7 +547,17 @@
     rxjs "6"
     semver "^7.3.5"
 
-"@ledgerhq/errors@6.2.0":
+"@ledgerhq/devices@^6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-6.3.0.tgz#7ee59614198882311d1805912e368451527d05b2"
+  integrity sha512-DmVxqMAf3FhkpKjkbBCFVJ5DmesfplujeCLzFwO/zF5VGuwY7xxPqeSxlpusXJkqhEq+DbFzIDRWJYDf7rtXqg==
+  dependencies:
+    "@ledgerhq/errors" "^6.2.0"
+    "@ledgerhq/logs" "^6.2.0"
+    rxjs "6"
+    semver "^7.3.5"
+
+"@ledgerhq/errors@6.2.0", "@ledgerhq/errors@^6.2.0":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-6.2.0.tgz#7dc2b3bf6bdedccdaa1b97dccacfa912c4fc22f8"
   integrity sha512-eO03x8HJmG60WtlrMuahigW/rwywFdcGzCnihta/MjkM8BD9A660cKVkyIuheCcpaB7UV/r+QsRl9abHbjjaag==
@@ -557,13 +567,13 @@
   resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-6.0.2.tgz#7c88d16620db08c96de6a2636440db1c0e541da1"
   integrity sha512-m42ZMzR/EKpOrZfPR3DzusE98DoF3d03cbBkQG6ddm6diwVXFSa7MabaKzgD+41EYQ+hrCGOEZK1K0kosX1itg==
 
-"@ledgerhq/hw-app-btc@^6.0.2":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-app-btc/-/hw-app-btc-6.0.2.tgz#0cf125d3d8e60e7e7225e8e7c0e3491d60effeed"
-  integrity sha512-CODHZ0hy0VuKo2xn8ADpPyKIG4ge1kQz+Q+XXQgfJEE/ZOYpT0R9nOfR974Ocif44Q9u/k0QAbuD9Q9w2STMUg==
+"@ledgerhq/hw-app-btc@6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-app-btc/-/hw-app-btc-6.3.0.tgz#21694b8e6f6e182b3d7fbdba836297b502623211"
+  integrity sha512-rwEG9rt7PrrxO4KAtCdYNAMfVs2V1DtB/n+RbABym74WK+jMSIM3vR6e59WGGt0cKUajHdptT4VoWGKzs9uLnQ==
   dependencies:
-    "@ledgerhq/hw-transport" "^6.0.2"
-    "@ledgerhq/logs" "^6.0.2"
+    "@ledgerhq/hw-transport" "^6.3.0"
+    "@ledgerhq/logs" "^6.2.0"
     bip32-path "^0.4.2"
     invariant "^2.2.4"
     ripemd160 "2"
@@ -579,6 +589,15 @@
     "@ledgerhq/errors" "^6.0.2"
     events "^3.3.0"
 
+"@ledgerhq/hw-transport@^6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.3.0.tgz#4fc966b1a68c991c0a6b5384841f99c4f8304ce9"
+  integrity sha512-kdnVrgmxrFtKaRdkoaQBEa02RXgLzEBiooYbxA65BGSJig3PGWDS9LrqNpzLTZM1RQlivd9NLBmfwU2ze4chWA==
+  dependencies:
+    "@ledgerhq/devices" "^6.3.0"
+    "@ledgerhq/errors" "^6.2.0"
+    events "^3.3.0"
+
 "@ledgerhq/json-bignumber@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@ledgerhq/json-bignumber/-/json-bignumber-1.0.2.tgz#c08f7fa00316b0065b0ea153d6153808a302e0b1"
@@ -586,7 +605,7 @@
   dependencies:
     bignumber.js "^9.0.1"
 
-"@ledgerhq/logs@6.2.0":
+"@ledgerhq/logs@6.2.0", "@ledgerhq/logs@^6.2.0":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.2.0.tgz#9fb2d6f1811316697f7b3cc14607f6c608912419"
   integrity sha512-SLyFyD7ElMhgKWPYedFGCT/ilcbGPgL5hXXYHxOM79Fs5fWi0zaUpt5oGqGMsOAAFaMa9/rbun0pokzPhEFz8A==
@@ -2469,6 +2488,11 @@ functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
+
+generic-pool@^3.8.2:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/generic-pool/-/generic-pool-3.8.2.tgz#aab4f280adb522fdfbdc5e5b64d718d3683f04e9"
+  integrity sha512-nGToKy6p3PAbYQ7p1UlWl6vSPwfwU6TMSWK7TTu+WUY4ZjyZQGniGGt2oNVvyNSpyZYSB43zMXVLcBm08MTMkg==
 
 gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
