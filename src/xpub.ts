@@ -226,7 +226,7 @@ class Xpub extends EventEmitter {
     destAddress: string;
     amount: BigNumber;
     feePerByte: number;
-    changeAddress: string;
+    changeAddress: Address;
     utxoPickingStrategy: PickingStrategy;
     sequence?: number;
   }): Promise<TransactionInfo> {
@@ -305,10 +305,10 @@ class Xpub extends EventEmitter {
     const dustAmount = utils.computeDustAmount(this.crypto, txSize);
     // Abandon the change output if change output amount is less than dust amount
     if (needChangeoutput && total.minus(params.amount).minus(fee) > dustAmount) {
-      outputs.push({
-        script: this.crypto.toOutputScript(params.changeAddress),
+      outputs.unshift({
+        script: this.crypto.toOutputScript(params.changeAddress.address),
         value: total.minus(params.amount).minus(fee),
-        address: params.changeAddress,
+        address: params.changeAddress.address,
         isChange: true,
       });
     }
@@ -320,6 +320,7 @@ class Xpub extends EventEmitter {
       associatedDerivations,
       outputs,
       fee: total.minus(outputsValue).toNumber(),
+      changeAddress: params.changeAddress,
     };
   }
 

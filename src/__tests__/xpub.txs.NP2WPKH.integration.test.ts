@@ -80,7 +80,7 @@ describe.skip('testing xpub segwit transactions', () => {
   let expectedFee1: number;
   it('should send a 1 btc tx to xpubs[1].xpub', async () => {
     const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
-    const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
+    const changeAddress = await xpubs[0].xpub.getNewAddress(1, 0);
 
     const psbt = new bitcoin.Psbt({ network });
 
@@ -90,7 +90,7 @@ describe.skip('testing xpub segwit transactions', () => {
       destAddress: address,
       amount: new BigNumber(100000000),
       feePerByte: 100,
-      changeAddress: change,
+      changeAddress,
       utxoPickingStrategy,
     });
 

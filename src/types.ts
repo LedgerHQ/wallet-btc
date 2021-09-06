@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { Input } from './storage/types';
+import { Address, Input } from './storage/types';
 
 export type InputInfo = Input & { txHex: string };
 
@@ -16,4 +16,5 @@ export type TransactionInfo = {
   associatedDerivations: [number, number][];
   outputs: OutputInfo[];
   fee: number;
+  changeAddress: Address;
 };

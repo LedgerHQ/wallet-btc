@@ -12,6 +12,7 @@ import Btc from '@ledgerhq/hw-app-btc';
 import { log } from '@ledgerhq/logs';
 import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
 
+import { CreateTransactionArg } from '@ledgerhq/hw-app-btc/lib/createTransaction';
 import { TransactionInfo } from './types';
 import { Account, SerializedAccount } from './account';
 import Xpub from './xpub';
@@ -224,7 +225,7 @@ class WalletLedger {
       destAddress: params.dest,
       amount: params.amount,
       feePerByte: params.feePerByte,
-      changeAddress: changeAddress.address,
+      changeAddress,
       utxoPickingStrategy: params.utxoPickingStrategy,
       sequence: params.sequence,
     });
@@ -288,11 +289,10 @@ class WalletLedger {
       expiryHeight: expiryHeight && expiryHeight.toString('hex'),
     });
 
-    const tx = await btc.createPaymentTransactionNew({
+    const cptParams: CreateTransactionArg = {
       inputs,
       associatedKeysets,
       outputScriptHex,
-      // changePath: `${fromAccount.params.path}/${fromAccount.params.index}'/${changeAddress.account}/${changeAddress.index}`,
       ...(params.lockTime && { lockTime: params.lockTime }),
       ...(params.sigHashType && { sigHashType: params.sigHashType }),
       ...(params.segwit && { segwit: params.segwit }),
@@ -302,7 +302,13 @@ class WalletLedger {
       onDeviceSignatureRequested,
       onDeviceSignatureGranted,
       onDeviceStreaming,
-    });
+    };
+
+    if (txInfo.outputs[0]?.isChange) {
+      cptParams.changePath = `${fromAccount.params.path}/${fromAccount.params.index}'/${txInfo.changeAddress.account}/${txInfo.changeAddress.index}`;
+    }
+
+    const tx = await btc.createPaymentTransactionNew(cptParams);
 
     return tx;
   }

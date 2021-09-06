@@ -83,7 +83,7 @@ describe('testing xpub legacy transactions', () => {
   it('should send a 1 btc tx to xpubs[1].xpub', async () => {
     const destAddress = await xpubs[1].xpub.getNewAddress(0, 0);
     const { address } = destAddress;
-    const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
+    const changeAddress = await xpubs[0].xpub.getNewAddress(1, 0);
 
     const psbt = new bitcoin.Psbt({ network });
 
@@ -93,7 +93,7 @@ describe('testing xpub legacy transactions', () => {
       destAddress: address,
       amount: new BigNumber(100000000),
       feePerByte: 100,
-      changeAddress: change,
+      changeAddress,
       utxoPickingStrategy,
     });
 
@@ -174,7 +174,7 @@ describe('testing xpub legacy transactions', () => {
   let expectedFee2: number;
   it('should send a 1 btc tx to xpubs[1].xpub and handle output splitting', async () => {
     const { address } = await xpubs[1].xpub.getNewAddress(0, 0);
-    const { address: change } = await xpubs[0].xpub.getNewAddress(1, 0);
+    const changeAddress = await xpubs[0].xpub.getNewAddress(1, 0);
 
     const psbt = new bitcoin.Psbt({ network });
 
@@ -185,7 +185,7 @@ describe('testing xpub legacy transactions', () => {
       destAddress: address,
       amount: new BigNumber(100000000),
       feePerByte: 100,
-      changeAddress: change,
+      changeAddress,
       utxoPickingStrategy,
     });
 

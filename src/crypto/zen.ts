@@ -11,6 +11,7 @@ import bs58check from 'bs58check';
 import { ICrypto, DerivationMode } from './types';
 
 class Zen implements ICrypto {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   network: any;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
