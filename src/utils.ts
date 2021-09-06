@@ -6,7 +6,8 @@ import { padStart } from 'lodash';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
-import { ICrypto } from './crypto/types';
+import { Currency, ICrypto } from './crypto/types';
+
 import * as crypto from './crypto';
 
 export function parseHexString(str: any) {
@@ -144,7 +145,7 @@ export function isValidAddress(address: string) {
   return true;
 }
 
-export function cryptoFactory(currency: string) {
+export function cryptoFactory(currency: Currency) {
   let res: ICrypto;
   switch (currency) {
     case 'bitcoin': {

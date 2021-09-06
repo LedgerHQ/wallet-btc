@@ -10,6 +10,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import Btc from '@ledgerhq/hw-app-btc';
 import { log } from '@ledgerhq/logs';
 import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
+import { Currency } from './crypto/types';
 
 import { TransactionInfo } from './types';
 import { Account, SerializedAccount } from './account';
@@ -54,7 +55,7 @@ class WalletLedger {
     btc?: Btc;
     path: string;
     index: number;
-    currency: string;
+    currency: Currency;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
     explorer: 'ledgerv3' | 'ledgerv2';
