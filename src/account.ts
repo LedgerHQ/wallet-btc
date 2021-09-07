@@ -1,9 +1,11 @@
+import { Currency } from './crypto/types';
 import Xpub from './xpub';
 
 export interface Account {
   params: {
     path: string;
     index: number;
+    currency: Currency;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
     explorer: 'ledgerv3' | 'ledgerv2';
@@ -21,6 +23,7 @@ export interface SerializedAccount {
   params: {
     path: string;
     index: number;
+    currency: Currency;
     network: 'mainnet' | 'testnet';
     derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
     explorer: 'ledgerv3' | 'ledgerv2';

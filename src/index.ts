@@ -1,3 +1,4 @@
+import { Currency } from './crypto/types';
 import WalletLedger from './wallet';
 import { InputInfo, OutputInfo, TransactionInfo } from './types';
 import { Account, SerializedAccount } from './account';
@@ -21,4 +22,5 @@ export {
   DeepFirst,
   Merge,
   isValidAddress,
+  Currency,
 };
