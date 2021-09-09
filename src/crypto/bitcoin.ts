@@ -72,12 +72,8 @@ class Bitcoin implements ICrypto {
   }
 
   // infer address type from its syntax
-  //
-  // TODO: improve the prefix matching: make the expected prefix
-  // correspond to the actual type (currently, a `ltc1` prefix
-  // could match a native Bitcoin address type for instance)
   getDerivationMode(address: string) {
-    if (address.match('^(bc1|tb1|ltc1).*')) {
+    if (address.match('^(bc1|tb1).*')) {
       return this.derivationMode.NATIVE_SEGWIT;
     }
     if (address.match('^(3|2|M).*')) {

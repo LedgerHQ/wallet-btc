@@ -13,6 +13,7 @@ class Litecoin implements ICrypto {
   derivationMode: DerivationMode = {
     LEGACY: DerivationModes.LEGACY,
     SEGWIT: DerivationModes.SEGWIT,
+    NATIVE_SEGWIT: DerivationModes.NATIVE_SEGWIT,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,12 +42,23 @@ class Litecoin implements ICrypto {
     return String(address);
   }
 
+  getNativeSegWitAddress(xpub: string, account: number, index: number): string {
+    const { address } = bjs.payments.p2wpkh({
+      pubkey: bip32.fromBase58(xpub, this.network).derive(account).derive(index).publicKey,
+      network: this.network,
+    });
+
+    return String(address);
+  }
+
   getAddress(derivationMode: DerivationModes, xpub: string, account: number, index: number): string {
     switch (derivationMode) {
       case this.derivationMode.LEGACY:
         return this.getLegacyAddress(xpub, account, index);
       case this.derivationMode.SEGWIT:
         return this.getSegWitAddress(xpub, account, index);
+      case this.derivationMode.NATIVE_SEGWIT:
+        return this.getNativeSegWitAddress(xpub, account, index);
       default:
         throw new Error('Should not be reachable');
     }
@@ -54,6 +66,9 @@ class Litecoin implements ICrypto {
 
   // infer address type from its syntax
   getDerivationMode(address: string) {
+    if (address.match('^(ltc1).*')) {
+      return this.derivationMode.NATIVE_SEGWIT;
+    }
     if (address.match('^(3|2|M).*')) {
       return this.derivationMode.SEGWIT;
     }
