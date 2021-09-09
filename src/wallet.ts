@@ -304,7 +304,8 @@ class WalletLedger {
       onDeviceStreaming,
     };
 
-    if (txInfo.outputs[0]?.isChange) {
+    const lastOutputIndex = txInfo.outputs.length - 1;
+    if (txInfo.outputs[lastOutputIndex]?.isChange) {
       cptParams.changePath = `${fromAccount.params.path}/${fromAccount.params.index}'/${txInfo.changeAddress.account}/${txInfo.changeAddress.index}`;
     }
 

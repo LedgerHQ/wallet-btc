@@ -305,7 +305,7 @@ class Xpub extends EventEmitter {
     const dustAmount = utils.computeDustAmount(this.crypto, txSize);
     // Abandon the change output if change output amount is less than dust amount
     if (needChangeoutput && total.minus(params.amount).minus(fee) > dustAmount) {
-      outputs.unshift({
+      outputs.push({
         script: this.crypto.toOutputScript(params.changeAddress.address),
         value: total.minus(params.amount).minus(fee),
         address: params.changeAddress.address,
