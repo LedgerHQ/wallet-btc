@@ -4,14 +4,15 @@ import bchaddr from 'bchaddrjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
+import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
 
 // a mock explorer class that just use js objects
 class BitcoinCash implements ICrypto {
   network: any;
 
-  DerivationMode: DerivationMode = {
-    LEGACY: 'Legacy',
+  derivationMode: DerivationMode = {
+    LEGACY: DerivationModes.LEGACY,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,7 +48,7 @@ class BitcoinCash implements ICrypto {
   // could match a native Bitcoin address type for instance)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDerivationMode(address: string) {
-    return this.DerivationMode.LEGACY;
+    return this.derivationMode.LEGACY;
   }
 
   toOutputScript(address: string) {

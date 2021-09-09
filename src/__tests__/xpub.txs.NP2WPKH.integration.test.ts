@@ -6,6 +6,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import coininfo from 'coininfo';
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
+import { DerivationModes } from '../types';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
@@ -38,7 +39,7 @@ describe.skip('testing xpub segwit transactions', () => {
       explorer,
       crypto,
       xpub: node.neutered().toBase58(),
-      derivationMode: 'SegWit',
+      derivationMode: DerivationModes.SEGWIT,
     });
 
     return {
@@ -84,7 +85,7 @@ describe.skip('testing xpub segwit transactions', () => {
 
     const psbt = new bitcoin.Psbt({ network });
 
-    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, 'SegWit', []);
+    const utxoPickingStrategy = new Merge(xpubs[0].xpub.crypto, DerivationModes.SEGWIT, []);
 
     const { inputs, associatedDerivations, outputs } = await xpubs[0].xpub.buildTx({
       destAddress: address,
@@ -150,7 +151,7 @@ describe.skip('testing xpub segwit transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'SegWit') * 100;
+    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, DerivationModes.SEGWIT) * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
   }, 180000);

@@ -11,7 +11,7 @@ import Crypto from '../crypto/bitcoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Storage from '../storage/mock';
 import * as utils from '../utils';
-import { InputInfo, OutputInfo } from '../types';
+import { InputInfo, OutputInfo, DerivationModes } from '../types';
 import { Merge } from '../pickingstrategies/Merge';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -39,7 +39,7 @@ describe('testing xpub legacy transactions', () => {
       explorer,
       crypto,
       xpub: node.neutered().toBase58(),
-      derivationMode: 'Legacy',
+      derivationMode: DerivationModes.LEGACY,
     });
 
     return {
@@ -127,7 +127,7 @@ describe('testing xpub legacy transactions', () => {
       console.log('broadcast error', e);
     }
 
-    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
+    expectedFee1 = utils.estimateTxSize(inputs.length, outputs.length, crypto, DerivationModes.LEGACY) * 100;
 
     // time for explorer to sync
     await sleep(30000);
@@ -233,7 +233,7 @@ describe('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
-    expectedFee2 = utils.estimateTxSize(inputs.length, outputs.length, crypto, 'Legacy') * 100;
+    expectedFee2 = utils.estimateTxSize(inputs.length, outputs.length, crypto, DerivationModes.LEGACY) * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(
       5700000000 - 100000000 - expectedFee1 - 100000000 - expectedFee2
     );

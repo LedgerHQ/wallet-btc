@@ -5,16 +5,17 @@ import * as bip32 from 'bip32';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
+import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
 
 class Bitcoin implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   network: any;
 
-  DerivationMode: DerivationMode = {
-    LEGACY: 'Legacy',
-    NATIVE: 'Native SegWit',
-    SEGWIT: 'SegWit',
+  derivationMode: DerivationMode = {
+    LEGACY: DerivationModes.LEGACY,
+    SEGWIT: DerivationModes.SEGWIT,
+    NATIVE_SEGWIT: DerivationModes.NATIVE_SEGWIT,
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,11 +60,11 @@ class Bitcoin implements ICrypto {
   // get address given an address type
   getAddress(derivationMode: string, xpub: string, account: number, index: number): string {
     switch (derivationMode) {
-      case this.DerivationMode.LEGACY:
+      case this.derivationMode.LEGACY:
         return this.getLegacyAddress(xpub, account, index);
-      case this.DerivationMode.SEGWIT:
+      case this.derivationMode.SEGWIT:
         return this.getSegWitAddress(xpub, account, index);
-      case this.DerivationMode.NATIVE:
+      case this.derivationMode.NATIVE_SEGWIT:
         return this.getNativeSegWitAddress(xpub, account, index);
       default:
         throw new Error(`Invalid derivation Mode: ${derivationMode}`);
@@ -77,13 +78,13 @@ class Bitcoin implements ICrypto {
   // could match a native Bitcoin address type for instance)
   getDerivationMode(address: string) {
     if (address.match('^(bc1|tb1|ltc1).*')) {
-      return this.DerivationMode.NATIVE;
+      return this.derivationMode.NATIVE_SEGWIT;
     }
     if (address.match('^(3|2|M).*')) {
-      return this.DerivationMode.SEGWIT;
+      return this.derivationMode.SEGWIT;
     }
     if (address.match('^(1|n|m|L).*')) {
-      return this.DerivationMode.LEGACY;
+      return this.derivationMode.LEGACY;
     }
     throw new Error('INVALID ADDRESS: '.concat(address).concat(' is not a valid address'));
   }
