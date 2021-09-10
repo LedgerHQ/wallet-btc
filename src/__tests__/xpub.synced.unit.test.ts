@@ -4,6 +4,7 @@
 // @ts-ignore
 import coininfo from 'coininfo';
 import { zipObject } from 'lodash';
+import { DerivationModes } from '../types';
 import Storage from '../storage/mock';
 import LedgerExplorer from '../explorer/ledgerexplorer';
 import Crypto from '../crypto/bitcoin';
@@ -28,7 +29,7 @@ describe('synced xpub utilites functions', () => {
       explorer,
       crypto,
       xpub: xpubraw,
-      derivationMode: 'Legacy',
+      derivationMode: DerivationModes.LEGACY,
     });
 
     beforeAll(async () => {

@@ -1,3 +1,4 @@
+import { DerivationModes } from '../types';
 import WalletLedger from '../wallet';
 import * as utils from '../utils';
 import { Account } from '../account';
@@ -13,7 +14,7 @@ describe('testing estimateMaxSpendable', () => {
       index: 0,
       currency: 'bitcoin',
       network: 'mainnet',
-      derivationMode: 'Legacy',
+      derivationMode: DerivationModes.LEGACY,
       explorer: 'ledgerv3',
       explorerURI: 'https://explorers.api.vault.ledger.com/blockchain/v3/btc',
       storage: 'mock',

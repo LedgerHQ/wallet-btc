@@ -1,3 +1,5 @@
+/* eslint-disable import/first */
+require('bitcore-lib');
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { flatten } from 'lodash';
@@ -12,7 +14,7 @@ import { log } from '@ledgerhq/logs';
 import { Transaction } from '@ledgerhq/hw-app-btc/lib/types';
 import { Currency } from './crypto/types';
 
-import { TransactionInfo } from './types';
+import { TransactionInfo, DerivationModes } from './types';
 import { Account, SerializedAccount } from './account';
 import Xpub from './xpub';
 import { IExplorer } from './explorer/types';
@@ -57,7 +59,7 @@ class WalletLedger {
     index: number;
     currency: Currency;
     network: 'mainnet' | 'testnet';
-    derivationMode: 'Legacy' | 'SegWit' | 'Native SegWit';
+    derivationMode: DerivationModes;
     explorer: 'ledgerv3' | 'ledgerv2';
     explorerURI: string;
     storage: 'mock';

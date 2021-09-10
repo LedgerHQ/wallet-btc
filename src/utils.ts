@@ -6,8 +6,8 @@ import { padStart } from 'lodash';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
+import { DerivationModes } from './types';
 import { Currency, ICrypto } from './crypto/types';
-
 import * as crypto from './crypto';
 
 export function parseHexString(str: any) {
@@ -98,11 +98,11 @@ export function estimateTxSize(inputCount: number, outputCount: number, currency
   fixedSize += byteSize(outputCount); // Number of outputs
   fixedSize += 4; // Timelock
 
-  const isSegwit = derivationMode === 'Native SegWit' || derivationMode === 'SegWit';
+  const isSegwit = derivationMode === DerivationModes.NATIVE_SEGWIT || derivationMode === DerivationModes.SEGWIT;
   if (isSegwit) {
     // Native Segwit: 32 PrevTxHash + 4 Index + 1 null byte + 4 sequence
     // P2SH: 32 PrevTxHash + 4 Index + 23 scriptPubKey + 4 sequence
-    const isNativeSegwit = derivationMode === 'Native SegWit';
+    const isNativeSegwit = derivationMode === DerivationModes.NATIVE_SEGWIT;
     const inputSize = isNativeSegwit ? 41 : 63;
     const noWitness = fixedSize + inputSize * inputCount + 34 * outputCount;
     // Include flag and marker size (one byte each)

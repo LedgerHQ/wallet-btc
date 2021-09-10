@@ -1,6 +1,6 @@
 import { Currency } from './crypto/types';
 import WalletLedger from './wallet';
-import { InputInfo, OutputInfo, TransactionInfo } from './types';
+import { DerivationModes, InputInfo, OutputInfo, TransactionInfo } from './types';
 import { Account, SerializedAccount } from './account';
 import { TX, Input, Output } from './storage/types';
 import { CoinSelect } from './pickingstrategies/CoinSelect';
@@ -12,6 +12,7 @@ export {
   WalletLedger,
   Account,
   SerializedAccount,
+  DerivationModes,
   Input,
   Output,
   InputInfo,

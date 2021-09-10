@@ -1,6 +1,12 @@
 import BigNumber from 'bignumber.js';
 import { Input } from './storage/types';
 
+export enum DerivationModes {
+  LEGACY = 'Legacy',
+  NATIVE_SEGWIT = 'Native SegWit',
+  SEGWIT = 'SegWit',
+}
+
 export type InputInfo = Input & { txHex: string };
 
 export type OutputInfo = {
