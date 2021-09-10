@@ -1,3 +1,5 @@
+/* eslint-disable import/first */
+require('bitcore-lib');
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { flatten } from 'lodash';
