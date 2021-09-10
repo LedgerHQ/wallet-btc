@@ -8,6 +8,7 @@ import bitcore from 'bitcore-lib';
 // @ts-ignore
 import zec from 'bitcore-lib-zcash';
 import bs58check from 'bs58check';
+import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
 
 class Zen implements ICrypto {
@@ -39,8 +40,8 @@ class Zen implements ICrypto {
     this.network.usesTimestampedTransaction = false;
   }
 
-  DerivationMode: DerivationMode = {
-    LEGACY: 'Legacy',
+  derivationMode: DerivationMode = {
+    LEGACY: DerivationModes.LEGACY,
   };
 
   // eslint-disable-next-line
@@ -66,7 +67,7 @@ class Zen implements ICrypto {
   }
 
   getDerivationMode(address: string) {
-    return this.DerivationMode.LEGACY;
+    return this.derivationMode.LEGACY;
   }
 
   toOutputScript(address: string) {

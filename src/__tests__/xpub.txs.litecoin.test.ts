@@ -6,6 +6,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import coininfo from 'coininfo';
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
+import { DerivationModes } from '../types';
 import Xpub from '../xpub';
 import Litecoin from '../crypto/litecoin';
 import LedgerExplorer from '../explorer/ledgerexplorer';
@@ -39,7 +40,7 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
       explorer,
       crypto,
       xpub: node.neutered().toBase58(),
-      derivationMode: 'Legacy',
+      derivationMode: DerivationModes.LEGACY,
     });
 
     return {

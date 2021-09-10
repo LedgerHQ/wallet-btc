@@ -2,7 +2,13 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import bs58 from 'bs58';
 import { padStart } from 'lodash';
-import { ICrypto } from './crypto/types';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import coininfo from 'coininfo';
+import { DerivationModes } from './types';
+import { Currency, ICrypto } from './crypto/types';
+import * as crypto from './crypto';
 
 export function parseHexString(str: any) {
   const result = [];
@@ -92,11 +98,11 @@ export function estimateTxSize(inputCount: number, outputCount: number, currency
   fixedSize += byteSize(outputCount); // Number of outputs
   fixedSize += 4; // Timelock
 
-  const isSegwit = derivationMode === 'Native SegWit' || derivationMode === 'SegWit';
+  const isSegwit = derivationMode === DerivationModes.NATIVE_SEGWIT || derivationMode === DerivationModes.SEGWIT;
   if (isSegwit) {
     // Native Segwit: 32 PrevTxHash + 4 Index + 1 null byte + 4 sequence
     // P2SH: 32 PrevTxHash + 4 Index + 23 scriptPubKey + 4 sequence
-    const isNativeSegwit = derivationMode === 'Native SegWit';
+    const isNativeSegwit = derivationMode === DerivationModes.NATIVE_SEGWIT;
     const inputSize = isNativeSegwit ? 41 : 63;
     const noWitness = fixedSize + inputSize * inputCount + 34 * outputCount;
     // Include flag and marker size (one byte each)
@@ -137,4 +143,104 @@ export function isValidAddress(address: string) {
     }
   }
   return true;
+}
+
+export function cryptoFactory(currency: Currency) {
+  let res: ICrypto;
+  switch (currency) {
+    case 'bitcoin': {
+      const network = coininfo.bitcoin.main.toBitcoinJS();
+      res = new crypto.Bitcoin({ network });
+      break;
+    }
+    case 'bitcoin_cash': {
+      const network = coininfo.bitcoincash.main.toBitcoinJS();
+      res = new crypto.BitcoinCash({ network });
+      break;
+    }
+    case 'litecoin': {
+      const network = coininfo.litecoin.main.toBitcoinJS();
+      res = new crypto.Litecoin({ network });
+      break;
+    }
+    case 'dash': {
+      const network = coininfo.dash.main.toBitcoinJS();
+      res = new crypto.Dash({ network });
+      break;
+    }
+    case 'qtum': {
+      const network = coininfo.qtum.main.toBitcoinJS();
+      res = new crypto.Qtum({ network });
+      break;
+    }
+    case 'zcash': {
+      const network = coininfo.zcash.main.toBitcoinJS();
+      res = new crypto.Zec({ network });
+      break;
+    }
+    case 'bitcoin_gold': {
+      const network = coininfo['bitcoin gold'].main.toBitcoinJS();
+      res = new crypto.BitcoinGold({ network });
+      break;
+    }
+    case 'dogecoin': {
+      const network = coininfo.dogecoin.main.toBitcoinJS();
+      res = new crypto.Doge({ network });
+      break;
+    }
+    case 'digibyte': {
+      const network = coininfo.digibyte.main.toBitcoinJS();
+      res = new crypto.Digibyte({ network });
+      break;
+    }
+    case 'komodo': {
+      const network = coininfo.bitcoin.main.toBitcoinJS();
+      res = new crypto.Komodo({ network });
+      break;
+    }
+    case 'pivx': {
+      const network = coininfo.bitcoin.main.toBitcoinJS();
+      res = new crypto.Pivx({ network });
+      break;
+    }
+    case 'zencash': {
+      const network = coininfo.zcash.main.toBitcoinJS();
+      res = new crypto.Zen({ network });
+      break;
+    }
+    case 'vertcoin': {
+      const network = coininfo.vertcoin.main.toBitcoinJS();
+      res = new crypto.Vertcoin({ network });
+      break;
+    }
+    case 'peercoin': {
+      const network = coininfo.peercoin.main.toBitcoinJS();
+      res = new crypto.Peercoin({ network });
+      break;
+    }
+    case 'viacoin': {
+      const network = coininfo.viacoin.main.toBitcoinJS();
+      res = new crypto.ViaCoin({ network });
+      break;
+    }
+    case 'stakenet': {
+      const network = coininfo.bitcoin.main.toBitcoinJS();
+      res = new crypto.Stakenet({ network });
+      break;
+    }
+    case 'stealthcoin': {
+      const network = coininfo.bitcoin.main.toBitcoinJS();
+      res = new crypto.Stealth({ network });
+      break;
+    }
+    case 'bitcoin_testnet': {
+      const network = coininfo.bitcoin.test.toBitcoinJS();
+      res = new crypto.Bitcoin({ network });
+      break;
+    }
+    default: {
+      throw new Error(`Currency ${currency} doesn't exist!`);
+    }
+  }
+  return res;
 }

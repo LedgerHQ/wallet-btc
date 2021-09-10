@@ -5,6 +5,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 // @ts-ignore
 import coininfo from 'coininfo';
 import axios from 'axios';
+import { DerivationModes } from '../types';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import Explorer from '../explorer/ledgerexplorer';
@@ -35,7 +36,7 @@ describe('testing xpub reorg management', () => {
       explorer,
       crypto,
       xpub: node.neutered().toBase58(),
-      derivationMode: 'Legacy',
+      derivationMode: DerivationModes.LEGACY,
     });
 
     return {

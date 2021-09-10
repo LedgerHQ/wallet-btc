@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { DerivationModes } from '../types';
 import WalletLedger from '../wallet';
 import { Account } from '../account';
 import { Merge } from '../pickingstrategies/Merge';
@@ -12,8 +13,9 @@ describe('testing wallet', () => {
       btc: new MockBtc(),
       path: "44'/0'",
       index: 0,
+      currency: 'bitcoin',
       network: 'mainnet',
-      derivationMode: 'Legacy',
+      derivationMode: DerivationModes.LEGACY,
       explorer: 'ledgerv3',
       explorerURI: 'https://explorers.api.vault.ledger.com/blockchain/v3/btc',
       storage: 'mock',

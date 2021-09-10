@@ -6,6 +6,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 // @ts-ignore
 import coininfo from 'coininfo';
 import BigNumber from 'bignumber.js';
+import { DerivationModes } from '../types';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
 import Storage from '../storage/mock';
@@ -30,7 +31,7 @@ describe('testing xpub legacy transactions', () => {
     explorer: null,
     crypto,
     xpub: node.neutered().toBase58(),
-    derivationMode: 'Legacy',
+    derivationMode: DerivationModes.LEGACY,
   });
   const dataset = {
     storage,
