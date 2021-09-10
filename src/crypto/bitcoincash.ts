@@ -6,6 +6,7 @@ import bchaddr from 'bchaddrjs';
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
 import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
+import { fallbackValidateAddress } from './base';
 
 // a mock explorer class that just use js objects
 class BitcoinCash implements ICrypto {
@@ -54,6 +55,11 @@ class BitcoinCash implements ICrypto {
 
   toOutputScript(address: string) {
     return toOutputScript(address, this.network);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  validateAddress(address: string): boolean {
+    return fallbackValidateAddress(address);
   }
 }
 

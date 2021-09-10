@@ -1,13 +1,49 @@
 // from https://github.com/LedgerHQ/xpub-scan/blob/master/src/actions/deriveAddresses.ts
 
 import * as bjs from 'bitcoinjs-lib';
-import * as bip32 from 'bip32';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import { toOutputScript } from 'bitcoinjs-lib/src/address';
-import { DerivationModes } from '../types';
-import { ICrypto, DerivationMode } from './types';
-import { fromBech32, isValidAddress } from '../utils';
+import { bech32, bech32m } from 'bech32';
+import Base from './base';
+
+/**
+ * Temporarily copied from bitcoinjs-lib master branch (as of 2021-09-02,
+ * commit 7b753caad6a5bf13d40ffb6ae28c2b00f7f5f585) so that we can make use of the
+ * updated bech32 lib version 2.0.0 that supports bech32m. bitcoinjs-lib version 5.2.0
+ * as currently used by wallet-btc uses an older version of bech32 that lacks bech32m support.
+ *
+ * When a new version of bitcoinjs-lib that supports bech32m is released this function can
+ * be removed and calls should be directed to bitcoinjs-lib instead. Our direct dependency
+ * on bech32 lib should also be removed.
+ *
+ * TODO: Replace with bitcoinjs-lib call
+ */
+/* eslint-disable */
+function fromBech32(address: string): { version: number, prefix: string, data: Buffer} {
+  let result;
+  let version;
+  try {
+    result = bech32.decode(address);
+  } catch (e) {}
+
+  if (result) {
+    version = result.words[0];
+    if (version !== 0) throw new TypeError(address + ' uses wrong encoding');
+  } else {
+    result = bech32m.decode(address);
+    version = result.words[0];
+    if (version === 0) throw new TypeError(address + ' uses wrong encoding');
+  }
+
+  const data = bech32.fromWords(result.words.slice(1));
+
+  return {
+    version,
+    prefix: result.prefix,
+    data: Buffer.from(data),
+  };
+}
+/* eslint-enable */
 
 // This function expects a valid base58check address or a valid
 // bech32/bech32m address.
@@ -29,87 +65,11 @@ function toOutputScriptTemporary(validAddress: string, network: bjs.Network): Bu
   ]);
 }
 
-class Bitcoin implements ICrypto {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  network: any;
-
-  derivationMode: DerivationMode = {
-    LEGACY: DerivationModes.LEGACY,
-    SEGWIT: DerivationModes.SEGWIT,
-    NATIVE_SEGWIT: DerivationModes.NATIVE_SEGWIT,
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor({ network }: { network: any }) {
-    this.network = network;
-    this.network.dustThreshold = 3000;
-    this.network.dustPolicy = 'PER_KBYTE';
-    this.network.usesTimestampedTransaction = false;
-  }
-
-  // derive legacy address at account and index positions
-  getLegacyAddress(xpub: string, account: number, index: number): string {
-    const { address } = bjs.payments.p2pkh({
-      pubkey: bip32.fromBase58(xpub, this.network).derive(account).derive(index).publicKey,
-      network: this.network,
-    });
-
-    return String(address);
-  }
-
-  // derive native SegWit at account and index positions
-  getNativeSegWitAddress(xpub: string, account: number, index: number): string {
-    const { address } = bjs.payments.p2wpkh({
-      pubkey: bip32.fromBase58(xpub, this.network).derive(account).derive(index).publicKey,
-      network: this.network,
-    });
-
-    return String(address);
-  }
-
-  // derive SegWit at account and index positions
-  getSegWitAddress(xpub: string, account: number, index: number): string {
-    const { address } = bjs.payments.p2sh({
-      redeem: bjs.payments.p2wpkh({
-        pubkey: bip32.fromBase58(xpub, this.network).derive(account).derive(index).publicKey,
-        network: this.network,
-      }),
-    });
-    return String(address);
-  }
-
-  // get address given an address type
-  getAddress(derivationMode: string, xpub: string, account: number, index: number): string {
-    switch (derivationMode) {
-      case this.derivationMode.LEGACY:
-        return this.getLegacyAddress(xpub, account, index);
-      case this.derivationMode.SEGWIT:
-        return this.getSegWitAddress(xpub, account, index);
-      case this.derivationMode.NATIVE_SEGWIT:
-        return this.getNativeSegWitAddress(xpub, account, index);
-      default:
-        throw new Error(`Invalid derivation Mode: ${derivationMode}`);
-    }
-  }
-
-  // infer address type from its syntax
-  getDerivationMode(address: string) {
-    if (address.match('^(bc1|tb1).*')) {
-      return this.derivationMode.NATIVE_SEGWIT;
-    }
-    if (address.match('^(3|2|M).*')) {
-      return this.derivationMode.SEGWIT;
-    }
-    if (address.match('^(1|n|m|L).*')) {
-      return this.derivationMode.LEGACY;
-    }
-    throw new Error('INVALID ADDRESS: '.concat(address).concat(' is not a valid address'));
-  }
-
+class Bitcoin extends Base {
   toOutputScript(address: string) {
     // Make sure the address is valid on this network
     // otherwise we can't call toOutputScriptTemporary.
-    if (!isValidAddress(address, this.network)) {
+    if (!this.validateAddress(address)) {
       throw new Error('Invalid address');
     }
     // bitcoinjs-lib/src/address doesn't yet have released support for bech32m,
@@ -118,7 +78,50 @@ class Bitcoin implements ICrypto {
     // master branch.
     // One major difference is that our function requires an already
     // valid address, whereas to bitcoinjs-lib version doesn't.
+    // TODO: Replace with bitcoinjs-lib call
     return toOutputScriptTemporary(address, this.network);
+  }
+
+  validateAddress(address: string): boolean {
+    try {
+      const result = bjs.address.fromBase58Check(address);
+      if (this.network.pubKeyHash === result.version || this.network.scriptHash === result.version) {
+        return true;
+      }
+      // Can a valid base58check string (but an invalid address) be a valid bech32 address? If so we should throw
+      // here and try bech32 decoding as well. If not, we should return false immediately.
+      // Also it'd probably make sense to first try bech32, then base58check, because bech32 checksums are
+      // stronger.
+      // throw new TypeError(`${address} uses wrong version ${result.version}. Expected ${network.pubKeyHash} or ${network.scriptHash}.`)
+      return false;
+    } catch {
+      // Not a valid base58check string
+      let result;
+      try {
+        result = fromBech32(address);
+      } catch {
+        // Not a valid Bech32 address either
+        return false;
+      }
+
+      if (this.network.bech32 !== result.prefix) {
+        // Address doesn't use the expected human-readable part ${network.bech32}
+        return false;
+      }
+      if (result.version > 16 || result.version < 0) {
+        // Address has invalid version
+        return false;
+      }
+      if (result.data.length < 2 || result.data.length > 40) {
+        // Address has invalid data length
+        return false;
+      }
+      if (result.version === 0 && result.data.length !== 20 && result.data.length !== 32) {
+        // Version 0 address uses an invalid witness program length
+        return false;
+      }
+    }
+    return true;
   }
 }
 

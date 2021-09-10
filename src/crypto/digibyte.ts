@@ -1,6 +1,6 @@
-import Bitcoin from './bitcoin';
+import Base from './base';
 
-class Digibyte extends Bitcoin {
+class Digibyte extends Base {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
     // missing bip32 info in coininfo network for digibyte, we fill it mannually

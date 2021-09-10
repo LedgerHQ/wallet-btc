@@ -1,9 +1,9 @@
-import { Bitcoin } from '../crypto';
-import { lookupNetwork } from '../utils';
+import { Currency } from '../crypto/types';
+import cryptoFactory from '../crypto/factory';
 
 describe('Unit tests for various bitcoin functions', () => {
-  function testAddresses(addresses: string[][], networkName: string) {
-    const bitcoin: Bitcoin = new Bitcoin({ network: lookupNetwork(networkName) });
+  function testAddresses(addresses: string[][], currency: Currency) {
+    const bitcoin = cryptoFactory(currency);
     addresses.forEach((pair: string[]) => {
       const result = bitcoin.toOutputScript(pair[0]);
       const actual = result.toString('hex');
@@ -26,7 +26,7 @@ describe('Unit tests for various bitcoin functions', () => {
         '512079be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798',
       ],
     ];
-    testAddresses(mainnetAddrs, 'mainnet');
+    testAddresses(mainnetAddrs, 'bitcoin');
     const testnetAddrs = [
       [
         'tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3q0sl5k7',
@@ -41,6 +41,6 @@ describe('Unit tests for various bitcoin functions', () => {
         '5120000000c4a5cad46221b2a187905e5266362b99d5e91c6ce24d165dab93e86433',
       ],
     ];
-    testAddresses(testnetAddrs, 'testnet');
+    testAddresses(testnetAddrs, 'bitcoin_testnet');
   });
 });

@@ -1,11 +1,10 @@
 import { bech32m, bech32, BechLib } from 'bech32';
 import * as utils from '../utils';
-import { lookupNetwork } from '../utils';
+import { Currency } from '../crypto/types';
 
-function checkValidAddresses(addresses: string[], networkName: string, expectedValid: boolean) {
-  const network = lookupNetwork(networkName);
+function checkValidAddresses(addresses: string[], currency: Currency, expectedValid: boolean) {
   addresses.forEach((address: string) => {
-    expect(utils.isValidAddress(address, network)).toEqual(expectedValid);
+    expect(utils.isValidAddress(address, currency)).toEqual(expectedValid);
   });
 }
 
@@ -54,7 +53,7 @@ describe('Unit tests for various utils functions', () => {
       'bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqzk5jj0',
       v1addrEncodedWithBase32m,
     ];
-    checkValidAddresses(validMainnetAddresses, 'mainnet', true);
+    checkValidAddresses(validMainnetAddresses, 'bitcoin', true);
 
     const validTestnetAddresses = [
       // bech32
@@ -63,7 +62,7 @@ describe('Unit tests for various utils functions', () => {
       'tb1qqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesrxh6hy',
       'tb1pqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesf3hn0c',
     ];
-    checkValidAddresses(validTestnetAddresses, 'testnet', true);
+    checkValidAddresses(validTestnetAddresses, 'bitcoin_testnet', true);
 
     const invalidMainnetAddresses = [
       'bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqh2y7hd', // Invalid checksum (Bech32 instead of Bech32m)
@@ -80,7 +79,7 @@ describe('Unit tests for various utils functions', () => {
       v0addrEncodedWithBase32m, // Version 0 address must be encoded with bech32
       v1addrEncodedWithBase32, // Version 1 address must be encoded with bech32m
     ];
-    checkValidAddresses(invalidMainnetAddresses, 'mainnet', false);
+    checkValidAddresses(invalidMainnetAddresses, 'bitcoin', false);
 
     const invalidTestnetAddresses = [
       'tc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vq5zuyut', // Invalid human-readable part
@@ -90,11 +89,11 @@ describe('Unit tests for various utils functions', () => {
       'tb1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vpggkg4j', // Non-zero padding in 8-to-5 conversion
       'bc1pw508d6qejxtdg4y5r3zarvary0c5xw7kw508d6qejxtdg4y5r3zarvary0c5xw7kt5nd6y', // Mainnet addr used on testnet
     ];
-    checkValidAddresses(invalidTestnetAddresses, 'testnet', false);
+    checkValidAddresses(invalidTestnetAddresses, 'bitcoin_testnet', false);
   });
 
-  it('isValidAddress should default to mainnet', () => {
-    expect(utils.isValidAddress('tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3q0sl5k7')).toBeFalsy();
-    expect(utils.isValidAddress('BC1SW50QGDZ25J')).toBeTruthy();
+  it('isValidAddress should default old validation if currency not provided', () => {
+    expect(utils.isValidAddress('tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3q0sl5k7')).toBeTruthy();
+    expect(utils.isValidAddress('tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3q0sl5k8')).toBeFalsy();
   });
 });
