@@ -222,7 +222,7 @@ class WalletLedger {
       destAddress: params.dest,
       amount: params.amount,
       feePerByte: params.feePerByte,
-      changeAddress: changeAddress.address,
+      changeAddress,
       utxoPickingStrategy: params.utxoPickingStrategy,
       sequence: params.sequence,
     });
@@ -286,16 +286,20 @@ class WalletLedger {
       expiryHeight: expiryHeight && expiryHeight.toString('hex'),
     });
 
+    const lastOutputIndex = txInfo.outputs.length - 1;
+
     const tx = await btc.createPaymentTransactionNew({
       inputs,
       associatedKeysets,
       outputScriptHex,
-      // changePath: `${fromAccount.params.path}/${fromAccount.params.index}'/${changeAddress.account}/${changeAddress.index}`,
       ...(params.lockTime && { lockTime: params.lockTime }),
       ...(params.sigHashType && { sigHashType: params.sigHashType }),
       ...(params.segwit && { segwit: params.segwit }),
       // initialTimestamp,
       ...(params.expiryHeight && { expiryHeight: params.expiryHeight }),
+      ...(txInfo.outputs[lastOutputIndex]?.isChange && {
+        changePath: `${fromAccount.params.path}/${fromAccount.params.index}'/${txInfo.changeAddress.account}/${txInfo.changeAddress.index}`,
+      }),
       additionals: additionals || [],
       onDeviceSignatureRequested,
       onDeviceSignatureGranted,

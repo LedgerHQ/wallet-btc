@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { Input } from './storage/types';
+import { Address, Input } from './storage/types';
 
 export enum DerivationModes {
   LEGACY = 'Legacy',
@@ -22,4 +22,5 @@ export type TransactionInfo = {
   associatedDerivations: [number, number][];
   outputs: OutputInfo[];
   fee: number;
+  changeAddress: Address;
 };

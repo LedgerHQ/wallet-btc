@@ -84,6 +84,7 @@ export class CoinSelect extends PickingStrategy {
 
     // Insufficient funds
     if (currentAvailableValue < actualTarget) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       throw new (NotEnoughBalance as any)();
     }
     // Sort utxos by effectiveValue

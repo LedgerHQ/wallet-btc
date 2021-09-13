@@ -39,6 +39,7 @@ export class Merge extends PickingStrategy {
     let i = 0;
     while (total.lt(amount.plus(fee))) {
       if (!unspentUtxos[i]) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         throw new (NotEnoughBalance as any)();
       }
       total = total.plus(unspentUtxos[i].value);
