@@ -82,46 +82,51 @@ class Bitcoin extends Base {
     return toOutputScriptTemporary(address, this.network);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   validateAddress(address: string): boolean {
     try {
-      const result = bjs.address.fromBase58Check(address);
-      if (this.network.pubKeyHash === result.version || this.network.scriptHash === result.version) {
-        return true;
+      // This prefix check is to avoid returning false in cases where a valid base58 address also happens
+      // to be a valid bech32(m) string (but invalid segwit address).
+      if (address.toLowerCase().startsWith(`${this.network.bech32}1`)) {
+        return this.tryBech32(address);
       }
-      // Can a valid base58check string (but an invalid address) be a valid bech32 address? If so we should throw
-      // here and try bech32 decoding as well. If not, we should return false immediately.
-      // Also it'd probably make sense to first try bech32, then base58check, because bech32 checksums are
-      // stronger.
-      // throw new TypeError(`${address} uses wrong version ${result.version}. Expected ${network.pubKeyHash} or ${network.scriptHash}.`)
-      return false;
     } catch {
-      // Not a valid base58check string
-      let result;
-      try {
-        result = fromBech32(address);
-      } catch {
-        // Not a valid Bech32 address either
-        return false;
-      }
+      /* Try base58 instead */
+    }
+    try {
+      return this.tryBase58(address);
+    } catch {
+      return false;
+    }
+  }
 
-      if (this.network.bech32 !== result.prefix) {
-        // Address doesn't use the expected human-readable part ${network.bech32}
-        return false;
-      }
-      if (result.version > 16 || result.version < 0) {
-        // Address has invalid version
-        return false;
-      }
-      if (result.data.length < 2 || result.data.length > 40) {
-        // Address has invalid data length
-        return false;
-      }
-      if (result.version === 0 && result.data.length !== 20 && result.data.length !== 32) {
-        // Version 0 address uses an invalid witness program length
-        return false;
-      }
+  private tryBech32(address: string): boolean {
+    const result = fromBech32(address);
+    if (this.network.bech32 !== result.prefix) {
+      // Address doesn't use the expected human-readable part ${network.bech32}
+      return false;
+    }
+    if (result.version > 16 || result.version < 0) {
+      // Address has invalid version
+      return false;
+    }
+    if (result.data.length < 2 || result.data.length > 40) {
+      // Address has invalid data length
+      return false;
+    }
+    if (result.version === 0 && result.data.length !== 20 && result.data.length !== 32) {
+      // Version 0 address uses an invalid witness program length
+      return false;
     }
     return true;
+  }
+
+  private tryBase58(address: string): boolean {
+    const result = bjs.address.fromBase58Check(address);
+    if (this.network.pubKeyHash === result.version || this.network.scriptHash === result.version) {
+      return true;
+    }
+    return false;
   }
 }
 
