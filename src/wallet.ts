@@ -23,6 +23,7 @@ import { IStorage } from './storage/types';
 import Mock from './storage/mock';
 import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
+import cryptoFactory from './crypto/factory';
 
 class WalletLedger {
   explorerInstances: { [key: string]: IExplorer } = {};
@@ -66,7 +67,7 @@ class WalletLedger {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     storageParams: any[];
   }): Promise<Account> {
-    const crypto = utils.cryptoFactory(params.currency);
+    const crypto = cryptoFactory(params.currency);
     const { network } = crypto;
 
     let { xpub } = params;
@@ -134,7 +135,7 @@ class WalletLedger {
   }
 
   async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
-    const crypto = utils.cryptoFactory(account.params.currency);
+    const crypto = cryptoFactory(account.params.currency);
     const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
     const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
 

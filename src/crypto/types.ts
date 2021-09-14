@@ -14,6 +14,7 @@ export interface ICrypto {
   getDerivationMode(address: string): string;
 
   toOutputScript(address: string): Buffer;
+  validateAddress(address: string): boolean;
 }
 
 export type Currency =

@@ -10,6 +10,7 @@ import zec from 'bitcore-lib-zcash';
 import bs58check from 'bs58check';
 import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
+import { fallbackValidateAddress } from './base';
 
 class Zen implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -72,6 +73,11 @@ class Zen implements ICrypto {
 
   toOutputScript(address: string) {
     return toOutputScript(address, this.network);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  validateAddress(address: string): boolean {
+    return fallbackValidateAddress(address);
   }
 }
 

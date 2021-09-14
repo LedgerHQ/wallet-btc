@@ -1,6 +1,6 @@
-import Bitcoin from './bitcoin';
+import Base from './base';
 
-class Peercoin extends Bitcoin {
+class Peercoin extends Base {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
     super({ network });

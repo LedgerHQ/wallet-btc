@@ -1,6 +1,6 @@
-import Bitcoin from './bitcoin';
+import Base from './base';
 
-class Stakenet extends Bitcoin {
+class Stakenet extends Base {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
     super({ network });
