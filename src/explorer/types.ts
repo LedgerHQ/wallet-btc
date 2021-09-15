@@ -1,8 +1,10 @@
+import { AxiosInstance } from 'axios';
 import { TX, Address, Block } from '../storage/types';
 
 // abstract explorer api used, abstract batching logic, pagination, and retries
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface IExplorer {
+  underlyingClient: AxiosInstance;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   broadcast(tx: string): Promise<any>;
   getTxHex(txId: string): Promise<string>;

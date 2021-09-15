@@ -77,4 +77,21 @@ describe('testing wallet', () => {
     });
     expect(tx).toEqual('637a8cb808fa1cd8b81a97e27b6bab94d87b899f');
   });
+
+  it('should throw during sync if there is an error in explorer', async () => {
+    const client = account.xpub.explorer.underlyingClient;
+    // eslint-disable-next-line no-underscore-dangle
+    const _get = client.get;
+    client.get = async () => {
+      throw new Error('coucou');
+    };
+    let thrown = false;
+    try {
+      await wallet.syncAccount(account);
+    } catch (e) {
+      thrown = true;
+    }
+    client.get = _get;
+    expect(thrown).toEqual(true);
+  });
 });
