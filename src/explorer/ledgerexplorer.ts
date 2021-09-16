@@ -45,6 +45,8 @@ const responseInterceptor = (
 class LedgerExplorer extends EventEmitter implements IExplorer {
   client: Pool<{ client: AxiosInstance }>;
 
+  underlyingClient: AxiosInstance;
+
   disableBatchSize = false;
 
   explorerVersion: 'v2' | 'v3';
@@ -73,6 +75,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     }
 
     const client = axios.create(clientParams);
+    this.underlyingClient = client;
     // 3 retries per request
     axiosRetry(client, { retries: 3 });
     // max 20 requests
@@ -97,7 +100,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   async broadcast(tx: string) {
     const url = '/transactions/send';
     const client = await this.client.acquire();
-    const res = client.client.post(url, { tx });
+    const res = await client.client.post(url, { tx });
     await this.client.release(client);
     return res;
   }
