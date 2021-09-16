@@ -10,7 +10,6 @@ import zec from 'bitcore-lib-zcash';
 import bs58check from 'bs58check';
 import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
-import { fallbackValidateAddress } from './base';
 
 class Zen implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,6 +66,7 @@ class Zen implements ICrypto {
     return this.getLegacyAddress(xpub, account, index);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDerivationMode(address: string) {
     return this.derivationMode.LEGACY;
   }
@@ -77,7 +77,10 @@ class Zen implements ICrypto {
 
   // eslint-disable-next-line class-methods-use-this
   validateAddress(address: string): boolean {
-    return fallbackValidateAddress(address);
+    const res = bs58check.decodeUnsafe(address);
+    if (!res) return false;
+    // refer to https://github.com/LedgerHQ/lib-ledger-core/blob/fc9d762b83fc2b269d072b662065747a64ab2816/core/src/wallet/bitcoin/networks.cpp#L142
+    return res && res.length > 3 && res[0] === 0x20 && (res[1] === 0x89 || res[1] === 0x96);
   }
 }
 

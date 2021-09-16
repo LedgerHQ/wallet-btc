@@ -5,6 +5,7 @@ import * as bip32 from 'bip32';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
+import bs58check from 'bs58check';
 import { DerivationModes } from '../types';
 import { DerivationMode, ICrypto } from './types';
 
@@ -106,7 +107,10 @@ class Base implements ICrypto {
 
   // eslint-disable-next-line class-methods-use-this
   validateAddress(address: string): boolean {
-    return fallbackValidateAddress(address);
+    // bs58 address
+    const res = bs58check.decodeUnsafe(address);
+    if (!res) return false;
+    return res && res.length > 3 && (res[0] === this.network.pubKeyHash || res[0] === this.network.scriptHash);
   }
 }
 
