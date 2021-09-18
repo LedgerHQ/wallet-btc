@@ -24,24 +24,6 @@ const requestInterceptor = (request: AxiosRequestConfig): AxiosRequestConfig => 
   return request;
 };
 
-const responseInterceptor = (
-  response: {
-    config: AxiosRequestConfig;
-  } & AxiosResponse
-) => {
-  const { baseURL, url, method = '' } = response?.config;
-  log(
-    'network-success',
-    `${response.status} ${method} ${baseURL}${url}`,
-    response.data ? { data: response.data } : undefined
-  );
-  if (LOG && LOG === 'http') {
-    // eslint-disable-next-line no-console
-    console.log(`${response.status} ${method} ${baseURL}${url}`, response.data ? { data: response.data } : undefined);
-  }
-  return response;
-};
-
 class LedgerExplorer extends EventEmitter implements IExplorer {
   client: Pool<{ client: AxiosInstance }>;
 
@@ -91,7 +73,38 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     // Logging
     client.interceptors.request.use(requestInterceptor);
-    client.interceptors.response.use(responseInterceptor);
+    client.interceptors.response.use(
+      (
+        response: {
+          config: AxiosRequestConfig;
+        } & AxiosResponse
+      ) => {
+        const { baseURL, url, method = '' } = response?.config;
+        log(
+          'network-success',
+          `${response.status} ${method} ${baseURL}${url}`,
+          response.data ? { data: JSON.stringify(response.data) } : undefined
+        );
+        if (LOG && LOG === 'http') {
+          // eslint-disable-next-line no-console
+          console.log(
+            'network-success',
+            `${response.status} ${method} ${baseURL}${url}`,
+            response.data ? { data: JSON.stringify(response.data) } : undefined
+          );
+        }
+        return response;
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (error: any) => {
+        log('network-error', JSON.stringify(error));
+        if (LOG && LOG === 'http') {
+          // eslint-disable-next-line no-console
+          console.log('network-error', JSON.stringify(error));
+        }
+        return Promise.reject(error);
+      }
+    );
   }
 
   async broadcast(tx: string) {
