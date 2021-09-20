@@ -33,13 +33,27 @@ const responseInterceptor = (
   log(
     'network-success',
     `${response.status} ${method} ${baseURL}${url}`,
-    response.data ? { data: response.data } : undefined
+    response.data ? { data: JSON.stringify(response.data) } : undefined
   );
   if (LOG && LOG === 'http') {
     // eslint-disable-next-line no-console
-    console.log(`${response.status} ${method} ${baseURL}${url}`, response.data ? { data: response.data } : undefined);
+    console.log(
+      'network-success',
+      `${response.status} ${method} ${baseURL}${url}`,
+      response.data ? { data: JSON.stringify(response.data) } : undefined
+    );
   }
   return response;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const responseErrorInterceptor = (error: any) => {
+  log('network-error', JSON.stringify(error));
+  if (LOG && LOG === 'http') {
+    // eslint-disable-next-line no-console
+    console.log('network-error', JSON.stringify(error));
+  }
+  return Promise.reject(error);
 };
 
 class LedgerExplorer extends EventEmitter implements IExplorer {
@@ -94,7 +108,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     // Logging
     client.interceptors.request.use(requestInterceptor);
-    client.interceptors.response.use(responseInterceptor);
+    client.interceptors.response.use(responseInterceptor, responseErrorInterceptor);
   }
 
   async broadcast(tx: string) {
