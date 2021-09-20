@@ -10,7 +10,6 @@ import zec from 'bitcore-lib-zcash';
 import bs58check from 'bs58check';
 import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
-import { fallbackValidateAddress } from './base';
 
 class ZCash implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,6 +48,7 @@ class ZCash implements ICrypto {
     return this.getLegacyAddress(xpub, account, index);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDerivationMode(address: string) {
     return this.derivationMode.LEGACY;
   }
@@ -59,7 +59,8 @@ class ZCash implements ICrypto {
 
   // eslint-disable-next-line class-methods-use-this
   validateAddress(address: string): boolean {
-    return fallbackValidateAddress(address);
+    const { Address } = zec;
+    return Address.isValid(address, 'livenet');
   }
 }
 
