@@ -3,13 +3,13 @@ import * as bip32 from 'bip32';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
-import { bech32m, bech32 } from 'bech32';
-import bs58check from 'bs58check';
+import { bech32 } from 'bech32';
 import { DerivationModes } from '../types';
 import { ICrypto, DerivationMode } from './types';
+import Base from './base';
 
 // Todo copy paste from bitcoin.ts. we can merge them later
-class Litecoin implements ICrypto {
+class Litecoin extends Base implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   network: any;
 
@@ -21,7 +21,7 @@ class Litecoin implements ICrypto {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
-    this.network = network;
+    super({ network });
     this.network.dustThreshold = 10000;
     this.network.dustPolicy = 'FIXED';
     this.network.usesTimestampedTransaction = false;
@@ -89,14 +89,12 @@ class Litecoin implements ICrypto {
   validateAddress(address: string): boolean {
     // bech32 address
     if (address.substring(0, 3) === 'ltc') {
-      if (bech32.decodeUnsafe(address) || bech32m.decodeUnsafe(address)) {
+      if (bech32.decodeUnsafe(address)) {
         return true;
       }
     }
     // bs58 address
-    const res = bs58check.decodeUnsafe(address);
-    if (!res) return false;
-    return res && res.length > 3 && (res[0] === this.network.pubKeyHash || res[0] === this.network.scriptHash);
+    return super.validateAddress(address);
   }
 }
 

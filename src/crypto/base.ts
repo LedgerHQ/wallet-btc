@@ -105,12 +105,11 @@ class Base implements ICrypto {
     return toOutputScript(address, this.network);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   validateAddress(address: string): boolean {
     // bs58 address
     const res = bs58check.decodeUnsafe(address);
     if (!res) return false;
-    return res && res.length > 3 && (res[0] === this.network.pubKeyHash || res[0] === this.network.scriptHash);
+    return res.length > 3 && (res[0] === this.network.pubKeyHash || res[0] === this.network.scriptHash);
   }
 }
 

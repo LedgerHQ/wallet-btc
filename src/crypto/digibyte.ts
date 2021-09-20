@@ -1,4 +1,4 @@
-import { bech32m, bech32 } from 'bech32';
+import { bech32 } from 'bech32';
 import bs58check from 'bs58check';
 import Base from './base';
 
@@ -17,14 +17,14 @@ class Digibyte extends Base {
   validateAddress(address: string): boolean {
     // bech32 address
     if (address.substring(0, 3) === 'dgb') {
-      if (bech32.decodeUnsafe(address) || bech32m.decodeUnsafe(address)) {
+      if (bech32.decodeUnsafe(address)) {
         return true;
       }
     }
     // bs58 address
     const res = bs58check.decodeUnsafe(address);
     if (!res) return false;
-    return res && res.length > 3 && (res[0] === this.network.pubKeyHash || res[0] === this.network.scriptHash);
+    return res.length > 3 && (res[0] === this.network.pubKeyHash || res[0] === this.network.scriptHash);
   }
 }
 

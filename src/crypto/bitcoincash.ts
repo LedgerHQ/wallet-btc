@@ -58,8 +58,7 @@ class BitcoinCash implements ICrypto {
 
   // eslint-disable-next-line class-methods-use-this
   validateAddress(address: string): boolean {
-    const { isValidAddress } = bchaddr;
-    return isValidAddress(address);
+    return bchaddr.isValidAddress(address);
   }
 }
 
