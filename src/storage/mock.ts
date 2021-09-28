@@ -153,7 +153,7 @@ class Mock implements IStorage {
       txs: this.txs,
       primaryIndex: this.primaryIndex,
       unspentUtxos: this.unspentUtxos,
-      spentUtxos: this.spentUtxos,
+      // spentUtxos: this.spentUtxos,
     };
   }
 
@@ -161,12 +161,12 @@ class Mock implements IStorage {
     txs: TX[];
     primaryIndex: { [key: string]: number };
     unspentUtxos: { [key: string]: Output[] };
-    spentUtxos: { [key: string]: Input[] };
+    // spentUtxos: { [key: string]: Input[] };
   }) {
     this.txs = data.txs;
     this.primaryIndex = data.primaryIndex;
     this.unspentUtxos = data.unspentUtxos;
-    this.spentUtxos = data.spentUtxos;
+    // this.spentUtxos = data.spentUtxos;
   }
 }
 
