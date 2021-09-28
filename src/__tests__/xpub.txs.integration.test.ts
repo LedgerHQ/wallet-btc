@@ -81,6 +81,9 @@ describe('testing xpub legacy transactions', () => {
 
   let expectedFee1: number;
   it('should send a 1 btc tx to xpubs[1].xpub', async () => {
+    // ensure export load work when done all the time
+    await xpubs[0].xpub.storage.load(await xpubs[0].xpub.storage.export());
+
     const destAddress = await xpubs[1].xpub.getNewAddress(0, 0);
     const { address } = destAddress;
     const changeAddress = await xpubs[0].xpub.getNewAddress(1, 0);
@@ -141,6 +144,9 @@ describe('testing xpub legacy transactions', () => {
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
 
+    // ensure export load work when done all the time
+    await xpubs[0].xpub.storage.load(await xpubs[0].xpub.storage.export());
+
     // pending is seen here
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
@@ -162,6 +168,9 @@ describe('testing xpub legacy transactions', () => {
 
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
+
+    // ensure export load work when done all the time
+    await xpubs[0].xpub.storage.load(await xpubs[0].xpub.storage.export());
 
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(5700000000 - 100000000 - expectedFee1);
     expect((await xpubs[1].xpub.getXpubBalance()).toNumber()).toEqual(100000000);
@@ -232,6 +241,9 @@ describe('testing xpub legacy transactions', () => {
 
     await xpubs[0].xpub.sync();
     await xpubs[1].xpub.sync();
+
+    // ensure export load work when done all the time
+    await xpubs[0].xpub.storage.load(await xpubs[0].xpub.storage.export());
 
     expectedFee2 = utils.estimateTxSize(inputs.length, outputs.length, crypto, DerivationModes.LEGACY) * 100;
     expect((await xpubs[0].xpub.getXpubBalance()).toNumber()).toEqual(
