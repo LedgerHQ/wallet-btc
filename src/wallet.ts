@@ -134,20 +134,48 @@ class WalletLedger {
     };
   }
 
-  async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
+  // eslint-disable-next-line class-methods-use-this
+  exportToSerializedAccountSync(account: Account): SerializedAccount {
+    const data = account.xpub.storage.exportSync();
+
+    return {
+      ...account,
+      xpub: {
+        xpub: account.xpub.xpub,
+        data,
+      },
+    };
+  }
+
+  instantiateXpubFromSerializedAccount(account: SerializedAccount): Xpub {
     const crypto = cryptoFactory(account.params.currency);
     const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
     const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
 
-    const xpub = new Xpub({
+    return new Xpub({
       storage,
       explorer,
       crypto,
       xpub: account.xpub.xpub,
       derivationMode: account.params.derivationMode,
     });
+  }
+
+  async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
+    const xpub = this.instantiateXpubFromSerializedAccount(account);
 
     await xpub.storage.load(account.xpub.data);
+
+    return {
+      ...account,
+      xpub,
+    };
+  }
+
+  importFromSerializedAccountSync(account: SerializedAccount): Account {
+    const xpub = this.instantiateXpubFromSerializedAccount(account);
+
+    xpub.storage.loadSync(account.xpub.data);
 
     return {
       ...account,
