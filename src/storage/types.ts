@@ -56,6 +56,8 @@ export interface IStorage {
   getUniquesAddresses(addressesFilter: { account?: number; index?: number }): Promise<Address[]>;
   removeTxs(txsFilter: { account: number; index: number }): Promise<void>;
   removePendingTxs(txsFilter: { account: number; index: number }): Promise<void>;
-  export(): Promise<unknown>;
-  load(data: unknown): Promise<void>;
+  export?(): Promise<unknown>;
+  load?(data: unknown): Promise<void>;
+  exportSync?(): unknown;
+  loadSync?(data: unknown): void;
 }

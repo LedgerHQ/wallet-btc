@@ -148,7 +148,7 @@ class Mock implements IStorage {
     await this.appendTxs(txsToReAdd);
   }
 
-  async export() {
+  exportSync() {
     return {
       txs: this.txs,
       primaryIndex: this.primaryIndex,
@@ -156,10 +156,18 @@ class Mock implements IStorage {
     };
   }
 
-  async load(data: { txs: TX[]; primaryIndex: { [key: string]: number }; unspentUtxos: { [key: string]: Output[] } }) {
+  loadSync(data: { txs: TX[]; primaryIndex: { [key: string]: number }; unspentUtxos: { [key: string]: Output[] } }) {
     this.txs = data.txs;
     this.primaryIndex = data.primaryIndex;
     this.unspentUtxos = data.unspentUtxos;
+  }
+
+  async export() {
+    return this.exportSync();
+  }
+
+  async load(data: { txs: TX[]; primaryIndex: { [key: string]: number }; unspentUtxos: { [key: string]: Output[] } }) {
+    return this.loadSync(data);
   }
 }
 
