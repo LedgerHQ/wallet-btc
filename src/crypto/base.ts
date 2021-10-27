@@ -7,7 +7,7 @@ import * as bip32 from 'bip32';
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
 import bs58check from 'bs58check';
 import { DerivationModes } from '../types';
-import { DerivationMode, ICrypto } from './types';
+import { ICrypto } from './types';
 
 export function fallbackValidateAddress(address: string): boolean {
   try {
@@ -28,12 +28,6 @@ class Base implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   network: any;
 
-  derivationMode: DerivationMode = {
-    LEGACY: DerivationModes.LEGACY,
-    SEGWIT: DerivationModes.SEGWIT,
-    NATIVE_SEGWIT: DerivationModes.NATIVE_SEGWIT,
-  };
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
     this.network = network;
@@ -42,10 +36,14 @@ class Base implements ICrypto {
     this.network.usesTimestampedTransaction = false;
   }
 
+  protected getPubkeyAt(xpub: string, account: number, index: number): Buffer {
+    return bip32.fromBase58(xpub, this.network).derive(account).derive(index).publicKey;
+  }
+
   // derive legacy address at account and index positions
   getLegacyAddress(xpub: string, account: number, index: number): string {
     const { address } = bjs.payments.p2pkh({
-      pubkey: bip32.fromBase58(xpub, this.network).derive(account).derive(index).publicKey,
+      pubkey: this.getPubkeyAt(xpub, account, index),
       network: this.network,
     });
 
@@ -55,7 +53,7 @@ class Base implements ICrypto {
   // derive native SegWit at account and index positions
   getNativeSegWitAddress(xpub: string, account: number, index: number): string {
     const { address } = bjs.payments.p2wpkh({
-      pubkey: bip32.fromBase58(xpub, this.network).derive(account).derive(index).publicKey,
+      pubkey: this.getPubkeyAt(xpub, account, index),
       network: this.network,
     });
 
@@ -66,7 +64,7 @@ class Base implements ICrypto {
   getSegWitAddress(xpub: string, account: number, index: number): string {
     const { address } = bjs.payments.p2sh({
       redeem: bjs.payments.p2wpkh({
-        pubkey: bip32.fromBase58(xpub, this.network).derive(account).derive(index).publicKey,
+        pubkey: this.getPubkeyAt(xpub, account, index),
         network: this.network,
       }),
     });
@@ -76,11 +74,11 @@ class Base implements ICrypto {
   // get address given an address type
   getAddress(derivationMode: string, xpub: string, account: number, index: number): string {
     switch (derivationMode) {
-      case this.derivationMode.LEGACY:
+      case DerivationModes.LEGACY:
         return this.getLegacyAddress(xpub, account, index);
-      case this.derivationMode.SEGWIT:
+      case DerivationModes.SEGWIT:
         return this.getSegWitAddress(xpub, account, index);
-      case this.derivationMode.NATIVE_SEGWIT:
+      case DerivationModes.NATIVE_SEGWIT:
         return this.getNativeSegWitAddress(xpub, account, index);
       default:
         throw new Error(`Invalid derivation Mode: ${derivationMode}`);
@@ -88,20 +86,21 @@ class Base implements ICrypto {
   }
 
   // infer address type from its syntax
-  getDerivationMode(address: string) {
+  // eslint-disable-next-line class-methods-use-this
+  getDerivationMode(address: string): DerivationModes {
     if (address.match('^(bc1|tb1).*')) {
-      return this.derivationMode.NATIVE_SEGWIT;
+      return DerivationModes.NATIVE_SEGWIT;
     }
     if (address.match('^(3|2|M).*')) {
-      return this.derivationMode.SEGWIT;
+      return DerivationModes.SEGWIT;
     }
     if (address.match('^(1|n|m|L).*')) {
-      return this.derivationMode.LEGACY;
+      return DerivationModes.LEGACY;
     }
     throw new Error('INVALID ADDRESS: '.concat(address).concat(' is not a valid address'));
   }
 
-  toOutputScript(address: string) {
+  toOutputScript(address: string): Buffer {
     return toOutputScript(address, this.network);
   }
 

@@ -1,16 +1,16 @@
 import BigNumber from 'bignumber.js';
 import { DerivationModes } from '../types';
-import WalletLedger from '../wallet';
+import BitcoinLikeWallet from '../wallet';
 import { Account } from '../account';
 import { Merge } from '../pickingstrategies/Merge';
 import MockBtc from './mocks/Btc';
 
 describe('testing wallet', () => {
-  const wallet = new WalletLedger();
+  const wallet = new BitcoinLikeWallet();
   let account: Account;
   it('should generate an account', async () => {
     account = await wallet.generateAccount({
-      btc: new MockBtc(),
+      xpub: 'xpub6CV2NfQJYxHn7MbSQjQip3JMjTZGUbeoKz5xqkBftSZZPc7ssVPdjKrgh6N8U1zoQDxtSo6jLarYAQahpd35SJoUKokfqf1DZgdJWZhSMqP',
       path: "44'/0'",
       index: 0,
       currency: 'bitcoin',
@@ -50,13 +50,14 @@ describe('testing wallet', () => {
       amount: new BigNumber(100000),
       feePerByte: 5,
       utxoPickingStrategy,
+      sequence: 0,
     });
     const tx = await wallet.signAccountTx({
       btc: new MockBtc(),
       fromAccount: account,
       txInfo,
     });
-    expect(tx).toEqual('a1e3e67bfc06cc1ae259474beebc423b2890a19a');
+    expect(tx).toEqual('66ad13fd62ca677ae4d169ec5fe84be2f846562a');
   });
 
   it('should allow to build a transaction splitting outputs', async () => {
@@ -69,13 +70,14 @@ describe('testing wallet', () => {
       amount: new BigNumber(100000),
       feePerByte: 5,
       utxoPickingStrategy,
+      sequence: 0,
     });
     const tx = await wallet.signAccountTx({
       btc: new MockBtc(),
       fromAccount: account,
       txInfo,
     });
-    expect(tx).toEqual('637a8cb808fa1cd8b81a97e27b6bab94d87b899f');
+    expect(tx).toEqual('23ab414d38fe836e22619d6ee84fdebafa6b5168');
   });
 
   it('should throw during sync if there is an error in explorer', async () => {

@@ -58,4 +58,6 @@ export interface IStorage {
   removePendingTxs(txsFilter: { account: number; index: number }): Promise<void>;
   export(): Promise<unknown>;
   load(data: unknown): Promise<void>;
+  exportSync(): unknown;
+  loadSync(data: unknown): void;
 }

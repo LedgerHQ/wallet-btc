@@ -1,13 +1,11 @@
-/* eslint-disable import/first */
-require('bitcore-lib');
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import coininfo from 'coininfo';
 import { toMatchFile } from 'jest-file-snapshot';
 import { DerivationModes } from '../types';
-import Storage from '../storage/mock';
-import LedgerExplorer from '../explorer/ledgerexplorer';
+import BitcoinLikeStorage from '../storage';
+import BitcoinLikeExplorer from '../explorer';
 import Xpub from '../xpub';
 import * as currency from '../crypto';
 
@@ -15,8 +13,8 @@ const startLogging = (emitters: any) => {
   emitters.forEach((emitter: any) =>
     emitter.emitter.on(emitter.event, (data: any) => {
       if (data.type === emitter.type) {
-        // eslint-disable-next-line no-console
-        console.log(emitter.event, JSON.stringify(data, null, 2));
+        // NOTE: Disabled logging because too verbose
+        // console.log(emitter.event, JSON.stringify(data, null, 2));
       }
     })
   );
@@ -91,15 +89,17 @@ describe('xpub integration sync', () => {
       coin: 'bch',
       explorerVersion: 'v3',
     },
+    /*
     {
-      xpub: 'xpub6CThYZbX4PTeA7KRYZ8YXP3F6HwT2eVKPQap3Avieds3p1eos35UzSsJtTbJ3vQ8d3fjRwk4bCEz4m4H6mkFW49q29ZZ6gS8tvahs4WCZ9X', // 138sec,
+      xpub: "xpub6CThYZbX4PTeA7KRYZ8YXP3F6HwT2eVKPQap3Avieds3p1eos35UzSsJtTbJ3vQ8d3fjRwk4bCEz4m4H6mkFW49q29ZZ6gS8tvahs4WCZ9X", // 138sec,
       derivationMode: DerivationModes.LEGACY,
       addresses: 9741,
       balance: 0,
       network: coininfo.bitcoin.main.toBitcoinJS(),
-      coin: 'btc',
-      explorerVersion: 'v3',
+      coin: "btc",
+      explorerVersion: "v3",
     },
+    */
     {
       xpub: 'Ltub2ZgHGhWdGi2jacCdKEy3qddYxH4bpDtmueiPWkG8267Z9K8yQEExapyNi1y4Qp7f79JN8468uE9V3nizpPU27WEDfXrtqpkp84MyhhCDTNk',
       addresses: 5,
@@ -224,7 +224,7 @@ describe('xpub integration sync', () => {
       if (dataset.explorerVersion !== 'v2' && dataset.explorerVersion !== 'v3') {
         throw new Error('wrong explorer version');
       }
-      const storage = new Storage();
+      const storage = new BitcoinLikeStorage();
       let crypto;
       switch (dataset.coin) {
         case 'btc':
@@ -284,7 +284,7 @@ describe('xpub integration sync', () => {
         default:
           throw new Error('Should not be reachable');
       }
-      const explorer = new LedgerExplorer({
+      const explorer = new BitcoinLikeExplorer({
         explorerURI: `https://explorers.api.vault.ledger.com/blockchain/${dataset.explorerVersion}/${dataset.coin}`,
         explorerVersion: dataset.explorerVersion,
       });

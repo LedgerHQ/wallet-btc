@@ -1,15 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
+import coininfo from 'coininfo';
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import bitcore from 'bitcore-lib';
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import zec from 'bitcore-lib-zcash';
+import zec from 'zcash-bitcore-lib';
 import bs58check from 'bs58check';
 import { DerivationModes } from '../types';
-import { ICrypto, DerivationMode } from './types';
+import { ICrypto } from './types';
 
 class Zen implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,10 +40,6 @@ class Zen implements ICrypto {
     this.network.usesTimestampedTransaction = false;
   }
 
-  derivationMode: DerivationMode = {
-    LEGACY: DerivationModes.LEGACY,
-  };
-
   // eslint-disable-next-line
   baddrToTaddr(baddrStr: string) {
     const baddr = bs58check.decode(baddrStr).slice(1);
@@ -54,12 +50,21 @@ class Zen implements ICrypto {
     return bs58check.encode(Buffer.from(taddr));
   }
 
+  private static toBitcoinAddr(taddr: string) {
+    // refer to https://runkitcdn.com/gojomo/baddr2taddr/1.0.2
+    const baddr = new Uint8Array(21);
+    baddr.set(bs58check.decode(taddr).slice(2), 1);
+    return bs58check.encode(Buffer.from(baddr));
+  }
+
   // eslint-disable-next-line
   getLegacyAddress(xpub: string, account: number, index: number): string {
-    const pubkey = new bitcore.HDPublicKey(xpub);
+    const pubkey = new zec.HDPublicKey(xpub);
     const child = pubkey.derive(account).derive(index);
-    const address = new bitcore.Address(child.publicKey, zec.Networks.livenet);
-    return this.baddrToTaddr(address.toString());
+    const address = new zec.Address(child.publicKey, zec.Networks.livenet);
+    const baddr = new Uint8Array(21);
+    baddr.set(bs58check.decode(address.toString()).slice(2), 1);
+    return this.baddrToTaddr(bs58check.encode(Buffer.from(baddr)));
   }
 
   getAddress(derivationMode: string, xpub: string, account: number, index: number): string {
@@ -67,12 +72,17 @@ class Zen implements ICrypto {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line class-methods-use-this
   getDerivationMode(address: string) {
-    return this.derivationMode.LEGACY;
+    return DerivationModes.LEGACY;
   }
 
   toOutputScript(address: string) {
-    return toOutputScript(address, this.network);
+    if (!this.validateAddress(address)) {
+      throw new Error('Invalid address');
+    }
+    // TODO find a better way to calculate the script from zen address instead of converting to bitcoin address
+    return toOutputScript(Zen.toBitcoinAddr(address), coininfo.bitcoin.main.toBitcoinJS());
   }
 
   // eslint-disable-next-line class-methods-use-this

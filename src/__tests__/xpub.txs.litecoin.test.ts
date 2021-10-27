@@ -9,8 +9,8 @@ import BigNumber from 'bignumber.js';
 import { DerivationModes } from '../types';
 import Xpub from '../xpub';
 import Litecoin from '../crypto/litecoin';
-import LedgerExplorer from '../explorer/ledgerexplorer';
-import Storage from '../storage/mock';
+import BitcoinLikeExplorer from '../explorer';
+import BitcoinLikeStorage from '../storage';
 import { Merge } from '../pickingstrategies/Merge';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -19,18 +19,18 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 In order to launch this litecoin test locally
 TICKER=ltc TAG=latest LOG_LEVEL=debug docker-compose -f ./environments/explorer-praline-btc.yml up -d
 */
-describe.skip('testing xpub legacy litecoin transactions', () => {
-  const explorer = new LedgerExplorer({
+describe('testing xpub legacy litecoin transactions', () => {
+  const explorer = new BitcoinLikeExplorer({
     explorerURI: 'http://localhost:20000/blockchain/v3',
     explorerVersion: 'v3',
     disableBatchSize: true, // https://ledgerhq.atlassian.net/browse/BACK-2191
   });
 
-  const network = coininfo.litecoin.regtest.toBitcoinJS();
+  const network = coininfo.litecoin.test.toBitcoinJS();
   const crypto = new Litecoin({ network });
 
   const xpubs = [1, 2, 3].map((i) => {
-    const storage = new Storage();
+    const storage = new BitcoinLikeStorage();
     const seed = bip39.mnemonicToSeedSync(`test${i} test${i} test${i}`);
     const node = bip32.fromSeed(seed, network);
     const signer = (account: number, index: number) =>
@@ -93,6 +93,7 @@ describe.skip('testing xpub legacy litecoin transactions', () => {
       feePerByte: 100,
       changeAddress,
       utxoPickingStrategy,
+      sequence: 0,
     });
 
     inputs.forEach((input) => {

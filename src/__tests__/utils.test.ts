@@ -99,11 +99,19 @@ describe('Unit tests for various utils functions', () => {
 
   it('Test altcoins', () => {
     validateAddrs(
-      ['1BpEi6DfDAUFd7GtittLSdBeYJvcoaVggu', 'bitcoincash:qqmyc72pkyx8c0ppgeuummq6clzverhxnsk3qh6jcf'],
+      [
+        '1BpEi6DfDAUFd7GtittLSdBeYJvcoaVggu',
+        'qqmyc72pkyx8c0ppgeuummq6clzverhxnsk3qh6jcf',
+        'bitcoincash:qqmyc72pkyx8c0ppgeuummq6clzverhxnsk3qh6jcf',
+      ],
       'bitcoin_cash',
       true
     );
-    validateAddrs(['bitcoincash:qqmyc72pkyx8c0ppgeuummq6clzverhxnsk3qh6jc1'], 'bitcoin_cash', false);
+    validateAddrs(
+      ['bitcoincash:qqmyc72pkyx8c0ppgeuummq6clzverhxnsk3qh6jc1', '1BpEi6DfDAUFd7GtittLSdBeYgvcoaVggu'],
+      'bitcoin_cash',
+      false
+    );
 
     validateAddrs(['bitcoincash:qzl0x0982hy9xrh99wdnejx4eecdn02jv58as5p595'], 'bitcoin_cash', true);
     validateAddrs(['ltc1q3e4eh3lldvx97zg6d74x4ns6v5a4j4hwwqycwv'], 'litecoin', true);

@@ -1,5 +1,3 @@
-/* eslint-disable import/first */
-require('bitcore-lib');
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { flatten } from 'lodash';
@@ -7,7 +5,6 @@ import BigNumber from 'bignumber.js';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { BufferWriter } from 'bitcoinjs-lib/src/bufferutils';
-import * as bitcoin from 'bitcoinjs-lib';
 
 import Btc from '@ledgerhq/hw-app-btc';
 import { log } from '@ledgerhq/logs';
@@ -18,25 +15,25 @@ import { TransactionInfo, DerivationModes } from './types';
 import { Account, SerializedAccount } from './account';
 import Xpub from './xpub';
 import { IExplorer } from './explorer/types';
-import LedgerExplorer from './explorer/ledgerexplorer';
+import BitcoinLikeExplorer from './explorer';
 import { IStorage } from './storage/types';
-import Mock from './storage/mock';
+import BitcoinLikeStorage from './storage';
 import { PickingStrategy } from './pickingstrategies/types';
 import * as utils from './utils';
 import cryptoFactory from './crypto/factory';
 
-class WalletLedger {
+class BitcoinLikeWallet {
   explorerInstances: { [key: string]: IExplorer } = {};
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   explorers: { [key: string]: (explorerURI: string) => IExplorer } = {
     ledgerv3: (explorerURI) =>
-      new LedgerExplorer({
+      new BitcoinLikeExplorer({
         explorerURI,
         explorerVersion: 'v3',
       }),
     ledgerv2: (explorerURI) =>
-      new LedgerExplorer({
+      new BitcoinLikeExplorer({
         explorerURI,
         explorerVersion: 'v2',
       }),
@@ -44,7 +41,7 @@ class WalletLedger {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   accountStorages: { [key: string]: (...args: any[]) => IStorage } = {
-    mock: () => new Mock(),
+    mock: () => new BitcoinLikeStorage(),
   };
 
   getExplorer(explorer: 'ledgerv3' | 'ledgerv2', explorerURI: string) {
@@ -54,8 +51,7 @@ class WalletLedger {
   }
 
   async generateAccount(params: {
-    xpub?: string;
-    btc?: Btc;
+    xpub: string;
     path: string;
     index: number;
     currency: Currency;
@@ -68,44 +64,6 @@ class WalletLedger {
     storageParams: any[];
   }): Promise<Account> {
     const crypto = cryptoFactory(params.currency);
-    const { network } = crypto;
-
-    let { xpub } = params;
-
-    if (!xpub) {
-      // Xpub not provided, generate it using the hwapp
-
-      if (!params.btc) {
-        // hwapp not provided
-        throw new Error('generateAccount need either a hwapp or xpub');
-      }
-
-      const parentDerivation = await params.btc.getWalletPublicKey(`${params.path}`);
-      const accountDerivation = await params.btc.getWalletPublicKey(`${params.path}/${params.index}'`);
-
-      // parent
-      const publicKeyParentCompressed = utils.compressPublicKey(parentDerivation.publicKey);
-      const publicKeyParentCompressedHex = utils.parseHexString(publicKeyParentCompressed);
-      let result = bitcoin.crypto.sha256(Buffer.from(publicKeyParentCompressedHex));
-      result = bitcoin.crypto.ripemd160(result);
-      // eslint-disable-next-line no-bitwise
-      const fingerprint = ((result[0] << 24) | (result[1] << 16) | (result[2] << 8) | result[3]) >>> 0;
-
-      // account
-      const publicKeyAccountCompressed = utils.compressPublicKey(accountDerivation.publicKey);
-      // eslint-disable-next-line no-bitwise
-      const childnum = (0x80000000 | params.index) >>> 0;
-
-      const xpubRaw = utils.createXPUB(
-        3,
-        fingerprint,
-        childnum,
-        accountDerivation.chainCode,
-        publicKeyAccountCompressed,
-        network.bip32.public
-      );
-      xpub = utils.encodeBase58Check(xpubRaw);
-    }
 
     const storage = this.accountStorages[params.storage](...params.storageParams);
     const explorer = this.getExplorer(params.explorer, params.explorerURI);
@@ -115,43 +73,9 @@ class WalletLedger {
         storage,
         explorer,
         crypto,
-        xpub,
+        xpub: params.xpub,
         derivationMode: params.derivationMode,
       }),
-    };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  async exportToSerializedAccount(account: Account): Promise<SerializedAccount> {
-    const data = await account.xpub.storage.export();
-
-    return {
-      ...account,
-      xpub: {
-        xpub: account.xpub.xpub,
-        data,
-      },
-    };
-  }
-
-  async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
-    const crypto = cryptoFactory(account.params.currency);
-    const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
-    const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
-
-    const xpub = new Xpub({
-      storage,
-      explorer,
-      crypto,
-      xpub: account.xpub.xpub,
-      derivationMode: account.params.derivationMode,
-    });
-
-    await xpub.storage.load(account.xpub.data);
-
-    return {
-      ...account,
-      xpub,
     };
   }
 
@@ -185,14 +109,33 @@ class WalletLedger {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async estimateAccountMaxSpendable(account: Account, feePerByte: number) {
+  async estimateAccountMaxSpendable(
+    account: Account,
+    feePerByte: number,
+    excludeUTXOs: Array<{ hash: string; outputIndex: number }>,
+    pickUnconfirmedRBF: boolean
+  ) {
     const addresses = await account.xpub.getXpubAddresses();
     const utxos = flatten(
       await Promise.all(addresses.map((address) => account.xpub.storage.getAddressUnspentUtxos(address)))
     );
-    const balance = await account.xpub.getXpubBalance();
+    let balance = new BigNumber(0);
+    log('btcwallet', 'estimateAccountMaxSpendable utxos', utxos);
+    utxos.forEach((utxo) => {
+      if (
+        !excludeUTXOs.find(
+          (excludeUtxo) => excludeUtxo.hash === utxo.output_hash && excludeUtxo.outputIndex === utxo.output_index
+        )
+      ) {
+        if ((pickUnconfirmedRBF && utxo.rbf) || utxo.block_height !== null) {
+          balance = balance.plus(utxo.value);
+        }
+      }
+    });
     // fees if we use all utxo
     const fees = feePerByte * utils.estimateTxSize(utxos.length, 1, account.xpub.crypto, account.xpub.derivationMode);
+    log('btcwallet', 'estimateAccountMaxSpendable balance', balance);
+    log('btcwallet', 'estimateAccountMaxSpendable fees', fees);
     const maxSpendable = balance.minus(fees);
     return maxSpendable.lt(0) ? new BigNumber(0) : maxSpendable;
   }
@@ -216,7 +159,7 @@ class WalletLedger {
     amount: BigNumber;
     feePerByte: number;
     utxoPickingStrategy: PickingStrategy;
-    sequence?: number;
+    sequence: number;
   }): Promise<TransactionInfo> {
     const changeAddress = await params.fromAccount.xpub.getNewAddress(1, 1);
     const txInfo = await params.fromAccount.xpub.buildTx({
@@ -248,11 +191,7 @@ class WalletLedger {
       btc,
       fromAccount,
       txInfo,
-      lockTime,
-      sigHashType,
-      segwit,
       additionals,
-      expiryHeight,
       onDeviceSignatureRequested,
       onDeviceSignatureGranted,
       onDeviceStreaming,
@@ -275,19 +214,29 @@ class WalletLedger {
       ([account, index]) => `${fromAccount.params.path}/${fromAccount.params.index}'/${account}/${index}`
     );
     type Inputs = [Transaction, number, string | null | undefined, number | null | undefined][];
-    const inputs: Inputs = txInfo.inputs.map((i) => [btc.splitTransaction(i.txHex, true), i.output_index, null, null]);
-
-    log('hw', `createPaymentTransactionNew`, {
-      associatedKeysets,
-      outputScriptHex,
-      lockTime,
-      sigHashType,
-      segwit,
-      additionals: additionals || [],
-      expiryHeight: expiryHeight && expiryHeight.toString('hex'),
-    });
+    const inputs: Inputs = txInfo.inputs.map((i) => [
+      btc.splitTransaction(i.txHex, true),
+      i.output_index,
+      null,
+      i.sequence,
+    ]);
 
     const lastOutputIndex = txInfo.outputs.length - 1;
+
+    log('hw', `createPaymentTransactionNew`, {
+      inputs,
+      associatedKeysets,
+      outputScriptHex,
+      ...(params.lockTime && { lockTime: params.lockTime }),
+      ...(params.sigHashType && { sigHashType: params.sigHashType }),
+      ...(params.segwit && { segwit: params.segwit }),
+      // initialTimestamp,
+      ...(params.expiryHeight && { expiryHeight: params.expiryHeight }),
+      ...(txInfo.outputs[lastOutputIndex]?.isChange && {
+        changePath: `${fromAccount.params.path}/${fromAccount.params.index}'/${txInfo.changeAddress.account}/${txInfo.changeAddress.index}`,
+      }),
+      additionals: additionals || [],
+    });
 
     const tx = await btc.createPaymentTransactionNew({
       inputs,
@@ -315,6 +264,68 @@ class WalletLedger {
     const res = await fromAccount.xpub.broadcastTx(tx);
     return res.data.result;
   }
+
+  instantiateXpubFromSerializedAccount(account: SerializedAccount): Xpub {
+    const crypto = cryptoFactory(account.params.currency);
+    const storage = this.accountStorages[account.params.storage](...account.params.storageParams);
+    const explorer = this.getExplorer(account.params.explorer, account.params.explorerURI);
+
+    return new Xpub({
+      storage,
+      explorer,
+      crypto,
+      xpub: account.xpub.xpub,
+      derivationMode: account.params.derivationMode,
+    });
+  }
+
+  async importFromSerializedAccount(account: SerializedAccount): Promise<Account> {
+    const xpub = this.instantiateXpubFromSerializedAccount(account);
+
+    await xpub.storage.load(account.xpub.data);
+
+    return {
+      ...account,
+      xpub,
+    };
+  }
+
+  importFromSerializedAccountSync(account: SerializedAccount): Account {
+    const xpub = this.instantiateXpubFromSerializedAccount(account);
+
+    xpub.storage.loadSync(account.xpub.data);
+
+    return {
+      ...account,
+      xpub,
+    };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async exportToSerializedAccount(account: Account): Promise<SerializedAccount> {
+    const data = await account.xpub.storage.export();
+
+    return {
+      ...account,
+      xpub: {
+        xpub: account.xpub.xpub,
+        data,
+      },
+    };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  exportToSerializedAccountSync(account: Account): SerializedAccount {
+    const data = account.xpub.storage.exportSync();
+
+    return {
+      ...account,
+      xpub: {
+        xpub: account.xpub.xpub,
+        data,
+      },
+    };
+  }
 }
 
-export default WalletLedger;
+export default BitcoinLikeWallet;

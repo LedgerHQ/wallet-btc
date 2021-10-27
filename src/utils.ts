@@ -8,7 +8,7 @@ import cryptoFactory from './crypto/factory';
 import { fallbackValidateAddress } from './crypto/base';
 
 export function parseHexString(str: any) {
-  const result = [];
+  const result: Array<number> = [];
   while (str.length >= 2) {
     result.push(parseInt(str.substring(0, 2), 16));
     // eslint-disable-next-line no-param-reassign
@@ -50,7 +50,7 @@ export function compressPublicKey(publicKey: any) {
   let compressedKeyIndex;
   if (publicKey.substring(0, 2) !== '04') {
     // eslint-disable-next-line no-throw-literal
-    throw 'Invalid public key format';
+    throw new Error('Invalid public key format');
   }
   if (parseInt(publicKey.substring(128, 130), 16) % 2 !== 0) {
     compressedKeyIndex = '03';
@@ -94,7 +94,12 @@ export function estimateTxSize(inputCount: number, outputCount: number, currency
   fixedSize += byteSize(inputCount); // Number of inputs
   fixedSize += byteSize(outputCount); // Number of outputs
   fixedSize += 4; // Timelock
-
+  // refer to https://medium.com/coinmonks/on-bitcoin-transaction-sizes-part-2-9445373d17f4
+  // and https://bitcoin.stackexchange.com/questions/96017/what-are-the-sizes-of-single-sig-and-2-of-3-multisig-taproot-inputs
+  if (derivationMode === DerivationModes.TAPROOT) {
+    txSize = fixedSize + 57.5 * inputCount + 43 * outputCount;
+    return Math.ceil(txSize);
+  }
   const isSegwit = derivationMode === DerivationModes.NATIVE_SEGWIT || derivationMode === DerivationModes.SEGWIT;
   if (isSegwit) {
     // Native Segwit: 32 PrevTxHash + 4 Index + 1 null byte + 4 sequence

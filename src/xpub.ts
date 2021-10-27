@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { maxBy, range, some } from 'lodash';
 import BigNumber from 'bignumber.js';
 import { Address, IStorage } from './storage/types';
@@ -20,6 +21,10 @@ class Xpub extends EventEmitter {
   xpub: string;
 
   derivationMode: string;
+
+  freshAddress: { [key: string]: string } = {};
+
+  freshAddressIndex: { [key: string]: number } = {};
 
   // https://github.com/bitcoinjs/bitcoinjs-lib/blob/27a840aac4a12338f1e40c54f3759bbd7a559944/src/bufferutils.js#L24
   // only works with number so we need to be sure to pass correct numbers
@@ -79,7 +84,11 @@ class Xpub extends EventEmitter {
 
       // in case pendings have changed we clean them out
       // TODO perf : bad : looping in the tx array
-      const hasPendings = !!(await this.storage.getLastTx({ confirmed: false, account, index }));
+      const hasPendings = !!(await this.storage.getLastTx({
+        confirmed: false,
+        account,
+        index,
+      }));
       if (hasPendings) {
         await this.storage.removePendingTxs({ account, index });
       }
@@ -89,7 +98,11 @@ class Xpub extends EventEmitter {
         total += added;
       }
 
-      const pendingTxs = await this.explorer.getPendings({ address, account, index });
+      const pendingTxs = await this.explorer.getPendings({
+        address,
+        account,
+        index,
+      });
       await this.storage.appendTxs(pendingTxs);
     } catch (e) {
       this.emitSyncedFailed(data);
@@ -102,7 +115,9 @@ class Xpub extends EventEmitter {
       account,
       index,
     });
-
+    if (lastTx) {
+      this.freshAddressIndex[account] = Math.max(this.freshAddressIndex[account], index + 1);
+    }
     return !!lastTx;
   }
 
@@ -112,6 +127,8 @@ class Xpub extends EventEmitter {
   }
 
   async syncAccount(account: number) {
+    this.freshAddressIndex[account] = 0;
+    this.freshAddress[account] = this.crypto.getAddress(this.derivationMode, this.xpub, account, 0);
     await this.whenSynced('account', account.toString());
 
     this.emitSyncing({
@@ -142,7 +159,12 @@ class Xpub extends EventEmitter {
       account,
       index,
     });
-
+    this.freshAddress[account] = this.crypto.getAddress(
+      this.derivationMode,
+      this.xpub,
+      account,
+      this.freshAddressIndex[account]
+    );
     return index;
   }
 
@@ -228,7 +250,7 @@ class Xpub extends EventEmitter {
     feePerByte: number;
     changeAddress: Address;
     utxoPickingStrategy: PickingStrategy;
-    sequence?: number;
+    sequence: number;
   }): Promise<TransactionInfo> {
     await this.whenSynced('all');
 
@@ -280,21 +302,19 @@ class Xpub extends EventEmitter {
 
     const inputs: InputInfo[] = unspentUtxoSelected.map((utxo, index) => {
       return {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         txHex: txHexs[index],
         value: utxo.value,
         address: utxo.address,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         output_hash: utxo.output_hash,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         output_index: utxo.output_index,
-        sequence: Number.isInteger(params.sequence) ? params.sequence : null,
+        sequence: params.sequence,
       };
     });
-    const associatedDerivations: [number, number][] = unspentUtxoSelected.map((utxo, index) => [
-      txs[index].account,
-      txs[index].index,
-    ]);
+    const associatedDerivations: [number, number][] = unspentUtxoSelected.map(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      (utxo, index) => [txs[index].account, txs[index].index]
+    );
 
     const txSize = utils.estimateTxSize(
       unspentUtxoSelected.length,

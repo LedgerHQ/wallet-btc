@@ -3,7 +3,7 @@ import { Input, IStorage, Output, TX, Address } from './types';
 
 // a mock storage class that just use js objects
 // sql.js would be perfect for the job
-class Mock implements IStorage {
+class BitcoinLikeStorage implements IStorage {
   txs: TX[] = [];
 
   // indexes
@@ -89,6 +89,8 @@ class Mock implements IStorage {
   async getUniquesAddresses(addressesFilter: { account?: number; index?: number }) {
     // TODO: to speed up, create more useful indexes in appendTxs
     return uniqBy(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       filter(this.txs, addressesFilter).map((tx: TX) => ({
         address: tx.address,
         account: tx.account,
@@ -148,7 +150,7 @@ class Mock implements IStorage {
     await this.appendTxs(txsToReAdd);
   }
 
-  async export() {
+  exportSync() {
     return {
       txs: this.txs,
       primaryIndex: this.primaryIndex,
@@ -156,11 +158,19 @@ class Mock implements IStorage {
     };
   }
 
-  async load(data: { txs: TX[]; primaryIndex: { [key: string]: number }; unspentUtxos: { [key: string]: Output[] } }) {
+  loadSync(data: { txs: TX[]; primaryIndex: { [key: string]: number }; unspentUtxos: { [key: string]: Output[] } }) {
     this.txs = data.txs;
     this.primaryIndex = data.primaryIndex;
     this.unspentUtxos = data.unspentUtxos;
   }
+
+  async export() {
+    return this.exportSync();
+  }
+
+  async load(data: { txs: TX[]; primaryIndex: { [key: string]: number }; unspentUtxos: { [key: string]: Output[] } }) {
+    return this.loadSync(data);
+  }
 }
 
-export default Mock;
+export default BitcoinLikeStorage;

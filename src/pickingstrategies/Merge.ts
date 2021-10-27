@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { flatten, sortBy } from 'lodash';
 import { NotEnoughBalance } from '@ledgerhq/errors';
+import { log } from '@ledgerhq/logs';
 import { Output } from '../storage/types';
 import Xpub from '../xpub';
 import { PickingStrategy } from './types';
@@ -13,6 +14,7 @@ export class Merge extends PickingStrategy {
     // get the utxos to use as input
     // from all addresses of the account
     const addresses = await xpub.getXpubAddresses();
+    log('picking strategy', 'Merge');
 
     let unspentUtxos = flatten(
       await Promise.all(addresses.map((address) => xpub.storage.getAddressUnspentUtxos(address)))
@@ -28,7 +30,7 @@ export class Merge extends PickingStrategy {
       utils.estimateTxSize(0, 1, this.crypto, this.derivationMode) -
       utils.estimateTxSize(0, 0, this.crypto, this.derivationMode);
 
-    unspentUtxos = sortBy(unspentUtxos, 'value');
+    unspentUtxos = sortBy(unspentUtxos, (utxo) => parseInt(utxo.value, 10));
     // https://metamug.com/article/security/bitcoin-transaction-fee-satoshi-per-byte.html
     const txSizeNoInput = utils.estimateTxSize(0, nbOutputsWithoutChange, this.crypto, this.derivationMode);
     let fee = txSizeNoInput * feePerByte;
@@ -39,8 +41,7 @@ export class Merge extends PickingStrategy {
     let i = 0;
     while (total.lt(amount.plus(fee))) {
       if (!unspentUtxos[i]) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        throw new (NotEnoughBalance as any)();
+        throw NotEnoughBalance();
       }
       total = total.plus(unspentUtxos[i].value);
       unspentUtxoSelected.push(unspentUtxos[i]);

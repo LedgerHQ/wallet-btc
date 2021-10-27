@@ -8,8 +8,8 @@ import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import Xpub from '../xpub';
 import Crypto from '../crypto/bitcoin';
-import LedgerExplorer from '../explorer/ledgerexplorer';
-import Storage from '../storage/mock';
+import BitcoinLikeExplorer from '../explorer';
+import BitcoinLikeStorage from '../storage';
 import * as utils from '../utils';
 import { InputInfo, OutputInfo, DerivationModes } from '../types';
 import { Merge } from '../pickingstrategies/Merge';
@@ -19,7 +19,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 describe('testing xpub legacy transactions', () => {
   const network = coininfo.bitcoin.regtest.toBitcoinJS();
 
-  const explorer = new LedgerExplorer({
+  const explorer = new BitcoinLikeExplorer({
     explorerURI: 'http://localhost:20000/blockchain/v3',
     explorerVersion: 'v3',
     disableBatchSize: true, // https://ledgerhq.atlassian.net/browse/BACK-2191
@@ -29,7 +29,7 @@ describe('testing xpub legacy transactions', () => {
   });
 
   const xpubs = [1, 2, 3].map((i) => {
-    const storage = new Storage();
+    const storage = new BitcoinLikeStorage();
     const seed = bip39.mnemonicToSeedSync(`test${i} test${i} test${i}`);
     const node = bip32.fromSeed(seed, network);
     const signer = (account: number, index: number) =>
@@ -95,6 +95,7 @@ describe('testing xpub legacy transactions', () => {
       feePerByte: 100,
       changeAddress,
       utxoPickingStrategy,
+      sequence: 0,
     });
 
     inputs.forEach((i: InputInfo) => {
@@ -187,6 +188,7 @@ describe('testing xpub legacy transactions', () => {
       feePerByte: 100,
       changeAddress,
       utxoPickingStrategy,
+      sequence: 0,
     });
 
     inputs.forEach((i) => {

@@ -1,20 +1,21 @@
-// from https://github.com/LedgerHQ/xpub-scan/blob/master/src/actions/deriveAddresses.ts
 import * as bch from 'bitcore-lib-cash';
 import bchaddr from 'bchaddrjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import { toOutputScript } from 'bitcoinjs-lib/src/address';
 import { DerivationModes } from '../types';
-import { ICrypto, DerivationMode } from './types';
+import { ICrypto } from './types';
+
+// Fix the "More than one instance of bitcore-lib-cash" issue. Refer to https://github.com/bitpay/bitcore/issues/1457
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line no-underscore-dangle
+delete global._bitcoreCash;
 
 // a mock explorer class that just use js objects
 class BitcoinCash implements ICrypto {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   network: any;
-
-  derivationMode: DerivationMode = {
-    LEGACY: DerivationModes.LEGACY,
-  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor({ network }: { network: any }) {
@@ -48,12 +49,17 @@ class BitcoinCash implements ICrypto {
   // correspond to the actual type (currently, a `ltc1` prefix
   // could match a native Bitcoin address type for instance)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line class-methods-use-this
   getDerivationMode(address: string) {
-    return this.derivationMode.LEGACY;
+    return DerivationModes.LEGACY;
   }
 
   toOutputScript(address: string) {
-    return toOutputScript(address, this.network);
+    if (!this.validateAddress(address)) {
+      throw new Error('Invalid address');
+    }
+    // TODO find a better way to calculate the script from bch address instead of converting to bitcoin address
+    return toOutputScript(bchaddr.toLegacyAddress(address), this.network);
   }
 
   // eslint-disable-next-line class-methods-use-this

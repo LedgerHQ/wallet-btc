@@ -8,8 +8,9 @@ import coininfo from 'coininfo';
 import BigNumber from 'bignumber.js';
 import { DerivationModes } from '../types';
 import Xpub from '../xpub';
+import BitcoinLikeExplorer from '../explorer';
 import Crypto from '../crypto/bitcoin';
-import Storage from '../storage/mock';
+import BitcoinLikeStorage from '../storage';
 import { Merge } from '../pickingstrategies/Merge';
 import { DeepFirst } from '../pickingstrategies/DeepFirst';
 import { CoinSelect } from '../pickingstrategies/CoinSelect';
@@ -21,14 +22,17 @@ describe('testing xpub legacy transactions', () => {
     network,
   });
 
-  const storage = new Storage();
+  const storage = new BitcoinLikeStorage();
   const seed = bip39.mnemonicToSeedSync('test1 test1 test1');
   const node = bip32.fromSeed(seed, network);
   const signer = (account: number, index: number) =>
     bitcoin.ECPair.fromWIF(node.derive(account).derive(index).toWIF(), network);
   const xpub = new Xpub({
     storage,
-    explorer: null,
+    explorer: new BitcoinLikeExplorer({
+      explorerURI: 'https://explorers.api.live.ledger.com/blockchain/v3/btc',
+      explorerVersion: 'v3',
+    }),
     crypto,
     xpub: node.neutered().toBase58(),
     derivationMode: DerivationModes.LEGACY,
@@ -269,20 +273,30 @@ describe('testing xpub legacy transactions', () => {
     ]);
     // we have 5 utxo now. 100000000, 200000000, 300000000, 600000000 and 5000000000
     const utxoPickingStrategy = new CoinSelect(dataset.xpub.crypto, dataset.xpub.derivationMode, []);
-    let res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(10000), 0, 1);
+    let res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(10000), 10, 1);
     expect(res.unspentUtxos.length).toEqual(1);
     expect(Number(res.unspentUtxos[0].value)).toEqual(100000000);
 
     res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(290000000), 10, 1);
-    expect(res.unspentUtxos.length).toEqual(2);
-    expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(100000000 + 200000000);
+    expect(res.unspentUtxos.length).toEqual(1);
+    expect(Number(res.unspentUtxos[0].value)).toEqual(300000000);
 
-    res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(500000000), 0, 1);
-    expect(res.unspentUtxos.length).toEqual(2);
-    expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(200000000 + 300000000);
+    res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(500000000), 10, 1);
+    expect(res.unspentUtxos.length).toEqual(1);
+    expect(Number(res.unspentUtxos[0].value)).toEqual(600000000);
 
-    res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(800000000), 0, 1);
+    res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(800000000), 10, 1);
+    expect(res.unspentUtxos.length).toEqual(1);
+    expect(Number(res.unspentUtxos[0].value)).toEqual(5000000000);
+
+    res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(5000000000), 10, 1);
     expect(res.unspentUtxos.length).toEqual(2);
-    expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(200000000 + 600000000);
+    expect(Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value)).toEqual(5100000000);
+
+    res = await utxoPickingStrategy.selectUnspentUtxosToUse(dataset.xpub, new BigNumber(5600000000), 10, 1);
+    expect(res.unspentUtxos.length).toEqual(3);
+    expect(
+      Number(res.unspentUtxos[0].value) + Number(res.unspentUtxos[1].value) + Number(res.unspentUtxos[2].value)
+    ).toEqual(5000000000 + 600000000 + 100000000);
   }, 180000);
 });

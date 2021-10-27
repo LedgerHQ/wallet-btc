@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios, { AxiosInstance } from 'axios';
-import axiosRetry from 'axios-retry';
+import axiosRetry, { isNetworkOrIdempotentRequestError } from 'axios-retry';
+import BigNumber from 'bignumber.js';
 import genericPool, { Pool } from 'generic-pool';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import JSONBigNumber from '@ledgerhq/json-bignumber';
 import { log } from '@ledgerhq/logs';
-import BigNumber from 'bignumber.js';
 import { Address, Block, TX } from '../storage/types';
 import EventEmitter from '../utils/eventemitter';
 import { IExplorer } from './types';
@@ -56,7 +57,7 @@ const responseErrorInterceptor = (error: any) => {
   return Promise.reject(error);
 };
 
-class LedgerExplorer extends EventEmitter implements IExplorer {
+class BitcoinLikeExplorer extends EventEmitter implements IExplorer {
   client: Pool<{ client: AxiosInstance }>;
 
   underlyingClient: AxiosInstance;
@@ -85,13 +86,22 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
       // eslint-disable-next-line global-require,@typescript-eslint/no-var-requires
       const https = require('https');
       // uses max 20 keep alive request in parallel
-      clientParams.httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 20 });
+      clientParams.httpsAgent = new https.Agent({
+        keepAlive: true,
+        maxSockets: 20,
+      });
     }
 
     const client = axios.create(clientParams);
     this.underlyingClient = client;
     // 3 retries per request
-    axiosRetry(client, { retries: 3 });
+    axiosRetry(client, {
+      retries: 3,
+      retryCondition: (e) =>
+        isNetworkOrIdempotentRequestError(e) ||
+        // workaround for explorers v3 that sometimes returns 4xx instead of 5xx
+        (e.code !== 'ECONNABORTED' && (!e.response || (e.response.status >= 400 && e.response.status <= 499))),
+    });
     // max 20 requests
     this.client = genericPool.createPool(
       {
@@ -126,7 +136,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     // TODO add a test for failure (at the sync level)
     const client = await this.client.acquire();
-    const res = (await client.client.get(url)).data;
+    const res: any = (await client.client.get(url)).data;
     await this.client.release(client);
 
     this.emit('fetched-transaction-tx', { url, tx: res[0] });
@@ -140,7 +150,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     this.emit('fetching-block', { url });
 
     const client = await this.client.acquire();
-    const res = (await client.client.get(url)).data;
+    const res: any = (await client.client.get(url)).data;
     await this.client.release(client);
 
     this.emit('fetched-block', { url, block: res });
@@ -164,7 +174,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     this.emit('fetching-block', { url, height });
 
     const client = await this.client.acquire();
-    const res = (await client.client.get(url)).data;
+    const res: any = (await client.client.get(url)).data;
     await this.client.release(client);
 
     this.emit('fetched-block', { url, block: res[0] });
@@ -210,11 +220,9 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
             noToken: 'true',
           }
         : {
-            // eslint-disable-next-line @typescript-eslint/camelcase
             no_token: 'true',
           };
     if (!this.disableBatchSize) {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       params.batch_size = nbMax || 1000;
     }
     const res = await this.fetchTxs(address, params);
@@ -231,7 +239,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
 
     // TODO add a test for failure (at the sync level)
     const client = await this.client.acquire();
-    const res: { txs: TX[] } = (
+    const res = (
       await client.client.get(url, {
         params,
         // some altcoin may have outputs with values > MAX_SAFE_INTEGER
@@ -248,7 +256,7 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
             return value;
           }),
       })
-    ).data;
+    ).data as { txs: TX[] };
     await this.client.release(client);
 
     this.emit('fetched-address-transaction', { url, params, res });
@@ -270,15 +278,14 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
     tx.index = address.index;
     // eslint-disable-next-line no-param-reassign
     tx.address = address.address;
-
     tx.outputs.forEach((output) => {
-      // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+      // eslint-disable-next-line no-param-reassign
       output.output_hash = tx.hash;
-      // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
+      // eslint-disable-next-line no-param-reassign
       output.block_height = tx.block ? tx.block.height : null;
       // Definition of replaceable, per the standard: https://github.com/bitcoin/bips/blob/61ccc84930051e5b4a99926510d0db4a8475a4e6/bip-0125.mediawiki#summary
-      // eslint-disable-next-line @typescript-eslint/camelcase,no-param-reassign
-      output.rbf = tx.inputs[0]?.sequence && tx.inputs[0].sequence < 0xffffffff;
+      // eslint-disable-next-line no-param-reassign
+      output.rbf = tx.inputs[0] ? tx.inputs[0].sequence < 0xffffffff : false;
     });
   }
 
@@ -295,18 +302,15 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
             noToken: 'true',
           }
         : {
-            // eslint-disable-next-line @typescript-eslint/camelcase
             no_token: 'true',
           };
     if (!this.disableBatchSize) {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       params.batch_size = batchSize;
     }
     if (lastTx) {
       if (this.explorerVersion === 'v2') {
         params.blockHash = lastTx.block.hash;
       } else {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         params.block_hash = lastTx.block.hash;
       }
     }
@@ -330,4 +334,4 @@ class LedgerExplorer extends EventEmitter implements IExplorer {
   }
 }
 
-export default LedgerExplorer;
+export default BitcoinLikeExplorer;
