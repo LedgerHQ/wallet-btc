@@ -100,18 +100,18 @@ class Mock implements IStorage {
 
   async removeTxs(txsFilter: { account: number; index: number }) {
     const newTxs: TX[] = [];
+    this.primaryIndex = {};
 
     this.txs.forEach((tx: TX) => {
-      if (tx.account !== txsFilter.account || tx.index !== txsFilter.index) {
-        newTxs.push(tx);
-        return;
-      }
-
       // clean
       const indexAddress = tx.address;
       const index = `${indexAddress}-${tx.hash}`;
 
-      delete this.primaryIndex[index];
+      if (tx.account !== txsFilter.account || tx.index !== txsFilter.index) {
+        this.primaryIndex[index] = newTxs.push(tx) - 1;
+        return;
+      }
+
       delete this.unspentUtxos[indexAddress];
       delete this.spentUtxos[indexAddress];
     });
@@ -124,10 +124,15 @@ class Mock implements IStorage {
   async removePendingTxs(txsFilter: { account: number; index: number }) {
     const newTxs: TX[] = [];
     const txsToReAdd: TX[] = [];
+    this.primaryIndex = {};
 
     this.txs.forEach((tx: TX) => {
+      // clean
+      const indexAddress = tx.address;
+      const index = `${indexAddress}-${tx.hash}`;
+
       if (tx.account !== txsFilter.account || tx.index !== txsFilter.index) {
-        newTxs.push(tx);
+        this.primaryIndex[index] = newTxs.push(tx) - 1;
         return;
       }
 
@@ -135,11 +140,6 @@ class Mock implements IStorage {
         txsToReAdd.push(tx);
       }
 
-      // clean
-      const indexAddress = tx.address;
-      const index = `${indexAddress}-${tx.hash}`;
-
-      delete this.primaryIndex[index];
       delete this.unspentUtxos[indexAddress];
       delete this.spentUtxos[indexAddress];
     });
